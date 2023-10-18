@@ -1,0 +1,3 @@
+x = "Tere!"
+
+print(x)
