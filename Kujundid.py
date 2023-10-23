@@ -73,6 +73,7 @@ while running:
 
   
     screen.fill("purple")
+
     rk.Joonista()
 
     
