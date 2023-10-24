@@ -15,12 +15,10 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
 
-  
         screen.fill("purple")
 
         rk.Joonista()
 
-    
         pygame.display.flip()
 
         clock.tick(60)  # limits FPS to 60
