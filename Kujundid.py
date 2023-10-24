@@ -59,11 +59,13 @@ class Ristkülik:
 
 
 class SündmuseRida:
-    def __init__(self, sündmus):
+    def __init__(self, pind, sündmus):
         self.sündmus = sündmus
+        self.pind = pind
 
     def Joonista():
         #võtab info:
+        pealkiri = Tekst(self.pind, "ÜritusePealkiri.")
         self.sündmus.VõtaNimi()
         self.sündmus.VõtaAlgusKell()
         self.sündmus.VõtaLõppkell()
