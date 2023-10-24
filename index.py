@@ -1,4 +1,5 @@
 ﻿from Kujundid import *
+from Tekst import *
 
 def tekst(screen, tekst, font, color, x, y):
     img = font.render(tekst, True, color)
@@ -21,6 +22,8 @@ def main():
 
         screen.fill("purple")
         tekst(screen, "kms", font, (255, 0, 0), 0, 0)
+        tekst1 = Tekst(screen, "Asi prindib teksti.")
+        tekst1.Joonista()
 
         rk.Joonista()
 

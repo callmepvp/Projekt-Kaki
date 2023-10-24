@@ -1,7 +1,6 @@
 ﻿import pygame
 
-
-
+from Tekst import *
 
 
 class ArvupaarAknas:
@@ -54,3 +53,34 @@ class Ristkülik:
         sy = self.suurus.VõtaVäärtus()[1]
 
         pygame.draw.rect(self.pind, self.värv, pygame.Rect(ax, ay, sx, sy))
+
+
+
+
+
+class SündmuseRida:
+    def __init__(self, sündmus):
+        self.sündmus = sündmus
+
+    def Joonista():
+        #võtab info:
+        self.sündmus.VõtaNimi()
+        self.sündmus.VõtaAlgusKell()
+        self.sündmus.VõtaLõppkell()
+
+        
+
+
+
+
+
+        
+"""
+class Päevaruut:
+    def __init__(self, päev):
+        self.sündmsued = päev.võtaSündmsed()
+
+    def Joonista():
+        for i in sündmsued:
+            pass
+        """
