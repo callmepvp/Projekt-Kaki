@@ -17,8 +17,9 @@ class SündmusteNimekiri:
 
 	VõtaSündmusedPäeval(soovitavpäev):
 		leiab sobivad sndmused
-		if sündmus.võtapäev() == soovitavPäev:
-			sobivad.append
+		for i in sündmusteNimekiri:
+			if sündmus.võtapäev() == soovitavPäev:
+				sobivad.append
 		return sobivadSündmsued
 
 	VõtaSündmusedPärastPäeva()
