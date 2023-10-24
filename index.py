@@ -9,7 +9,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
     rk = Ristkülik(screen, screen)
-    sündRida1 = SündmuseRida(screen, 1, (30, 30))
+    tekst2 = Tekst(screen, "AAaa", värv=(10,10,10), asuk=(30, 50))
 
     while running:
 
@@ -19,12 +19,13 @@ def main():
 
         screen.fill("purple")
         
-        tekst1 = Tekst(screen, "Asi prindib teksti.")
-        tekst1.Joonista()
 
-        sündRida1.Joonista()
+        tekst2.Joonista()
+
 
         rk.Joonista()
+
+        
 
         pygame.display.flip()
 
