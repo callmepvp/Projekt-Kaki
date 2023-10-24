@@ -63,12 +63,14 @@ class SündmuseRida:
         self.sündmus = sündmus
         self.pind = pind
 
-    def Joonista():
+    def Joonista(self):
         #võtab info:
         pealkiri = Tekst(self.pind, "ÜritusePealkiri.")
         self.sündmus.VõtaNimi()
         self.sündmus.VõtaAlgusKell()
         self.sündmus.VõtaLõppkell()
+
+
 
         
 
