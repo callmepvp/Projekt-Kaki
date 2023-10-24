@@ -67,9 +67,10 @@ class SündmuseRida:
     def Joonista(self):
         #võtab info:
 
-        pygame.draw.circle(self.pind, (10, 10, 10), self.asukoht, 10.0,)
+        pygame.draw.circle(self.pind, (10, 10, 10), self.asukoht, 5.0,)
 
-        pealkiri = Tekst(self.pind, "ÜritusePealkiri.", asuk = self.asukoht)
+        tekstiAsuk = (self.asukoht[0] + 20, self.asukoht[1] - 20)
+        pealkiri = Tekst(self.pind, "ÜritusePealkiri.", asuk=tekstiAsuk, värv=(10,10,10))
         pealkiri.Joonista()
         """
         self.sündmus.VõtaNimi()

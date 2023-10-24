@@ -1,9 +1,6 @@
 ﻿from Kujundid import *
 from Tekst import *
 
-def tekst(screen, tekst, font, color, x, y):
-    img = font.render(tekst, True, color)
-    screen.blit(img, (x, y))
 
 def main():
     pygame.init()
@@ -12,7 +9,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
     rk = Ristkülik(screen, screen)
-
+    sündRida1 = SündmuseRida(screen, 1, (30, 30))
 
     while running:
 
@@ -21,11 +18,11 @@ def main():
                 running = False
 
         screen.fill("purple")
-        tekst(screen, "kms", font, (255, 0, 0), 0, 0)
+        
         tekst1 = Tekst(screen, "Asi prindib teksti.")
         tekst1.Joonista()
 
-        pygame.draw.circle(screen, (255, 0, 0), (100, 100), 10.0,)
+        sündRida1.Joonista()
 
         rk.Joonista()
 
