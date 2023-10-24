@@ -25,6 +25,8 @@ def main():
         tekst1 = Tekst(screen, "Asi prindib teksti.")
         tekst1.Joonista()
 
+        pygame.draw.circle(screen, (255, 0, 0), (100, 100), 10.0,)
+
         rk.Joonista()
 
         pygame.display.flip()

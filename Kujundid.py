@@ -59,16 +59,22 @@ class Ristkülik:
 
 
 class SündmuseRida:
-    def __init__(self, pind, sündmus):
+    def __init__(self, pind, sündmus, asukoht):
         self.sündmus = sündmus
         self.pind = pind
+        self.asukoht = asukoht
 
     def Joonista(self):
         #võtab info:
-        pealkiri = Tekst(self.pind, "ÜritusePealkiri.")
+
+        pygame.draw.circle(self.pind, (10, 10, 10), self.asukoht, 10.0,)
+
+        pealkiri = Tekst(self.pind, "ÜritusePealkiri.", asuk = self.asukoht)
+        pealkiri.Joonista()
+        """
         self.sündmus.VõtaNimi()
         self.sündmus.VõtaAlgusKell()
-        self.sündmus.VõtaLõppkell()
+        self.sündmus.VõtaLõppkell()"""
 
 
 
