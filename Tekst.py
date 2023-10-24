@@ -8,6 +8,6 @@ class Tekst:
         self.asuk = asuk
         self.img = pygfont.render(tekst, True, värv)
     
-
+    
     def Joonista(self):
         self.pind.blit(self.img, self.asuk)
