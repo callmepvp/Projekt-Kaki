@@ -9,7 +9,7 @@ def main():
     clock = pygame.time.Clock()
     running = True
     rk = Ristkülik(screen, screen)
-    tekst2 = Tekst(screen, "AAaa", värv=(10,10,10), asuk=(30, 50))
+    tekst2 = SündmuseRida(screen, 2, (400, 500))
 
     while running:
 
