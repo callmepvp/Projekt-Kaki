@@ -1,7 +1,7 @@
 ﻿import pygame
+from itertools import chain
 
 # Ingliskeelne kood copy pastetud kusagilt lehelt, aga need funktsioonid teevad täpselt seda, mida vaja. Jagab antud teksti (stringi) tükkideks nii, et valitud fondi korral ei ületaks ükski tükk kindlat valitud laiust pikslites. Lühidalt jagab teksti tükkideks, et iga tüki saaks eraldi reale renderdada ja kõik oleksid roughly reapikkused.
-from itertools import chain
 
 def truncline(text, font, maxwidth):
     real=len(text)       
@@ -41,6 +41,7 @@ def wrap_multi_line(text, font, maxwidth):
     return list(lines)
 
 
+
 class Tekst:
 
     def __init__(self, pind, tekst, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60):
@@ -62,7 +63,6 @@ class Tekst:
 
         self.pind.blit(self.img, tekstiAsuk)
 
-
 class MitmeReaTekst:
 
     def __init__(self, pind, tekst="Lorem Ipsum", reaLaius=400, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60, reavahe=50):
@@ -78,8 +78,6 @@ class MitmeReaTekst:
     
     def Joonista(self):
         read = wrap_multi_line(self.tekst, self.pygfont, self.reaLaius)
-
-        pygame.draw.circle(self.pind, (10, 10, 10), self.asuk, 4.0)
 
         mitmes = 0
         for i in read:
