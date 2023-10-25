@@ -45,7 +45,7 @@ def wrap_multi_line(text, font, maxwidth):
 class Tekst:
 
     def __init__(self, pind, tekst, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60):
-        self.font = pygame.font.SysFont(font, suurus)
+        self.font = pygame.font.Font(font, suurus)
         self.pind = pind
         self.asuk = asuk
         self.img = self.font.render(tekst, True, värv)
@@ -66,7 +66,8 @@ class Tekst:
 class MitmeReaTekst:
 
     def __init__(self, pind, tekst="Lorem Ipsum", reaLaius=400, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60, reavahe=50):
-        self.pygfont = pygame.font.SysFont(font, suurus)
+        self.font = font
+        self.pygfont = pygame.font.Font(font, suurus)
         self.pind = pind
         self.asuk = asuk
         self.img = self.pygfont.render(tekst, True, värv)
@@ -74,6 +75,7 @@ class MitmeReaTekst:
         self.tekst = tekst
         self.reaLaius = reaLaius
         self.reavahe = reavahe
+        self.suurus = suurus
     
     
     def Joonista(self):
@@ -81,8 +83,9 @@ class MitmeReaTekst:
 
         mitmes = 0
         for i in read:
+            print(self.font)
             reaAsukoht = (self.asuk[0], self.asuk[1] + self.reavahe*mitmes)
-            rida = Tekst(self.pind, i, asuk=reaAsukoht)
+            rida = Tekst(self.pind, i, asuk=reaAsukoht, font=self.font, värv=self.värv, suurus=self.suurus)
             rida.Joonista()
             mitmes += 1
             
