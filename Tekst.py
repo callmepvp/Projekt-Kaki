@@ -1,6 +1,6 @@
 ﻿import pygame
 
-# Ingliskeelne kood copy pastetud kusagilt lehelt, aga see pasitab tegevat täpselt seda, mis vaja.
+# Ingliskeelne kood copy pastetud kusagilt lehelt, aga need funktsioonid teevad täpselt seda, mida vaja. Jagab antud teksti (stringi) tükkideks nii, et valitud fondi korral ei ületaks ükski tükk kindlat valitud laiust pikslites. Lühidalt jagab teksti tükkideks, et iga tüki saaks eraldi reale renderdada ja kõik oleksid roughly reapikkused.
 from itertools import chain
 
 def truncline(text, font, maxwidth):
@@ -34,14 +34,11 @@ def wrapline(text, font, maxwidth):
         text=text[nl:]                                 
     return wrapped
 
-
 def wrap_multi_line(text, font, maxwidth):
     """ returns text taking new lines into account.
     """
     lines = chain(*(wrapline(line, font, maxwidth) for line in text.splitlines()))
     return list(lines)
-
-
 
 
 class Tekst:
@@ -65,9 +62,6 @@ class Tekst:
 
         self.pind.blit(self.img, tekstiAsuk)
 
-
-
-# Kalendri peamises vaates on mingi 15 ruutu, igaüks vastab migile päevale. Iga ruudu sees on selle päeva kuupäev ja loetelu sellel päeval olevatest sündmustest. Ma nimetan üht loetelu punkti sündmusereaks. See objekt tegeleb sündmuserea teksti õigesti kirjutamisega. See objekt on osa sündmuseRea objektist. SündmuseReaTeksti obj tegeleb pealkirja tekstiga, SündmuseRea objektis lisatakse sellele ette bullet point ja järele kellaaeg.
 
 class MitmeReaTekst:
 
