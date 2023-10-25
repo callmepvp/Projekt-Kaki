@@ -71,7 +71,7 @@ class SündmuseRida:
 
         #Sündmuse nimi
         tekstiAsuk = (self.asukoht[0] + 20, self.asukoht[1])
-        pealkiri = Tekst(self.pind, "Lamp sündmusterida.", asuk=tekstiAsuk, värv=(10,10,10), suurus=40)
+        pealkiri = Tekst(self.pind, "Lamp sündmuserida.", asuk=tekstiAsuk, värv=(10,10,10), suurus=40)
         pealkiri.Joonista()
 
         #Sündmuse kellaaeg väiksemalt.
