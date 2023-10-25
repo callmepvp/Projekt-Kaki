@@ -57,7 +57,7 @@ class Ristkülik:
 
 
 
-
+"""
 class SündmuseRida:
     def __init__(self, pind, sündmus, asukoht):
         self.sündmus = sündmus
@@ -79,9 +79,9 @@ class SündmuseRida:
         
         pealkiri = Tekst(self.pind, "19.30", asuk=(self.asukoht[0]+400, self.asukoht[1]), värv=(10,10,10), suurus=30)
         pealkiri.Joonista()
-
+"""
         
-        """
+"""
         self.sündmus.VõtaNimi()
         self.sündmus.VõtaAlgusKell()
         self.sündmus.VõtaLõppkell()"""

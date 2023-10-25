@@ -1,5 +1,4 @@
 ﻿import pygame
-import pygame.freetype
 
 # Ingliskeelne kood copy pastetud kusagilt lehelt, aga see pasitab tegevat täpselt seda, mis vaja.
 from itertools import chain
@@ -69,23 +68,30 @@ class Tekst:
 
 
 # Kalendri peamises vaates on mingi 15 ruutu, igaüks vastab migile päevale. Iga ruudu sees on selle päeva kuupäev ja loetelu sellel päeval olevatest sündmustest. Ma nimetan üht loetelu punkti sündmusereaks. See objekt tegeleb sündmuserea teksti õigesti kirjutamisega. See objekt on osa sündmuseRea objektist. SündmuseReaTeksti obj tegeleb pealkirja tekstiga, SündmuseRea objektis lisatakse sellele ette bullet point ja järele kellaaeg.
-class SündmuseReaTekst:
 
-    def __init__(self, pind, tekst, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60):
-        self.font = pygame.font.SysFont(font, suurus)
+class MitmeReaTekst:
+
+    def __init__(self, pind, tekst="Lorem Ipsum", reaLaius=400, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60, reavahe=50):
+        self.pygfont = pygame.font.SysFont(font, suurus)
         self.pind = pind
         self.asuk = asuk
-        self.img = self.font.render(tekst, True, värv)
+        self.img = self.pygfont.render(tekst, True, värv)
         self.värv = värv
+        self.tekst = tekst
+        self.reaLaius = reaLaius
+        self.reavahe = reavahe
     
     
     def Joonista(self):
-        suurtäheKõrgus = self.font.get_ascent()
+        read = wrap_multi_line(self.tekst, self.pygfont, self.reaLaius)
+
+        pygame.draw.circle(self.pind, (10, 10, 10), self.asuk, 4.0)
+
+        mitmes = 0
+        for i in read:
+            reaAsukoht = (self.asuk[0], self.asuk[1] + self.reavahe*mitmes)
+            rida = Tekst(self.pind, i, asuk=reaAsukoht)
+            rida.Joonista()
+            mitmes += 1
+            
         
-
-        poolVäiketäheKõrgus = self.font.get_height()*0.34
-        
-
-        tekstiAsuk = (self.asuk[0], self.asuk[1]-suurtäheKõrgus + poolVäiketäheKõrgus)
-
-        self.pind.blit(self.img, tekstiAsuk)
