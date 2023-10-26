@@ -1,6 +1,17 @@
 ﻿import pygame
 from itertools import chain
 
+
+def Silbita(tekst):
+    kaashäälikud = "bcdfghjklmnpqrsšzžtvwxy"
+    silbid = ""
+    silp = ""
+    for i in tekst:
+        pass
+
+    
+
+
 # Ingliskeelne kood copy pastetud kusagilt lehelt, aga need funktsioonid teevad täpselt seda, mida vaja. Jagab antud teksti (stringi) tükkideks nii, et valitud fondi korral ei ületaks ükski tükk kindlat valitud laiust pikslites. Lühidalt jagab teksti tükkideks, et iga tüki saaks eraldi reale renderdada ja kõik oleksid roughly reapikkused.
 
 def truncline(text, font, maxwidth):
