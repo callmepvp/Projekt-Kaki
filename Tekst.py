@@ -88,5 +88,8 @@ class MitmeReaTekst:
             rida = Tekst(self.pind, i, asuk=reaAsukoht, font=self.font, värv=self.värv, suurus=self.suurus)
             rida.Joonista()
             mitmes += 1
+
+    def MuudaReaLaiust(self, uusLaius):
+        self.reaLaius = uusLaius
             
         
