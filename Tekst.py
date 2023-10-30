@@ -1,4 +1,5 @@
 ﻿import pygame
+import os
 from itertools import chain
 
 
@@ -78,6 +79,7 @@ class MitmeReaTekst:
 
     def __init__(self, pind, tekst="Lorem Ipsum", reaLaius=400, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60, reavahe=50):
         self.font = font
+        print(os.path.join('Fondid', font))
         self.pygfont = pygame.font.Font(font, suurus)
         self.pind = pind
         self.asuk = asuk
