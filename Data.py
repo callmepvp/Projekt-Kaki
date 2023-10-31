@@ -1,3 +1,6 @@
+import os
+import json
+
 """
 näidis json file'ist, mis salvestab informatsiooni.
 
@@ -6,6 +9,10 @@ See on tehtav ka nii, et tal mitte-vajaminevad väljad on tühjad, kuid siis (po
 See viskaks errori ning lihtsam oleks lihtsalt returnida tühi väärtus (None, 0, NaN).
 
 {  
+    "programmiInfo" : {
+        "font": ""
+    },
+    
     "sündmused": {
         "teatrisseminek": {
             "algKuupäev": (),
@@ -35,12 +42,24 @@ Siis peamiselt programmi kinni pannes salvestab ta cache'i ära.
 
 #Salvestamiseks
 def SalvestaFaili():
-    pass
+    #salvestab alati cache faili data faili
+    with open("./Data/cache.json", encoding="utf-8") as cache:
+        tempData = cache.read()
 
-def UuendaCache():
-    pass
+    with open("./Data/data.json", "w", encoding="utf-8") as f:
+        f.write(tempData)
+
+    os.remove("./Data/cache.json") #removes the cache fail
+
+def UuendaCache(cacheObject):
+    with open("./Data/cache.json", "w", encoding="utf-8") as f:
+        f.write(cacheObject)
 
 
 #Laadimiseks
-def VõtaFailist():
-    pass
+#Praegu on kaks andmetüüpi, mida saab indexida -> programmiInfo ja sündmused
+def VõtaFailist(andmeteTüüp):
+    with open("./Data/data.json", encoding="utf-8") as f:
+        info = json.load(f)
+
+    return info[andmeteTüüp]
