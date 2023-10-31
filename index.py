@@ -13,7 +13,6 @@ def main():
     running = True
     rk = Ristkülik(screen, screen)
 
-
     while running:
 
         for event in pygame.event.get():

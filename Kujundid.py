@@ -62,7 +62,7 @@ class SündmuseRida:
     def __init__(self, sündmus):
         self.sündmus = sündmus
 
-    def Joonista():
+    def Joonista(self):
         #võtab info:
         self.sündmus.VõtaNimi()
         self.sündmus.VõtaAlgusKell()
