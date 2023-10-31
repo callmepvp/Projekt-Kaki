@@ -26,3 +26,12 @@ class SündmusteNimekiri:
 
     def võtaNädalasedSündmused():
         pass
+
+
+class Sündmus:
+    # Kuupäevi käsitletakse 3-liikmelise tuplina, mis on järgmisel kujul (p, k, a),
+    # kus p tähistab päeva arvu, k kuude arvu ja a aasta arvu.
+    def __init__(self, nimi, kuupäev):
+        self.nimi = nimi
+        self.kuupäev = kuupäev
+
