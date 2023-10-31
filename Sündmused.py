@@ -1,4 +1,4 @@
-from kuupäev import *
+from Kuupäev import *
 
 
 #Panen siia praegu mingisuguse leet-code moodi asja, kuid enam-vähem see, mis sul mõttes oli.
@@ -36,5 +36,5 @@ class Sündmus:
     # kus p tähistab päeva arvu, k kuude arvu ja a aasta arvu.
     def __init__(self, nimi, kuupäev):
         self.nimi = nimi
-        self.kuupäev = kuupäev
+        self.kuupäev = Kuupäev(kuupäev[0], kuupäev[1], kuupäev[2])
 
