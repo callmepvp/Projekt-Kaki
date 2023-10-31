@@ -1,0 +1,35 @@
+Oke, ma mõtlesin, välja, et selline süsteem, kus päeva sees on sellel päeval olevate sündmuse objektide nimekiri, ikkagi ei ole hea mõte. Kui oleks sedasi, siis uue sündmuse lisamisel, kui otsustatakse, et sündmusel on algusaeg ühel päeval ja lõppaeg teisel, ss läheb üks ja seesama sündmus vastavalt kahele päevale. See ei päde ikkagi, sest nende üle on siis raske arvet pidada.
+
+Parem on, kui on üks sündmuste nimekiri üldse väljaspool päevade objekte ja selles nimekirjas on iga sündmus ainult üks kord. Olgu see näiteks klassis SündmusteNimekiri. Selles klassis oleks siis meetodeid selleks, et väljastada sündmuste nimekirjast need sündmused, millel on soovitud päevaga nõutud moel midagi pistmist. See väldiks ühe sündmuse paljunemist mitme päeva peale. Lisaks on see parem veel sellepärast, et enam poleks seda, et sama kuupäev on päeva objektis ja sündmuse objketis. See on ss rohkem nagu database ja vb kergem sellega igat pidi tegeleda.
+
+Ühesõnaga kogu info on hoitud sündmuse klassist objektides. janti, et sünmduse objketid peaks sorteeritult päevaobjektide sees olema, ei ole. Selleks, et leida sündmsued mingil kindlal ajal tuleb mitte võtta ette päevadenimekirjast sobiv päev ja selle seest sündmusi vaadata, vaid iteratida läbi sündmuse objektide nimekirja. Ja kontrollida vastavaid omadusi. Selle jaoks peaks olema SündmusteNimekirja objekt ja selle sees igasugu meetodid nõutavat moodi sündmuse andmete väljastamiseks. 
+
+
+Oleks ss nii:
+
+class SündmusteNimekiri:
+
+	# Master sündmuste nimekiri.
+	sünmdusteNimekiri = [s1, s2, s4 ...]
+
+
+	#Igasugu meetodid, mis tagastavad sobivate tingimustega sündmusi.
+
+	VõtaSündmusedPäeval(soovitavpäev):
+		leiab sobivad sndmused
+		for i in sündmusteNimekiri:
+			if sündmus.võtapäev() == soovitavPäev:
+				sobivad.append
+		return sobivadSündmsued
+
+	VõtaSündmusedPärastPäeva()
+
+	VõtaKestuegaSündmused()
+
+	VõtaSündmusedEnnePäeva()
+
+	VõtaNädalapäevasedSündmused(nädalapäevaNimi)
+
+	VõtaSündmusedKuul()
+
+	...

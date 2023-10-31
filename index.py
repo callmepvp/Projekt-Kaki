@@ -1,30 +1,44 @@
-﻿from Kujundid import *
+﻿import pygame
+from Kujundid import *
 from Tekst import *
-
-def tekst(screen, tekst, font, color, x, y):
-    img = font.render(tekst, True, color)
-    screen.blit(img, (x, y))
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
-    font = pygame.font.SysFont("C:\Windows\Fonts\ARLRDBD.TTF", 30)
     clock = pygame.time.Clock()
-    running = True
-    rk = Ristkülik(screen, screen)
 
+    pikktekst = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic"
+    fontObject = pygame.font.Font("Fondid\Gogh-ExtraBold.ttf", 20)
+    tekst1 = Tekst(screen, "", "Fondid\Gogh-ExtraBold.ttf", (10,10,10), (0,100), 60)
+    tekst2 = Tekst(screen, "", "Fondid\Gogh-ExtraBold.ttf", (10,10,10), (0,200), 60)
+    
+    running = True
     while running:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+
                 running = False
 
         screen.fill("purple")
-        tekst(screen, "kms", font, (255, 0, 0), 0, 0)
-        tekst1 = Tekst(screen, "Asi prindib teksti.")
-        tekst1.Joonista()
+        
 
-        rk.Joonista()
+
+
+        hiireAsuk = pygame.mouse.get_pos()
+        pygame.draw.circle(screen, "black", hiireAsuk, 10)
+        tekstid = EraldaSobivaPikkusegaTekst(pikktekst, hiireAsuk[0], fontObject)
+        print(tekstid[0])
+        tekst1.tekst = tekstid[0]
+        tekst2.tekst = tekstid[1]
+        
+        tekst1.Joonista()
+        tekst2.Joonista()
+
+
+
+        
+        tekst1.Joonista()
 
         pygame.display.flip()
 
