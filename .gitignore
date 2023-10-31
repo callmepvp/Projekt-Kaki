@@ -2,3 +2,4 @@
 .__pycache__/
 Data/cache.json
 Data/data.json
+*.pyc

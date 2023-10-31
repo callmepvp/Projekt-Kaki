@@ -6,33 +6,13 @@ from Tekst import *
 
 from Data import *
 
-#See on see formaat, mis tuleb salvestada cache'i iga kord kui programm lahti tehakse
-defaultCacheBody = """{
-    "programmiInfo" : {
-        "font" : "Gogh-ExtraBold.ttf"
-    },
 
-    "sündmused" : {
-    
-    }
-}
-"""
-
+#Pärisprogramm (võiks töötada)
 def main():
     pygame.init()
 
-    print(f"Program launched from {indexDirectory}")
-
-    #Data võtmine programmi käima panemisel
-    if os.path.isfile(dataDirectory):
-        #Programm on varem käivitunud
-        SalvestaCache(defaultCacheBody)
-        peamineInfo = VõtaData("programmiInfo")
-
-    else:
-        #Programm käivitub esimest korda
-        SalvestaCache(defaultCacheBody)
-        peamineInfo = VõtaCache("programmiInfo")
+    print(f"Programm käivitus kohast {indexDirectory}")
+    peamineInfo = VõtaProgrammiInfo() #Kontrollib ja tagastab data
 
     #Assign program variables
     font = os.path.join(indexDirectory, f"Fondid/{peamineInfo['font']}")
@@ -59,8 +39,6 @@ def main():
 
         screen.fill("purple")
         
-
-
         hiireAsuk = pygame.mouse.get_pos()
         pygame.draw.circle(screen, "black", hiireAsuk, 10)
         tekstid = EraldaSobivaPikkusegaTekst(pikktekst, hiireAsuk[0], fontObject)
@@ -78,4 +56,27 @@ def main():
 
     pygame.quit()
 
-main()
+
+
+
+#Testimiseks (ei pea töötama)
+def testMain():
+    pygame.init()
+
+    running = True
+    while running:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+    pygame.quit()
+
+
+
+
+#Käivitab vastava main() funktsiooni
+if testingMode:
+    testMain()
+else:
+    main()
