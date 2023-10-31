@@ -1,0 +1,10 @@
+Ma mõtlesin, et võiks teha ühe kindla faili, kuhu me saaksime lisada mingid meetodid, muutujad, muud funktioonid ja programmiga seotud asjad, mida me mõlemad võiksime teada, et on olemas meie programmis ja saame kasutada. Samuti, kui teed mingi funktsiooni ja tahad selle kasutamist paremini kirjeldada, siis võiks selle kõik siia panna, sest mulle see moodle'i viki page ei meeldi ja me saaks ise ilusama teha. :P
+
+(See on mainly ka sellepärast, et suurem osa muutujatest tuleb asendada väärtustega programmi käigus, kuna programm annab neile väärtuse iga kord, kui ta uuesti käima läheb (json-ist) ja seega ei saa enamus asju hardcode-ida)
+
+
+
+font 
+-> Hoiab endas kasutaja kasutatava fondi asukohta fondi foldris, kujul "Fondid/<fondinimi.ttf>"
+-> Kasutada hardcoded fondi asukoha asemel
+
