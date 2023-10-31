@@ -36,3 +36,10 @@ VõtaCache(andmeTüüp) ; VõtaData(andmeTüüp)
 SalvestaFaili() ; SalvestaCache(cacheObject)
 -> Esimene salvestab cache'i data faili (cache -> data) (ei võta argumente) ning eemaldab cache faili (!)
 -> Teine salvestab (loob) cache faili sisseantud cacheObjecti põhjal (mis on samal kujul, kui defaultCacheBody Data.py failis)
+
+
+/// Tekstikujundid.py
+Fail, kus sees on erinevad klassid teksti erinevate esinemisviiside jaoks. Näteks on seal sündmuserea klass, mis kujutab endast üht loetelupunktiga rida päevaruudus ja sellel on kirjas sündmuse nimi ja selle kellaaeg, kui see on. Veel tõenäoliselt hakkab seal olema päeva pealikirja klass, milleks on suurelt kuupäev. Veel võib faili tulla selline tekstiklass, mis on mingite nuppude peal, kui nuppe kunagi lisame.
+
+/// Tekstikujundid.py -> SündmuseRida
+Klass, mis on mõeldud selleks, et joonistada õigesti päevaruudu sees olevat sündmusteloetelu elementi. Tegeleb sellega, et joonistab loetelupunkti, sündmuse nime ja kellaaja antud laiusesse piklites. Laius võib muutuda ja eesmärk on, et objekti joonistaks iga mõistliku laiuse puhul infot kenasti.

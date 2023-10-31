@@ -1,3 +1,13 @@
+31.10.2023
+Yo, see dokumentatsiooniidee on nice, aga ma arvan, et seda ei peaks tegema eraldi failis vaid iga vastava funktsooni v klassi definitsiooni ees. Nkn kui kasutatakse ctrl clicki mingi funktsiooni v klassi esindaja peal, ss IDE võtab kohe vastava definitsiooni koha koodis lahti. Oleks nice, kui vot seal oleks see dokumentatasioon.
+
+
+
+
+
+
+
+11.10.2023
 Oke, ma mõtlesin, välja, et selline süsteem, kus päeva sees on sellel päeval olevate sündmuse objektide nimekiri, ikkagi ei ole hea mõte. Kui oleks sedasi, siis uue sündmuse lisamisel, kui otsustatakse, et sündmusel on algusaeg ühel päeval ja lõppaeg teisel, ss läheb üks ja seesama sündmus vastavalt kahele päevale. See ei päde ikkagi, sest nende üle on siis raske arvet pidada.
 
 Parem on, kui on üks sündmuste nimekiri üldse väljaspool päevade objekte ja selles nimekirjas on iga sündmus ainult üks kord. Olgu see näiteks klassis SündmusteNimekiri. Selles klassis oleks siis meetodeid selleks, et väljastada sündmuste nimekirjast need sündmused, millel on soovitud päevaga nõutud moel midagi pistmist. See väldiks ühe sündmuse paljunemist mitme päeva peale. Lisaks on see parem veel sellepärast, et enam poleks seda, et sama kuupäev on päeva objektis ja sündmuse objketis. See on ss rohkem nagu database ja vb kergem sellega igat pidi tegeleda.

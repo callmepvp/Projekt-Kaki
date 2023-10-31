@@ -1,6 +1,6 @@
 ﻿# Selle klassi mõte on hoida endas kuupäeva ning väljastada kuupäeva kohta käivat vajalikku infot nt mis nädalapäev vastab sellele kuupäevale, kas aasta on liigaasta, kas kuu, päeva ja aasta numbrid üldse vastavad päris kuupäevale jms.
 
-# Selles klassis on meetod kontrollimaks, kas kuupäev on võimalik, aga see ei tegele sellega, et õiget kuupäeva kasutajalt välja pinnida. Inputi võtmisega tegeletakse kuskil mujal.
+# Kuupäeva objekt võib vabalt hoida endas selliseid numbreid, mis tegelikult kuupevaks ei kõlba, aga samas omab funktsionaalsust kontrollimaks, kas numbrid on võimalikud v mitte. Selle meetodi tagastuse True v False põhjal väljaspool objekti tegeleda vajaduse korral uue sisestuse võtmisega ja seejärel objekti meetoditega väärtuse muutmisega. Point on, et see klass ei tegele inputi võtmisega.
 import math
 
 class Kuupäev:
