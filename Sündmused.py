@@ -1,3 +1,6 @@
+from kuupäev import *
+
+
 #Panen siia praegu mingisuguse leet-code moodi asja, kuid enam-vähem see, mis sul mõttes oli.
 
 class SündmusteNimekiri:

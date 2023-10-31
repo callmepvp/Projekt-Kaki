@@ -1,6 +1,7 @@
 ﻿import pygame
 import os
 from Kujundid import *
+from Kuupäev import *
 from Tekst import *
 
 from Data import *
@@ -43,6 +44,9 @@ def main():
     fontObject = pygame.font.Font(font, 20)
     tekst1 = Tekst(screen, "", font, (10,10,10), (0,100), 60)
     tekst2 = Tekst(screen, "", font, (10,10,10), (0,200), 60)
+    kuupäev1 = Kuupäev(6, 11, 2023)
+    print(kuupäev1.VõtaNädalaPäev())
+
 
     running = True
     while running:
@@ -68,15 +72,10 @@ def main():
         tekst2.Joonista()
 
 
-
-        
-        tekst1.Joonista()
-
         pygame.display.flip()
 
         clock.tick(60)  # limits FPS to 60
 
     pygame.quit()
-
 
 main()
