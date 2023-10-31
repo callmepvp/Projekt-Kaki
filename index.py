@@ -20,11 +20,14 @@ cacheBody = """{
 def main():
     pygame.init()
 
+    font = "Fondid\Gogh-ExtraBold.ttf"
+
     #Data update
     if os.path.isfile("./Data/data.json"):
         #Programm on varem käivitunud
         UuendaCache(cacheBody)
         peamineInfo = VõtaFailist("programmiInfo")
+
     else:
         #Programm käivitub esimest korda
         UuendaCache(cacheBody)
@@ -34,8 +37,8 @@ def main():
 
     pikktekst = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic"
     fontObject = pygame.font.Font("Fondid\Gogh-ExtraBold.ttf", 20)
-    tekst1 = Tekst(screen, "", "Fondid\Gogh-ExtraBold.ttf", (10,10,10), (0,100), 60)
-    tekst2 = Tekst(screen, "", "Fondid\Gogh-ExtraBold.ttf", (10,10,10), (0,200), 60)
+    tekst1 = Tekst(screen, "", font, (10,10,10), (0,100), 60)
+    tekst2 = Tekst(screen, "", font, (10,10,10), (0,200), 60)
 
     running = True
     while running:
