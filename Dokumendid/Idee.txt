@@ -1,5 +1,5 @@
 31.10.2023
-Yo, see dokumentatsiooniidee on nice, aga ma arvan, et seda ei peaks tegema eraldi failis vaid iga vastava funktsooni v klassi definitsiooni ees. Nkn kui kasutatakse ctrl clicki mingi funktsiooni v klassi esindaja peal, ss IDE võtab kohe vastava definitsiooni koha koodis lahti. Oleks nice, kui vot seal oleks see dokumentatasioon.
+Yo, see dokumentatsiooniidee on nice, aga ma arvan, et seda ei peaks tegema eraldi failis vaid iga vastava funktsooni v klassi definitsiooni ees. Nkn kui kasutatakse ctrl clicki mingi funktsiooni v klassi esindaja peal, ss IDE võtab kohe vastava definitsiooni koha koodis lahti. Oleks nice, kui vot seal oleks see dokumentatasioon. Vb mingi txt fail lic loetlemaks kõiki klasse ja funktsioone ülevaate saamiseks, aga kui kirjeldust v selgitust tahetakse, ss peaks definitsiooni juurde minema.
 
 
 
