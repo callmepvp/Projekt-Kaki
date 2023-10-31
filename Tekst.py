@@ -56,16 +56,19 @@ def wrap_multi_line(text, font, maxwidth):
     return list(lines)
 
 
+# Funktsioon võtab sisse teksti, pikkuse pikslites ja pygame fonti objekti.
+# Funktsioon tagastab esialgse teksti kahe tekstilise tuplena, millest esimene osa on nii pikk, et mahuks täpselt antud pikkusesse ja teine osa on kõik ülejäänud tekst.
 def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject):
     kasvatatav = ""
     täheVõtuKoht = 0
     while True:
         tekstilaius = fontObject.size(kasvatatav)[0]
-        if tekstilaius > sobivPikkus or kasvatatav == algtekst:
+        if tekstilaius > sobivPikkus/3 or kasvatatav == algtekst:
             return kasvatatav, algtekst[täheVõtuKoht:]
         else:
             kasvatatav += algtekst[täheVõtuKoht]
             täheVõtuKoht += 1
+
 
 
 class Tekst:
