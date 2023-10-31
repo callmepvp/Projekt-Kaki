@@ -6,38 +6,22 @@ from Tekst import *
 
 from Data import *
 
-#See on see formaat, mis tuleb salvestada cache'i iga kord kui programm lahti tehakse
-cacheBody = """{
-    "programmiInfo" : {
-        "font" : "Fondid/Gogh-ExtraBold.ttf"
-    },
 
-    "sündmused" : {
-    
-    }
-}
-"""
-
+#Pärisprogramm (võiks töötada)
 def main():
     pygame.init()
 
-    font = "Fondid\Gogh-ExtraBold.ttf"
+    print(f"Programm käivitus kohast {indexDirectory}")
+    peamineInfo = VõtaProgrammiInfo() #Kontrollib ja tagastab data
 
-    #Data update
-    if os.path.isfile("./Data/data.json"):
-        #Programm on varem käivitunud
-        UuendaCache(cacheBody)
-        peamineInfo = VõtaFailist("programmiInfo")
-
-    else:
-        #Programm käivitub esimest korda
-        UuendaCache(cacheBody)
+    #Assign program variables
+    font = os.path.join(indexDirectory, f"Fondid/{peamineInfo['font']}")
 
     screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
     clock = pygame.time.Clock()
 
     pikktekst = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic"
-    fontObject = pygame.font.Font("Fondid/Gogh-ExtraBold.ttf", 20)
+    fontObject = pygame.font.Font(font, 20)
     tekst1 = Tekst(screen, "", font, (10,10,10), (0,100), 60)
     tekst2 = Tekst(screen, "", font, (10,10,10), (0,200), 60)
     kuupäev1 = Kuupäev(6, 11, 2023)
@@ -55,8 +39,6 @@ def main():
 
         screen.fill("purple")
         
-
-
         hiireAsuk = pygame.mouse.get_pos()
         pygame.draw.circle(screen, "black", hiireAsuk, 10)
         tekstid = EraldaSobivaPikkusegaTekst(pikktekst, hiireAsuk[0], fontObject)
@@ -74,4 +56,27 @@ def main():
 
     pygame.quit()
 
-main()
+
+
+
+#Testimiseks (ei pea töötama)
+def testMain():
+    pygame.init()
+
+    running = True
+    while running:
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+    pygame.quit()
+
+
+
+
+#Käivitab vastava main() funktsiooni
+if testingMode:
+    testMain()
+else:
+    main()

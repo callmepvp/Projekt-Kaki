@@ -1,0 +1,38 @@
+Ma mõtlesin, et võiks teha ühe kindla faili, kuhu me saaksime lisada mingid meetodid, muutujad, muud funktioonid ja programmiga seotud asjad, mida me mõlemad võiksime teada, et on olemas meie programmis ja saame kasutada. Samuti, kui teed mingi funktsiooni ja tahad selle kasutamist paremini kirjeldada, siis võiks selle kõik siia panna, sest mulle see moodle'i viki page ei meeldi ja me saaks ise ilusama teha. :P
+
+(See on mainly ka sellepärast, et suurem osa muutujatest tuleb asendada väärtustega programmi käigus, kuna programm annab neile väärtuse iga kord, kui ta uuesti käima läheb (json-ist) ja seega ei saa enamus asju hardcode-ida)
+
+Täpsustusi või küsimusi võib alati iga sissekande juurde kirjutada, kui vaja.
+
+
+
+
+= index.py / Vajab data võtmist enne (Local/Muutuv)
+font 
+-> Hoiab endas kasutaja kasutatava fondi asukohta fondi folderis, hoiab väärtust kujul "Fondid/<fondinimi.ttf>"
+-> Kasutada hardcoded fondi asukoha asemel
+
+= Data.py (Global)
+testingMode
+-> Boolean väärtuse peal töötav muutuja, mis käivitab True korral funktsiooni testMain() ning False korral pärisprogrammi põhifunktsiooni main()
+
+= from Data import * (Global)
+indexDirectory ; dataDirectory ; cacheDirectory
+-> indexDirectory hoiab endas töötavat täielikku directory't (MITTE index.py faili asukoht, vaid see directory, kust index jookseb)
+-> data- ja cacheDirectory hoiavad endas data.json ja cache.json täielikku failide asukohta
+
+= from Data import * (Funktsioon)
+VõtaProgrammiInfo()
+-> Kontrollib (!) kas data.json eksisteerib, mõlemal juhul tagastab "programmiInfo" väljad data (või cache) failist, mida saab kasutada, et mistahes programmiInfot välja võtta.
+-> Kasutada seda, kui ei tea, kas on võimalik võtta cache või data failist infot või kui ei ole vahet kumbast failist võetakse ning kui on tahet tagastada AINULT "programmiInfo" andmeväli (!)
+
+= from Data import * (Funktsioon)
+VõtaCache(andmeTüüp) ; VõtaData(andmeTüüp)
+-> Tagastavad vastava jsoni andmevälja cache või data failist vastavalt.
+-> Tagastatavad andmeväljad on hetkel "programmiInfo" ja "sündmused".
+-> Kasutada siis, kui on kindlalt teada, et emb-kumb eksisteerib ning tahab tagastada kindla andmevälja (st. lubab ka sündmusi tagastada)
+
+= from Data import * (Funktsioon)
+SalvestaFaili() ; SalvestaCache(cacheObject)
+-> Esimene salvestab cache'i data faili (cache -> data) (ei võta argumente) ning eemaldab cache faili (!)
+-> Teine salvestab (loob) cache faili sisseantud cacheObjecti põhjal (mis on samal kujul, kui defaultCacheBody Data.py failis)
