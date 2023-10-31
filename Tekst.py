@@ -63,7 +63,7 @@ def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject):
     täheVõtuKoht = 0
     while True:
         tekstilaius = fontObject.size(kasvatatav)[0]
-        if tekstilaius > sobivPikkus/3 or kasvatatav == algtekst:
+        if tekstilaius >= sobivPikkus or kasvatatav == algtekst:
             return kasvatatav, algtekst[täheVõtuKoht:]
         else:
             kasvatatav += algtekst[täheVõtuKoht]
@@ -73,8 +73,8 @@ def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject):
 
 class Tekst:
 
-    def __init__(self, pind, tekst, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60):
-        self.font = pygame.font.Font(font, suurus)
+    def __init__(self, pind, tekst, pygFont, värv=(255,0,0), asuk=(0,0)):
+        self.pygFont = pygFont
         self.pind = pind
         self.asuk = asuk
         self.tekst = tekst
@@ -82,15 +82,15 @@ class Tekst:
     
     
     def Joonista(self):
-        suurtäheKõrgus = self.font.get_ascent()
+        suurtäheKõrgus = self.pygFont.get_ascent()
         
-        # Oke, see on scuffed ja töötab kindlalt ainult selle fondiga. 0.34 on silma järgi valitud, aga see arv aitab teha nii, et tekst joonistuks valitud kohta täpselt nii, et väiketähe kõrguse keskkoht oleks soovitud kõrgusel. Keskkoht selle pärast, et ss on bullet pointe lihtsam joondada. Seda peaks vist täiendama, kui on vaja kirjutada mitmerealine tekst. Scuffed on veel see, et height on fontide terminoloogias väiketähe kõrgus, aga siin imo on vahemik nt j tähe langusest l tähe tõusuni, seega u 2x väiketähe kõrgus. 0.34 ≈ 0.25 lol
-        poolVäiketäheKõrgus = self.font.get_height()*0.34
+        # Oke, see on scuffed ja töötab kindlalt ainult selle fondiga. 0.34 on silma järgi valitud, aga see arv aitab teha nii, et tekst joonistuks valitud kohta täpselt nii, et väiketähe kõrguse keskkoht oleks soovitud kõrgusel. Keskkoht selle pärast, et ss on bullet pointe lihtsam joondada. Seda peaks vist täiendama, kui on vaja kirjutada mitmerealine tekst. Scuffed on veel see, et height on fontide terminoloogias väiketähe kõrgus, aga siin imo on vahemik nt j tähe langusest l tähe tõusuni, seega u 2x väiketähe kõrgus.
+        poolVäiketäheKõrgus = self.pygFont.get_height()*0.22
         
 
         tekstiAsuk = (self.asuk[0], self.asuk[1]-suurtäheKõrgus + poolVäiketäheKõrgus)
 
-        img = self.font.render(self.tekst, True, self.värv)
+        img = self.pygFont.render(self.tekst, True, self.värv)
         self.pind.blit(img, tekstiAsuk)
 
 class MitmeReaTekst:

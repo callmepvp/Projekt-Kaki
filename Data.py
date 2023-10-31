@@ -19,7 +19,7 @@ indexDirectory = os.path.dirname(__file__) #Python scripti relatiivne path
 dataDirectory = os.path.join(indexDirectory, 'Data/data.json')
 cacheDirectory = os.path.join(indexDirectory, 'Data/cache.json')
 
-testingMode = False
+testingMode = True
 
 #Salvestamiseks
 def SalvestaFaili():
