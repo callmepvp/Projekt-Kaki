@@ -1,4 +1,5 @@
-﻿import re
+﻿import win32gui
+import win32con
 from tkinter import N
 import pygame
 from Kujundid import *
@@ -81,7 +82,7 @@ class Ristkülik:
         return self.asuk
 
     def Joonista(self):
-        pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()))
+        pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()), border_radius=5)
 
 
 
@@ -103,6 +104,7 @@ class Ruudustik:
     def Paiguta(self):
         taustaLaius = self.taust.VõtaSuurus()[0]
         mituReas = floor(taustaLaius/self.minLaius)
+        if mituReas == 0: mituReas = 1
         vahesidKokku = 2*self.äärevahe + (mituReas-1)*self.vahe
         ruudulaius = (taustaLaius - vahesidKokku)/mituReas
 
@@ -110,6 +112,8 @@ class Ruudustik:
         vasakServ = self.taust.VõtaAsukoht()[0]
         ülemServ = self.taust.VõtaAsukoht()[1]
         for i in self.ruudud:
+
+            
             mitmesTulp = counter % mituReas
             mitmesRida = floor(counter/mituReas)
 

@@ -63,11 +63,25 @@ def main():
 
 #Testimiseks (ei pea töötama)
 
-
+def wndProc(oldWndProc, draw_callback, hWnd, message, wParam, lParam):
+    if message == win32con.WM_SIZE:
+        draw_callback()
+        win32gui.RedrawWindow(hWnd, None, None, win32con.RDW_INVALIDATE | win32con.RDW_ERASE)
+    return win32gui.CallWindowProc(oldWndProc, hWnd, message, wParam, lParam)
 
 def testMain():
     pygame.init()
     ekraan = pygame.display.set_mode((640, 420), pygame.RESIZABLE)
+    
+    def JoonistaAsjad():
+        ekraan.fill((240, 240, 240))
+
+        taust.Joonista()
+        r1.Paiguta()
+        r1.Joonista()
+        pygame.display.flip()
+    
+    oldWndProc = win32gui.SetWindowLong(win32gui.GetForegroundWindow(), win32con.GWL_WNDPROC, lambda *args: wndProc(oldWndProc, JoonistaAsjad, *args))
 
 
 
@@ -90,17 +104,9 @@ def testMain():
             if event.type == pygame.QUIT:
                 running = False
 
-        ekraan.fill((240, 240, 240))
+        JoonistaAsjad()
 
 
-
-        r1.Paiguta()
-        r1.Joonista()
-
-
-
-
-        pygame.display.flip()
         clock.tick(60)  # limits FPS to 60
     pygame.quit()
 
