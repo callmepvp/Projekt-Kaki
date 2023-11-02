@@ -1,6 +1,5 @@
 ﻿import win32gui
 import win32con
-from tkinter import N
 import pygame
 from Kujundid import *
 from Tekst import *
