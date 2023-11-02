@@ -19,10 +19,14 @@ class ArvupaarAknas:
     
     def __init__(self, aken, suhex, suhey):
         self.aken = aken
-        self.suhe = (suhex, suhey)
+        self.suhe = [suhex, suhey]
 
     def MuudaSuhet(self, x, y):
-        self.suhe = (x, y)
+        self.suhe = [x, y]
+
+    def MuudaSuhetVõrra(self, x, y):
+        self.suhe[0] += x
+        self.suhe[1] += y
 
     def VõtaVäärtus(self):
         aknaSuurus = self.aken.get_size()
@@ -31,7 +35,7 @@ class ArvupaarAknas:
 
 
 
-class Ristkülik:
+class RistkülikAknas:
     # Akent on vaja selleks, et ristkülik teaks, mis suurusega olla, pinda on
     # vaja selleks, et minna pygame süsteemis sellele pinnale ennast joonistama.
     # Pind võib olla ka aken, aga aknale joonistamisel ei võeta arvesse läbipaistvust.
@@ -43,7 +47,19 @@ class Ristkülik:
         self.suurus = ArvupaarAknas(aken, 1/3, 1/3)
         self.värv = (255, 0, 0, 255)
 
-    def MuudaVärvi(self, r, g, b, a=255):
+    def MääraAsukoht(self, asukx, asuky):
+        self.asukoht.MuudaSuhet(asukx, asuky)
+
+    def VõtaAsukoht(self):
+        return self.asukoht.VõtaVäärtus()
+
+    def VõtaSuurus(self):
+        return self.suurus.VõtaVäärtus()
+
+    def MääraSuurus(self, suurx, suury):
+        self.suurus.MuudaSuhet(suurx, suury)
+
+    def MääraVärv(self, r, g, b, a=255):
         self.värv = (r,g,b,a)
 
     def Joonista(self):
@@ -53,7 +69,6 @@ class Ristkülik:
         sy = self.suurus.VõtaVäärtus()[1]
 
         pygame.draw.rect(self.pind, self.värv, pygame.Rect(ax, ay, sx, sy))
-
 
 
 

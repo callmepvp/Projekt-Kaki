@@ -1,6 +1,11 @@
-﻿import pygame
+﻿import re
+from tkinter import N
+import pygame
+from Kujundid import *
 from Tekst import *
 from Sündmused import *
+from math import floor
+from typing import List
 
 class SündmuseRida:
     # Oke, mu jaoks on see süntaks uus, aga pmst see on ainus viis pythonis märkida, et sisestatud parameeter peab olema mingi kindla klassi esindaja ja kui pole, ss ei tohiks joosta. Süntaks järgmine: parameeter: "klassiNimi". Klassinimi justkui oleks tekst, aga tegelt pole.
@@ -44,3 +49,79 @@ class SündmuseRida:
 
     def MuudaLaiust(self, laius):
         self.laius = laius
+
+
+class PäevaRuut:
+    def __init__(self, päevaTekst, sündmused):
+        self.ruut = 3
+
+class PäevaPealkiri:
+    pass
+
+class PäevaRuut:
+    pass
+
+class Ristkülik:
+    def __init__(self, pind, asukoht, suurus):
+        self.asuk = asukoht
+        self.suur = suurus
+        self.pind = pind
+        self.värv = (200, 200, 200)
+
+    def MääraSuurus(self, x, y):
+        self.suur = (x,y)
+    
+    def MääraAsukoht(self, x, y):
+        self.asuk = (x,y)
+
+    def VõtaSuurus(self):
+        return self.suur
+
+    def VõtaAsukoht(self):
+        return self.asuk
+
+    def Joonista(self):
+        pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()))
+
+
+
+    
+
+class Ruudustik:
+    def __init__(self, pind, kujuRistkülik:"Ristkülik", minLaius, kõrgus, vahesuurus, äärevahe, ruutudeArv):
+        self.minLaius = minLaius
+        self.kõrgus = kõrgus
+        self.vahe = vahesuurus
+        self.ruudud: List[Ristkülik] = []
+        self.taust = kujuRistkülik
+        for i in range(ruutudeArv):
+            uusRuut = Ristkülik(pind, (0,0),(0,0))
+            self.ruudud.append(uusRuut)
+        self.äärevahe = äärevahe
+
+
+    def Paiguta(self):
+        taustaLaius = self.taust.VõtaSuurus()[0]
+        mituReas = floor(taustaLaius/self.minLaius)
+        vahesidKokku = 2*self.äärevahe + (mituReas-1)*self.vahe
+        ruudulaius = (taustaLaius - vahesidKokku)/mituReas
+
+        counter = 0
+        vasakServ = self.taust.VõtaAsukoht()[0]
+        ülemServ = self.taust.VõtaAsukoht()[1]
+        for i in self.ruudud:
+            mitmesTulp = counter % mituReas
+            mitmesRida = floor(counter/mituReas)
+
+            asukx = vasakServ + self.äärevahe + mitmesTulp*(ruudulaius + self.vahe)
+            asuky = ülemServ + self.äärevahe + mitmesRida*(self.minLaius + self.vahe)
+
+            i.MääraAsukoht(asukx, asuky)
+            i.MääraSuurus(ruudulaius, self.minLaius)
+
+            counter += 1
+
+
+    def Joonista(self):
+        for i in self.ruudud:
+            i.Joonista()

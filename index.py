@@ -71,16 +71,14 @@ def testMain():
 
 
 
-    kp1 = (31, 10, 2023)
-    s1 = Sündmus("Teatrietendus", kp1)
-    s1.MääraLõppKell(12, 45)
-    sündmuseRida1 = SündmuseRida(ekraan, s1, (100,100), 400)
-    # Kui midagi on soov katsetada, pane siia funktsiooni. Mõte on, et oleks kiire leida üles koht, kuhu reaalselt need asjad, mida joonsitada tahetakse, kirja panna.
-    def MainLoopiSisu():
-        hiireAsuk = pygame.mouse.get_pos()
-        sündmuseRida1.MuudaLaiust(hiireAsuk[0])
-        sündmuseRida1.Joonista()
 
+    
+
+    taust = RistkülikAknas(ekraan, ekraan)
+    taust.MääraAsukoht(0.1, 0.1)
+    taust.MääraSuurus(0.8, 0.8)
+    r1 = Ruudustik(ekraan, taust, 200, 210, 15, 30, 8)
+            
 
 
 
@@ -91,10 +89,15 @@ def testMain():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        ekraan.fill("purple")
+
+        ekraan.fill((240, 240, 240))
 
 
-        MainLoopiSisu()
+
+        r1.Paiguta()
+        r1.Joonista()
+
+
 
 
         pygame.display.flip()
