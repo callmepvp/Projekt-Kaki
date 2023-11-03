@@ -22,14 +22,6 @@ def main():
     screen = pygame.display.set_mode((1280, 720), pygame.RESIZABLE)
     clock = pygame.time.Clock()
 
-    pikktekst = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic"
-    fontObject = pygame.font.Font(font, 20)
-    tekst1 = Tekst(screen, "", font, (10,10,10), (0,100), 60)
-    tekst2 = Tekst(screen, "", font, (10,10,10), (0,200), 60)
-    kuupäev1 = Kuupäev(6, 11, 2023)
-    print(kuupäev1.VõtaNädalaPäev())
-
-
     running = True
     while running:
 

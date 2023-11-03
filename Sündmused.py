@@ -1,12 +1,14 @@
 from Kuupäev import *
+from typing import List
 
 
 #Panen siia praegu mingisuguse leet-code moodi asja, kuid enam-vähem see, mis sul mõttes oli.
 
 class SündmusteNimekiri:
-
+    
     def __init__(self, nimekiri):
-        self.nimekiri = nimekiri #Master sündmuste nimekiri (?)
+        #Master sündmuste nimekiri
+        self.nimekiri: List[Sündmus] = nimekiri
 
     def võtaSündmusedPäeval():
         pass
@@ -29,6 +31,15 @@ class SündmusteNimekiri:
 
     def võtaNädalasedSündmused():
         pass
+
+    def VõtaSündmustegaKuupäevad(self):
+        kuupäevad = []
+        for i in self.nimekiri:
+            kp = i.VõtaKuupäev()
+            if kp not in kuupäevad:
+                kuupäevad.append(kp)
+
+        return kuupäevad
 
 
 
