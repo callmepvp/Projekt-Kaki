@@ -1,34 +1,76 @@
-import os
+Ôªøimport win32gui
+import win32con
 
 
-#See on klass, mis luuakse main functionis. Selle klassi muutujad tuleb salvestada faili ja failist see klass ka vıtab oma muutujatele v‰‰rtused, kui on faili, kust neid vıtta. 
+
+#See on klass, mis luuakse main functionis. Selle klassi muutujad tuleb salvestada faili ja failist see klass ka v√µtab oma muutujatele v√§√§rtused, kui on faili, kust neid v√µtta. 
 class Programm:
     def __init__(self):
-        self.s¸ndmusteNimekiri = None
+        self.s√ºndmusteNimekiri = None
         self.font = None
         self.fondiSuurus = None
-        self.p‰evaRuuduLaius = None
-        self.p‰evaRuuduKırgus = None
+        self.p√§evaRuuduLaius = None
+        self.p√§evaRuuduK√µrgus = None
 
 
-    # Funktsioon, mis loeb faili ja selle pıhjal m‰‰rab klassimuutujate v‰‰rtusi. 
-    def VıtaOlek():
+    # Funktsioon, mis loeb faili ja selle p√µhjal m√§√§rab klassimuutujate v√§√§rtusi. 
+    def V√µtaOlek():
         pass
 
 
-    # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil n‰hakse, kui programm tˆˆtab.
-    def JaaaaL‰ks():
+    # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil n√§hakse, kui programm t√∂√∂tab.
+    def JaaaaL√§ks():
 
         def wndProc(oldWndProc, draw_callback, hWnd, message, wParam, lParam):
             if message == win32con.WM_SIZE:
                 draw_callback()
                 win32gui.RedrawWindow(hWnd, None, None, win32con.RDW_INVALIDATE | win32con.RDW_ERASE)
             return win32gui.CallWindowProc(oldWndProc, hWnd, message, wParam, lParam)
+
+        pygame.init()
+        ekraan = pygame.display.set_mode((640, 420), pygame.RESIZABLE)
+    
+        def JoonistaAsjad():
+            ekraan.fill((240, 240, 240))
+
+            taust.Joonista()
+            r1.Paiguta()
+            r1.Joonista()
+            pygame.display.flip()
+    
+        oldWndProc = win32gui.SetWindowLong(win32gui.GetForegroundWindow(), win32con.GWL_WNDPROC, lambda *args: wndProc(oldWndProc, JoonistaAsjad, *args))
+
+
+
+
+    
+
+        taust = Ristk√ºlikAknas(ekraan, ekraan)
+        taust.M√§√§raAsukoht(0.1, 0.1)
+        taust.M√§√§raSuurus(0.8, 0.8)
+        r1 = Ruudustik(ekraan, taust, 200, 210, 15, 30, 8)
+            
+
+
+
+        clock = pygame.time.Clock()
+
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+
+            JoonistaAsjad()
+
+
+            clock.tick(60)  # limits FPS to 60
+        pygame.quit()
         
 
 
 
-    # Funktsioon, mis salvestab klassimuutujad faili, et neid sealt j‰rgmine kord uuesti sisse lugeda.
+    # Funktsioon, mis salvestab klassimuutujad faili, et neid sealt j√§rgmine kord uuesti sisse lugeda.
     def SalvestaOlek():
         pass
 

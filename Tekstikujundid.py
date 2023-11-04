@@ -1,6 +1,4 @@
-﻿import win32gui
-import win32con
-import pygame
+﻿import pygame
 from Kujundid import *
 from Tekst import *
 from Sündmused import *
