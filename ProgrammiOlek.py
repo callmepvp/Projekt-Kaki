@@ -21,6 +21,9 @@ class ProgrammiOlek:
         # Teksti värv päevaruutudes
         self.ruuduTekstiVärv = (30, 30, 30)
 
+        # Väikese vahe suurus, mis on päevaruudu pealkirjas suurelt kirjutatud kuupäeva ja väikselt kirjutatud aasta vahel.
+        self.päevaruuduPealkPäevaAastaVahe = 10
+
 
     # Funktsioon, mis loeb faili ja selle põhjal määrab klassimuutujate väärtusi. 
     def VõtaOlekFailist():
