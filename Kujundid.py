@@ -1,9 +1,10 @@
 ﻿import pygame
+from Tekstikujundid import Ruudustik
 
 from Tekst import *
 
 
-class ArvupaarAknas:
+class ArvupaarPinnal:
     
     # Objekt võtab sisse akna objekti ja selle põhjal muudab iga
     # koordinaadi väärtuse võtmise hetkel väärtuse kõige värskemaks.
@@ -34,6 +35,15 @@ class ArvupaarAknas:
         return väärtus
 
 
+class ArvAknasX:
+    def __init__(self, aken, suhe):
+        self.aken = aken
+        self.suhe = suhe
+
+    def VõtaVäärtus(self):
+        väärtus = self.aken.get_size()[0] * self.suhe
+        return väärtus
+
 
 class RistkülikAknas:
     # Akent on vaja selleks, et ristkülik teaks, mis suurusega olla, pinda on
@@ -43,8 +53,8 @@ class RistkülikAknas:
     def __init__(self, aken, pind):
         self.pind = pind
         self.aken = aken
-        self.asukoht = ArvupaarAknas(aken, 1/3, 1/3)
-        self.suurus = ArvupaarAknas(aken, 1/3, 1/3)
+        self.asukoht = ArvupaarPinnal(aken, 1/3, 1/3)
+        self.suurus = ArvupaarPinnal(aken, 1/3, 1/3)
         self.värv = (255, 0, 0, 255)
 
     def MääraAsukoht(self, asukx, asuky):
@@ -73,13 +83,18 @@ class RistkülikAknas:
 
 
 
-        
-"""
-class Päevaruut:
-    def __init__(self, päev):
-        self.sündmsued = päev.võtaSündmsed()
+class Päevaruudud:
+    def __init__(self, aken, pind):
+        self.aken = aken
+        self.ruudustik = Ruudustik()
 
-    def Joonista():
-        for i in sündmsued:
-            pass
-        """
+    def LeiaTaustaLaius(self):
+        aknalaius = self.aken.get_size()[0]
+        return aknalaius * self.laiusesuhe
+
+    def 
+
+
+    def LeiaKõrgus(mituRida):
+
+

@@ -4,6 +4,7 @@ from Tekst import *
 from Sündmused import *
 from math import floor
 from typing import List
+from Programm import ProgrammiOlek
 
 class SündmuseRida:
     # Oke, mu jaoks on see süntaks uus, aga pmst see on ainus viis pythonis märkida, et sisestatud parameeter peab olema mingi kindla klassi esindaja ja kui pole, ss ei tohiks joosta. Süntaks järgmine: parameeter: "klassiNimi". Klassinimi justkui oleks tekst, aga tegelt pole.
@@ -50,14 +51,34 @@ class SündmuseRida:
 
 
 class PäevaRuut:
-    def __init__(self, päevaTekst, sündmused):
-        self.ruut = 3
+    def __init__(self, olek:"ProgrammiOlek", sündmused):
+        self.kuupäev = sündmused[0].VõtaKuupäev()
+        self.suurus = (10,10)
+        self.asuk = (10,10)
+        
+
+    def MääraAsukoht(self, x, y):
+        self.asuk = (x,y)
+
+    def MääraSuurus(self, x, y):
+        self.suurus = (x,y)
+        
+    
+        
+
+
 
 class PäevaPealkiri:
-    pass
+    def __init__(self, olek:"ProgrammiOlek", kuupäev:"Kuupäev"):
+        self.font = fontObject
+        self.kuupäev = kuupäev
+        self.päevKuuTekst = Tekst(pind,kuupäev.VõtaPäevKuuTekstina(), fontObject, 
 
-class PäevaRuut:
-    pass
+    def Paiguta(x, y):
+        
+        
+
+
 
 class Ristkülik:
     def __init__(self, pind, asukoht, suurus):
@@ -66,7 +87,12 @@ class Ristkülik:
         self.pind = pind
         self.värv = (200, 200, 200)
 
+    # Funktsiooni saab panna ka None sisse kummagi väärtuse asemele, mis jätab suuruse samaks.
     def MääraSuurus(self, x, y):
+        if x == None:
+            self.suur = (self.suur[0], y)
+        elif y == None:
+            self.suur = (x, self.suur[1])
         self.suur = (x,y)
     
     def MääraAsukoht(self, x, y):
@@ -82,10 +108,10 @@ class Ristkülik:
         pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()), border_radius=5)
 
 
+ruut = PäevaRuut()
+päevaRuudud = []  
 
-    
-
-class Ruudustik:
+class PäevaRuudustik:
     def __init__(self, pind, kujuRistkülik:"Ristkülik", minLaius, kõrgus, vahesuurus, äärevahe, ruutudeArv):
         self.minLaius = minLaius
         self.kõrgus = kõrgus
@@ -96,6 +122,7 @@ class Ruudustik:
             uusRuut = Ristkülik(pind, (0,0),(0,0))
             self.ruudud.append(uusRuut)
         self.äärevahe = äärevahe
+        self.ridadeArv = 0
 
 
     def Paiguta(self):
@@ -113,6 +140,8 @@ class Ruudustik:
             
             mitmesTulp = counter % mituReas
             mitmesRida = floor(counter/mituReas)
+            ridadeArv = mitmesRida
+
 
             asukx = vasakServ + self.äärevahe + mitmesTulp*(ruudulaius + self.vahe)
             asuky = ülemServ + self.äärevahe + mitmesRida*(self.minLaius + self.vahe)
@@ -121,6 +150,12 @@ class Ruudustik:
             i.MääraSuurus(ruudulaius, self.minLaius)
 
             counter += 1
+
+
+    # Seda meetodit kutsuda ainult pärast seda, kui on kasutatud Paiguta meetodit, sest see tagab, et self.ridadeArv omab õiget väärtust. Väljastab kauguse ülemise ruudu ülemisest servast alumise ruudu alumise servani. Vajalik selleks, et väljaspool klassi saaks taustaks olev kujund enda suuruse õigeks panna.
+    def VõtaRuutudeKõrgus(self):
+        kõrgus = self.ridadeArv * kõrgus + (self.ridadeArv-1) * self.vahesuurus
+        return kõrgus
 
 
     def Joonista(self):

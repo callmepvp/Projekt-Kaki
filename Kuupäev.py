@@ -54,9 +54,20 @@ class Kuupäev:
 
     # Kasutada pigem seda funktsiooni selle asemel, et ükshaaval muutujaid nüsida.
     def MuudaKuupäeva(self, päev, kuu, aasta):
-        self.kuu = kuu
-        self.päev = päev
-        self.aasta = aasta
+        if päev != None:
+            self.päev = päev
+        if kuu != None:
+            self.kuu = kuu
+        if aasta != None:
+            self.aasta = aasta
+
+
+    # Neid funktsioone kasutab päevaruudus Päevapealkirja objekt, mille ülesanne on paigutada õigesti päevaruudu ülaserva selle päeva kuupäev.
+    def VõtaPäevKuuTekstina(self):
+        return str(self.päev) + "." + str(self.kuu)
+
+    def VõtaAastaTekstina(self):
+        return str(self.aasta)
 
 
 
