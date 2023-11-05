@@ -81,3 +81,30 @@ class RistkülikAknas:
 
 
 
+# Nagu ristkülikAknas, aga ei muuda oma suurust vastavalt aknale, vaid lihtsalt on ristkülik mingite kindalte mõõtmetega.
+class Ristkülik:
+    def __init__(self, pind, asukoht, suurus):
+        self.asuk = asukoht
+        self.suur = suurus
+        self.pind = pind
+        self.värv = (200, 200, 200)
+
+    # Funktsiooni saab panna ka None sisse kummagi väärtuse asemele, mis jätab suuruse samaks.
+    def MääraSuurus(self, x, y):
+        if x == None:
+            self.suur = (self.suur[0], y)
+        elif y == None:
+            self.suur = (x, self.suur[1])
+        self.suur = (x,y)
+    
+    def MääraAsukoht(self, x, y):
+        self.asuk = (x,y)
+
+    def VõtaSuurus(self):
+        return self.suur
+
+    def VõtaAsukoht(self):
+        return self.asuk
+
+    def Joonista(self):
+        pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()), border_radius=5)

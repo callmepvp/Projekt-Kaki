@@ -4,7 +4,7 @@ from Tekst import *
 from Sündmused import *
 from math import floor
 from typing import List
-from Programm import ProgrammiOlek
+from Programmiolek import ProgrammiOlek
 
 # SündmuseRida
 class SündmuseRida:
@@ -69,56 +69,26 @@ class PäevaRuut:
 # PäevaPealkiri
 class PäevaPealkiri:
     def __init__(self, olek:"ProgrammiOlek", pind, kuupäev:"Kuupäev"):
-        self.font = olek.päevaruuduPealkirjaPygFont
+        self.kpFont = olek.päevaruuduPealkKpPygFont
+        self.aFont = olek.päevaruuduPealkAastaPygFont
         self.kuupäev = kuupäev
         self.asukoht = (0,0)
         self.pind = pind
-        self.laius = 10
         self.värv = olek.ruuduTekstiVärv
 
     def MääraAsukoht(self, x, y):
         self.asukoht = (x,y)
 
-    def MääraLaius(self, laius):
-        self.laius = laius
-
     def Joonista(self):
         pk = self.kuupäev.VõtaPäevKuuTekstina()
         a = self.kuupäev.VõtaAastaTekstina()
-        päevKuuTekst = Tekst(self.pind, pk, self.font, self.värv, self.asukoht)
+
+        päevKuuTekst = Tekst(self.pind, pk, self.kpFont, self.värv, self.asukoht)
         päevKuuTekst.Joonista()
-
-
         
-
-
-
-class Ristkülik:
-    def __init__(self, pind, asukoht, suurus):
-        self.asuk = asukoht
-        self.suur = suurus
-        self.pind = pind
-        self.värv = (200, 200, 200)
-
-    # Funktsiooni saab panna ka None sisse kummagi väärtuse asemele, mis jätab suuruse samaks.
-    def MääraSuurus(self, x, y):
-        if x == None:
-            self.suur = (self.suur[0], y)
-        elif y == None:
-            self.suur = (x, self.suur[1])
-        self.suur = (x,y)
-    
-    def MääraAsukoht(self, x, y):
-        self.asuk = (x,y)
-
-    def VõtaSuurus(self):
-        return self.suur
-
-    def VõtaAsukoht(self):
-        return self.asuk
-
-    def Joonista(self):
-        pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()), border_radius=5)
+        aAsuk = (self.asukoht[0] + self.kpFont.size(pk)[0] + 10, self.asukoht[1])
+        aastaTekst = Tekst(self.pind, a, self.aFont, self.värv,aAsuk)
+        aastaTekst.Joonista()
 
 
 

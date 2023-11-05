@@ -3,6 +3,8 @@ import win32gui
 import win32con
 from Kujundid import RistkülikAknas
 from Tekstikujundid import PäevaPealkiri
+from Programmiolek import ProgrammiOlek
+from Kuupäev import Kuupäev
 import os
 
   
@@ -36,7 +38,9 @@ class Programm:
             ekraan.fill((240, 240, 240))
 
             taust.Joonista()
-            pk.MääraAsukoht(100, 100)
+            asuk = taust.VõtaAsukoht()
+            
+            pk.MääraAsukoht(asuk[0], asuk[1])
             pk.Joonista()
             pygame.display.flip()
     
