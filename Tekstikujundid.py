@@ -6,6 +6,7 @@ from math import floor
 from typing import List
 from Programm import ProgrammiOlek
 
+# SündmuseRida
 class SündmuseRida:
     # Oke, mu jaoks on see süntaks uus, aga pmst see on ainus viis pythonis märkida, et sisestatud parameeter peab olema mingi kindla klassi esindaja ja kui pole, ss ei tohiks joosta. Süntaks järgmine: parameeter: "klassiNimi". Klassinimi justkui oleks tekst, aga tegelt pole.
     def __init__(self, pind, sündmus: "Sündmus", asukoht, laius):
@@ -50,6 +51,7 @@ class SündmuseRida:
         self.laius = laius
 
 
+# PäevaRuut
 class PäevaRuut:
     def __init__(self, olek:"ProgrammiOlek", sündmused):
         self.kuupäev = sündmused[0].VõtaKuupäev()
@@ -63,19 +65,30 @@ class PäevaRuut:
     def MääraSuurus(self, x, y):
         self.suurus = (x,y)
         
-    
-        
 
-
-
+# PäevaPealkiri
 class PäevaPealkiri:
-    def __init__(self, olek:"ProgrammiOlek", kuupäev:"Kuupäev"):
-        self.font = fontObject
+    def __init__(self, olek:"ProgrammiOlek", pind, kuupäev:"Kuupäev"):
+        self.font = olek.päevaruuduPealkirjaPygFont
         self.kuupäev = kuupäev
-        self.päevKuuTekst = Tekst(pind,kuupäev.VõtaPäevKuuTekstina(), fontObject, 
+        self.asukoht = (0,0)
+        self.pind = pind
+        self.laius = 10
+        self.värv = olek.ruuduTekstiVärv
 
-    def Paiguta(x, y):
-        
+    def MääraAsukoht(self, x, y):
+        self.asukoht = (x,y)
+
+    def MääraLaius(self, laius):
+        self.laius = laius
+
+    def Joonista(self):
+        pk = self.kuupäev.VõtaPäevKuuTekstina()
+        a = self.kuupäev.VõtaAastaTekstina()
+        päevKuuTekst = Tekst(self.pind, pk, self.font, self.värv, self.asukoht)
+        päevKuuTekst.Joonista()
+
+
         
 
 
@@ -108,8 +121,6 @@ class Ristkülik:
         pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()), border_radius=5)
 
 
-ruut = PäevaRuut()
-päevaRuudud = []  
 
 class PäevaRuudustik:
     def __init__(self, pind, kujuRistkülik:"Ristkülik", minLaius, kõrgus, vahesuurus, äärevahe, ruutudeArv):

@@ -1,21 +1,16 @@
-﻿import pygame
-from Tekstikujundid import Ruudustik
+﻿# Selles failis on ainult kujundid ja abstraktsed asukohaobjektid. Siin pole objekte, mis renderdaks teksti ekraanile.
 
-from Tekst import *
 
+
+import pygame
 
 class ArvupaarPinnal:
     
-    # Objekt võtab sisse akna objekti ja selle põhjal muudab iga
-    # koordinaadi väärtuse võtmise hetkel väärtuse kõige värskemaks.
-    # Objekti nimi on hägus ja mitte täpselt asukohtAknas vms, sest seda saab kasutada
-    # ka näiteks õige suuruse hoidmiseks ja sel juhul nimi ei kajastaks seda, mis asi on.
+    # Objekt võtab sisse akna objekti ja selle põhjal muudab iga koordinaadi väärtuse võtmise hetkel väärtuse kõige värskemaks. Objekti nimi on hägus ja mitte täpselt asukohtAknas vms, sest seda saab kasutada ka näiteks õige suuruse hoidmiseks ja sel juhul nimi ei kajastaks seda, mis asi on.
 
     # Pygame libraryga saab teha kujundeid ainult määrates nurgapunktide asukohti pikslites.
 
-    # Selleks, et näiteks punkt püsiks pidevalt akna keskel hoolimata sellest,
-    # kas akna suurus muutub v mitte, on vaja pidevalt muuta pikslite arvu,
-    # mis on punkti ja akna ääre vahel.
+    # Selleks, et näiteks punkt püsiks pidevalt akna keskel hoolimata sellest, kas akna suurus muutub v mitte, on vaja pidevalt muuta pikslite arvu, mis on punkti ja akna ääre vahel.
     
     
     def __init__(self, aken, suhex, suhey):
@@ -35,6 +30,8 @@ class ArvupaarPinnal:
         return väärtus
 
 
+
+
 class ArvAknasX:
     def __init__(self, aken, suhe):
         self.aken = aken
@@ -43,6 +40,8 @@ class ArvAknasX:
     def VõtaVäärtus(self):
         väärtus = self.aken.get_size()[0] * self.suhe
         return väärtus
+
+
 
 
 class RistkülikAknas:
@@ -80,21 +79,5 @@ class RistkülikAknas:
 
         pygame.draw.rect(self.pind, self.värv, pygame.Rect(ax, ay, sx, sy))
 
-
-
-
-class Päevaruudud:
-    def __init__(self, aken, pind):
-        self.aken = aken
-        self.ruudustik = Ruudustik()
-
-    def LeiaTaustaLaius(self):
-        aknalaius = self.aken.get_size()[0]
-        return aknalaius * self.laiusesuhe
-
-    def 
-
-
-    def LeiaKõrgus(mituRida):
 
 

@@ -62,9 +62,7 @@ def main():
 def testMain():
     
     programm = Programm()
-    programm.VõtaOlek()
     programm.JaaaaLäks()
-    programm.SalvestaOlek()
 
 
 
