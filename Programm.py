@@ -2,9 +2,10 @@
 import win32gui
 import win32con
 from Kujundid import RistkülikAknas
-from Tekstikujundid import PäevaPealkiri
+from Tekstikujundid import PäevaRuut
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
+from Sündmused import Sündmus
 import os
 
   
@@ -25,23 +26,23 @@ class Programm:
 
         pygame.init()
         ekraan = pygame.display.set_mode((640, 420), pygame.RESIZABLE)
+        pygame.display.set_caption('Indie kalender')
+
         clock = pygame.time.Clock()
-    
-        taust = RistkülikAknas(ekraan, ekraan)
-        taust.MääraAsukoht(0.1, 0.1)
-        taust.MääraSuurus(0.8, 0.8)
+        
         kp = Kuupäev(5, 11, 2023)
-        pk = PäevaPealkiri(self.olek, ekraan, kp)
+        s1 = Sündmus("EMadepäeva kontsert", kp)
+        pr = PäevaRuut(self.olek, ekraan, [s1])
+        pr.taust.MääraVärv((100, 100, 100, 255))
         
 
         def JoonistaAsjad():
             ekraan.fill((240, 240, 240))
 
-            taust.Joonista()
-            asuk = taust.VõtaAsukoht()
+            pr.MääraAsukoht(ekraan.get_width() * 0.5, ekraan.get_height()*0.1)
+            pr.MääraSuurus(ekraan.get_width() * 0.5, ekraan.get_height()*0.5)
+            pr.Joonista()
             
-            pk.MääraAsukoht(asuk[0], asuk[1])
-            pk.Joonista()
             pygame.display.flip()
     
 

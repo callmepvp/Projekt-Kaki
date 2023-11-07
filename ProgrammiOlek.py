@@ -24,6 +24,13 @@ class ProgrammiOlek:
         # Väikese vahe suurus, mis on päevaruudu pealkirjas suurelt kirjutatud kuupäeva ja väikselt kirjutatud aasta vahel.
         self.päevaruuduPealkPäevaAastaVahe = 10
 
+        # Päevaruudu taustaks oleva ristküliku värv. Hiljem vb lisab transparency efecti ja ss see asi vb muutub kuidagi.
+        self.päevaruuduVärv = (235,235,235, 255)
+
+        # Päevaruudu pealkirja asukoht päevaruudu suhtes
+        self.päevaruuduPealkKaugusÜlaservast = 20
+        self.päevaruuduPealkKaugusVasakult = 5
+
 
     # Funktsioon, mis loeb faili ja selle põhjal määrab klassimuutujate väärtusi. 
     def VõtaOlekFailist():

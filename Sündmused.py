@@ -48,11 +48,11 @@ class SündmusteNimekiri:
 # Kui objekti muutujal mingit väärtust ei ole, siis on selle väärtuseks None. Näiteks, kui pole alguskellaaega, ss on algusKella väärtus None.
 class Sündmus:
     
-    #Kuupäeva käsitletakse kolmese tuplina, kus on (p, k, a).
-    def __init__(self, nimi, kuupäev):
+    # Ürituse pealkiri on string ja kuupäev on Kuupäeva objekt.
+    def __init__(self, nimi, kuupäev:Kuupäev):
         self.nimi = nimi
 
-        self.algusKuupäev = Kuupäev(kuupäev[0], kuupäev[1], kuupäev[2])
+        self.algusKuupäev = kuupäev
         self.lõppKuupäev = Kuupäev(None, None, None)
 
         self.algusKell = Kellaaeg(None, None)

@@ -37,7 +37,7 @@ class Kuupäev:
         return True
         
 
-    def VõtaKuupäev(self):
+    def VõtaKuupäevTuplina(self):
         return (self.päev, self.kuu, self.aasta)
 
 

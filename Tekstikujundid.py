@@ -90,13 +90,15 @@ class PäevaPealkiri:
 # PäevaRuut
 class PäevaRuut:
     def __init__(self, olek:"ProgrammiOlek", pind, sündmused:"List[Sündmus]"):
-        self.kuupäev = sündmused[0].VõtaKuupäev()
+        self.kuupäev = sündmused[0].algusKuupäev
         self.suurus = (10,10)
         self.asuk = (10,10)
         self.pealkiri = PäevaPealkiri(olek, pind, self.kuupäev)
-        self.sündmuseRead = []
-        for i in sündmused:
-            rida = SündmuseRida(pind, i, )
+        self.olek = olek
+        self.taust = Ristkülik(pind, self.asuk, self.suurus)
+        self.taust.MääraVärv(olek.päevaruuduVärv)
+
+        self.pind = pind
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)
@@ -105,8 +107,18 @@ class PäevaRuut:
         self.suurus = (x,y)
 
     def Joonista(self):
-        pealkAsuky = 20
-        pealkAsukx = self.asuk + (self.suurus - self.pealkiri.VõtaLaius())/2
+        self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])
+        self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
+        self.taust.Joonista()
+
+        pealkAsukx = self.asuk[0] + self.olek.päevaruuduPealkKaugusVasakult
+        pealkAsuky = self.asuk[1] + self.olek.päevaruuduPealkKaugusÜlaservast
+        self.pealkiri.MääraAsukoht(pealkAsukx, pealkAsuky)
+        self.pealkiri.Joonista()
+
+
+
+
 
 
         

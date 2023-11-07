@@ -87,7 +87,7 @@ class Ristkülik:
         self.asuk = asukoht
         self.suur = suurus
         self.pind = pind
-        self.värv = (200, 200, 200)
+        self.värv = (200, 200, 200, 255)
 
     # Funktsiooni saab panna ka None sisse kummagi väärtuse asemele, mis jätab suuruse samaks.
     def MääraSuurus(self, x, y):
@@ -105,6 +105,10 @@ class Ristkülik:
 
     def VõtaAsukoht(self):
         return self.asuk
+
+    # Värv olgu tuple nagu (r,g,b,a).
+    def MääraVärv(self, värv):
+        self.värv = värv
 
     def Joonista(self):
         pygame.draw.rect(self.pind, self.värv, (self.VõtaAsukoht(), self.VõtaSuurus()), border_radius=5)
