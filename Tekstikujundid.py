@@ -1,10 +1,12 @@
 ﻿import pygame
-from Kujundid import *
-from Tekst import *
-from Sündmused import *
-from math import floor, pi
+from Kujundid import Ristkülik
+from Tekst import Tekst, EraldaSobivaPikkusegaTekst
+from Sündmused import Sündmus
+from math import floor
 from typing import List
 from Programmiolek import ProgrammiOlek
+from Kuupäev import Kuupäev
+from Päev import Päev
 
 # SündmuseRida
 class SündmuseRida:
@@ -96,8 +98,8 @@ class PäevaPealkiri:
 
 # PäevaRuut
 class PäevaRuut:
-    def __init__(self, olek:"ProgrammiOlek", pind, sündmused:"List[Sündmus]"):
-        self.kuupäev = sündmused[0].algusKuupäev
+    def __init__(self, olek:"ProgrammiOlek", pind, päev:"Päev"):
+        self.kuupäev = päev.kuupäev
         self.suurus = (10,10)
         self.asuk = (10,10)
         self.pealkiri = PäevaPealkiri(olek, pind, self.kuupäev)
@@ -105,7 +107,7 @@ class PäevaRuut:
         self.taust = Ristkülik(pind, self.asuk, self.suurus)
         self.taust.MääraVärv(olek.päevaruuduVärv)
         self.pind = pind
-        self.sündmused = sündmused
+        self.sündmused = päev.sündmusteNimekiri
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)
@@ -144,20 +146,94 @@ class PäevaRuut:
 
 
 class PäevaRuudustik:
-    def __init__(self, olek, pind, päevad):
+    def __init__(self, olek:ProgrammiOlek, pind, päevad:List[Päev]):
         self.olek = olek
         self.pind = pind
-        self.suurus = (400, 400)
+        self.laius = 400
         self.asukoht = (0,0)
+        self.päevaRuudud: List[PäevaRuut] = []
+        for i in päevad:
+            uusRuut = PäevaRuut(olek, pind, i)
+            self.päevaRuudud.append(uusRuut)
 
-    def MääraSuurus(self, suurus):
-        self.suurus = suurus
+    def MääraLaius(self, laius):
+        self.laius = laius
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
 
-    def Joonista():
-        pass
+    def Joonista(self):
+        # Tausta kõrgus leitakse selle põhjal mitu rida ruute tuleb ja see arvutatakse hiljem.
+        taustaAsukx = self.asukoht[0]
+        taustaAsuky = self.asukoht[0]
+        taustaLaius = self.laius
+
+        # Mitu ruutu mahub ühte ritta.
+        äärevahe = self.olek.päevaruutudeTaustaJaRuutudeVahe
+        ruuduvahe = self.olek.päevaruutudeVahe
+        minLaius = self.olek.päevaruuduMinLaius
+        # Leiab, mitu ruutu mahub ühte ritta. Põhineb sellel, et vaatab kui palju ruutudevahe suurusid saab vahemikku panna nii, et ülejäänud vahemikku ühe võrra suurema kogusega jagades ei annaks tulemust alla min laiuse.
+        mituReas = 0
+        mituVahet = 0
+        ruum = taustaLaius-2*äärevahe
+        while True:
+            if (ruum - mituVahet * ruuduvahe) / (mituVahet+1) < minLaius:
+                mituReas = mituVahet
+                break
+            else:
+                mituVahet += 1
+
+        
+        # Võib olla olukord, kus aken läheb nii kitsaks, et isegi, kui reas on ainult 1 ruut, on sellel ikkagi nii vähe ruumi, et reas peaks olema null ruutu. See kood parandab olukorra ja lic lepib sellega, et ruudu laius on väiksem, kui minlaius.
+        if mituReas == 0: mituReas = 1
+        
+        # Arvutab, kui palju ruumi jääb vahede kõrvalt ruutudele. Mis peab ühe reasoleva ruudu laius olema. 
+        print(mituReas)
+        vahesidKokku = 2*äärevahe + (mituReas-1)*ruuduvahe
+        ruudulaius = (taustaLaius - vahesidKokku)/mituReas
+        pygame.draw.rect(self.pind, (10,10,10,255), (taustaAsukx, 250, taustaLaius, 10))
+        pygame.draw.rect(self.pind, (10,10,10,255), (taustaAsukx, 240, vahesidKokku, 10))
+
+        # Hakkab kõiki ruutusid paigutama.
+        counter = 0
+        ridadeArv = 0
+        vasakServ = taustaAsukx
+        ülemServ = taustaAsuky
+
+        ruuduKõrgus = self.olek.päevaruuduKõrgus
+        for i in self.päevaRuudud:
+
+            mitmesTulp = counter % mituReas
+            mitmesRida = floor(counter/mituReas)
+            # Kui kõik ruudud on läbi käidud, ss on ridadeArv võrdne sellega, kui palju ridasid on ruudustikus. Seda väärtust kasutab taust, et oma kõrgus leida.
+            ridadeArv = mitmesRida
+
+
+            asukx = vasakServ + äärevahe + mitmesTulp*(ruudulaius + ruuduvahe)
+            asuky = ülemServ + äärevahe + mitmesRida*(ruuduKõrgus + ruuduvahe)
+
+            i.MääraAsukoht(asukx, asuky)
+            i.MääraSuurus(ruudulaius, ruuduKõrgus)
+            counter += 1
+
+        taustaKõrgus = 2*äärevahe + ridadeArv*ruuduKõrgus + (ridadeArv-1)*ruuduvahe
+
+        # PAIGUTAMINE LÕPPES
+
+        # ALGAB JOONISTAMINE
+
+        # Taust
+        taustaVärv = self.olek.päevaruutudeTaustaVärv
+        nurgaRaadius = self.olek.päevaruutudeTaustaNurgaÜmardus
+        pygame.draw.rect(self.pind, taustaVärv, (taustaAsukx, taustaAsuky, taustaLaius, taustaKõrgus), border_radius=nurgaRaadius)
+
+        # Ruudud
+        for i in self.päevaRuudud:
+            i.Joonista()
+            
+
+
+        
 
 
 

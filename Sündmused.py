@@ -1,4 +1,4 @@
-from Kuupäev import *
+from Kuupäev import Kuupäev, Kellaaeg
 from typing import List
 
 

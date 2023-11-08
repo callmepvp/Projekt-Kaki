@@ -62,3 +62,22 @@ class ProgrammiOlek:
 
         # Selle vahe suurus, mis on päevaruudus kõige ülemise sündmuse ja kuupäeva vahel, Täpsemalt kuupäeva keskkoha ja sündmuse keskkoha vahel.
         self.sündmuseReadKuupäevast = 20
+
+        # Päevaruutude minimaalne laius. Kui akna suuruse vähendamisel läheks reas olevate päevaruutude laius selelst väiksemaks, läheb reas viimane ruut uuele reale, seega eelmisel real on rohkem ruumi ja ruudud ei pea olema väiksemad kui min laius.
+        self.päevaruuduMinLaius = 300
+
+        # Päevaruutude taga on taustaks suur ristkülik, mis aitab ruute kõige taga olevast pildist paremini eraldada. See vahe on päevaruutudel tausta servast. Kaugus ülevalt, alt, paremalt ja vasakult on kõik sama.
+        self.päevaruutudeTaustaJaRuutudeVahe = 25
+
+        # See vahe on päevaruutude ruudustikus kahe kõrvuti v üksteise all oleva ruudu vahel.
+        self.päevaruutudeVahe = 10
+
+        # Päevaruutude kõrgus. Erinevalt laiusest see ei muutu akna suuruse muutmisel. 
+        self.päevaruuduKõrgus = 100
+
+        self.päevaruutudeTaustaVärv = (200,200,200,255)
+
+        self.päevaruutudeTaustaNurgaÜmardus = 20
+
+
+        

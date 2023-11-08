@@ -2,12 +2,13 @@
 import win32gui
 import win32con
 from Kujundid import RistkülikAknas
-from Tekstikujundid import PäevaRuut, SündmuseRida
+from Tekstikujundid import PäevaRuut, SündmuseRida, PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Sündmused import Sündmus
 from Tekst import Tekst, EraldaSobivaPikkusegaTekst
 import os
+from Päev import Päev
 
   
 
@@ -35,20 +36,20 @@ class Programm:
         kp1 = Kuupäev(8, 11, 2023)
         s1 = Sündmus("Emadepäeva kontsert", kp1)
         s1.MääraLõppKell(15, 34)
+        s2 = Sündmus("MMP Moodle'i testi tähtaeg", kp1)
+        s2.MääraLõppKell(21,0)
+        p1 = Päev(kp1, [s1, s2])
 
         kp2 = Kuupäev(12, 11, 2023)
-        s2 = Sündmus("MMP Moodle'i testi tähtaeg", kp2)
-        s2.MääraLõppKell(21,0)
+        s3 = Sündmus("Rong läheb Rakverre", kp2)
+        s3.MääraLõppKell(13, 0)
+        s4 = Sündmus("Pakk kaob pakiautomaadist ära", kp2)
+        s4.MääraLõppKell(23,0)
+        p2 = Päev(kp2, [s3, s4])
 
-        sür = SündmuseRida(self.olek, ekraan, s1)
-        rk1 = RistkülikAknas(ekraan, ekraan)
-        font = self.olek.sündmuseReaKirjaFont
-        värv = self.olek.ruuduTekstiVärv
-        tek = Tekst(ekraan, "Tere", font, värv, (0,0))
-        algtekst = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        tek2 = Tekst(ekraan, algtekst, font, värv, (0,0))
 
-        ruut = PäevaRuut(self.olek, ekraan, [s1,s2])
+        ruudustik = PäevaRuudustik(self.olek, ekraan, [p1, p2])
+
 
         def JoonistaAsjad():
             ekraan.fill((255, 255, 255, 255))
@@ -70,15 +71,25 @@ class Programm:
             tek2.MääraAsukoht((sürAsuk[0], sürAsuk[1] + 80))
             sobTek = EraldaSobivaPikkusegaTekst(algtekst, laius, font)
             tek2.MääraTekst(sobTek[0])
-            tek2.Joonista()"""
+            tek2.Joonista()
 
             ekrLaius = ekraan.get_width()
             ekrKõrgus = ekraan.get_height()
 
             ruut.MääraAsukoht(ekrLaius*0.1, ekrKõrgus*0.1)
             ruut.MääraSuurus(ekrLaius*0.8, ekrKõrgus*0.8)
-            ruut.Joonista()
+            ruut.Joonista()"""
 
+            
+            ekrLai = ekraan.get_width()
+            ekrKõrg = ekraan.get_height()
+            ruudAsukx = ekrLai * 0.1
+            ruudAsuky = ekrKõrg * 0.1
+            ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
+            ruudustik.MääraLaius(ekrLai*0.8)
+            ruudustik.Joonista()
+
+            pygame.draw.rect(ekraan, (0,0,0,255), (300,50,100,100))
             
             pygame.display.flip()
     
