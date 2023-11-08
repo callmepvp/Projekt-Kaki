@@ -12,11 +12,15 @@ class ProgrammiOlek:
         # Päevaruutude tausta ümardatud nurkade raadius pikslites. Hiljem vb teeb selle teguriks akna laiusest v kõrgusest v mõlemast, aga ei viitsi prg mõelda.
         self.ruutudeTaustaNurgaÜmardus = 10
         
+        #Fondi suurused
+        self.pvPealkKpSuurus = 30
+        self.pvPealkAastaSuurus = 10
+
         # Pygame fondiobjektid eri kohtade jaoks. Ma arvan, et on parem, kui need on salvestatud programmiolekusse, mitte ei hakata võimalik et iga kaader looma seda fondiobjekti algusest peale.
-        self.font = os.path.join("Fondid", "Gogh-ExtraBold.ttf")
-        self.päevaruuduTekstiPygFont = pygame.font.Font(self.font, 20)
-        self.päevaruuduPealkKpPygFont = pygame.font.Font(self.font, 30)
-        self.päevaruuduPealkAastaPygFont = pygame.font.Font(self.font, 10)
+        self.fondiNimi = "Gogh-ExtraBold.ttf"
+        self.font = os.path.join("Fondid", self.fondiNimi)
+        self.päevaruuduPealkKpPygFont = pygame.font.Font(self.font, self.pvPealkKpSuurus)
+        self.päevaruuduPealkAastaPygFont = pygame.font.Font(self.font, self.pvPealkAastaSuurus)
 
         # Teksti värv päevaruutudes
         self.ruuduTekstiVärv = (30, 30, 30)
@@ -31,9 +35,13 @@ class ProgrammiOlek:
         self.päevaruuduPealkKaugusÜlaservast = 20
         self.päevaruuduPealkKaugusVasakult = 5
 
+        #Fondi suurused
+        self.sündmuseReaKirjaSuurus = 20
+        self.sündmuseReaAjaSuurus = 10
+        
         # Päevaruudus olevate sündmuseridade fondid sündmuse pealkirja jaoks ja rea lõpus oleva kellaaja jaoks.
-        self.sündmuseReaKirjaFont = pygame.font.Font(self.font, 20)
-        self.sündmuseReaAjaFont = pygame.font.Font(self.font, 10)
+        self.sündmuseReaKirjaFont = pygame.font.Font(self.font, self.sündmuseReaKirjaSuurus)
+        self.sündmuseReaAjaFont = pygame.font.Font(self.font, self.sündmuseReaAjaSuurus)
 
         # Sündmuserea teksti ja loetelutäpi vahel oleva vahe suurus
         self.sündmuseReaTäpiVahe = 15
@@ -54,13 +62,3 @@ class ProgrammiOlek:
 
         # Selle vahe suurus, mis on päevaruudus kõige ülemise sündmuse ja kuupäeva vahel, Täpsemalt kuupäeva keskkoha ja sündmuse keskkoha vahel.
         self.sündmuseReadKuupäevast = 20
-
-
-
-    # Funktsioon, mis loeb faili ja selle põhjal määrab klassimuutujate väärtusi. 
-    def VõtaOlekFailist():
-        pass
-
-    # Funktsioon, mis salvestab klassimuutujad faili, et neid sealt järgmine kord uuesti sisse lugeda.
-    def SalvestaOlek(self):
-        pass

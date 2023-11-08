@@ -13,8 +13,8 @@ import os
 
 #See on klass, mis luuakse main functionis. Kuna sellel klassil on ainult üks funktsioon, siis tehniliselt see klass võiks ka samahästi mitte klass olla, vaid lihtsalt see funktsioon olla
 class Programm:
-    def __init__(self):
-        self.olek = ProgrammiOlek()
+    def __init__(self, olek):
+        self.olek = olek
 
 
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
@@ -98,6 +98,8 @@ class Programm:
 
             clock.tick(60)  # limits FPS to 60
         pygame.quit()
+
+        return self.olek
     # Programmi käimasolemise funktsiooni lõpp. 
 
 
