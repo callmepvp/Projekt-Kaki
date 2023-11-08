@@ -83,6 +83,9 @@ class Kellaaeg:
         return True
 
     def VõtaStringina(self):
-        return(str(self.tund) + "." + str(self.minut))
+        minutitekst = str(self.minut)
+        if self.minut < 10:
+            minutitekst = "0" + minutitekst
+        return(str(self.tund) + "." + minutitekst)
 
 

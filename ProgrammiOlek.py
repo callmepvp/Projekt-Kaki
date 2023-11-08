@@ -31,6 +31,31 @@ class ProgrammiOlek:
         self.päevaruuduPealkKaugusÜlaservast = 20
         self.päevaruuduPealkKaugusVasakult = 5
 
+        # Päevaruudus olevate sündmuseridade fondid sündmuse pealkirja jaoks ja rea lõpus oleva kellaaja jaoks.
+        self.sündmuseReaKirjaFont = pygame.font.Font(self.font, 20)
+        self.sündmuseReaAjaFont = pygame.font.Font(self.font, 10)
+
+        # Sündmuserea teksti ja loetelutäpi vahel oleva vahe suurus
+        self.sündmuseReaTäpiVahe = 15
+
+        # Sündmusrea teksti ees oleva loetelupunkti raadius
+        self.sündmuseReaTäpiRaadius = 4
+        
+        # Sündmuserea kaugus päevaruudu vasakust servast
+        self.sündmuseRidaVasakult = 10
+        # sündmuseRea kaugus päevaruudu paremast servast. Kui see väärtus koos vasakpoolse kaugusega lahutada päevaruudu laiusest, saab sündmuserea laiuse.
+        self.sündmuseRidaParemalt = 10
+
+        # Sündmusteridade vahe suurus. Kui palju piksleid on üksteise all olevate sündmuseridade keskkohtade vahel.
+        self.sündmuseRidadeVahe = 30
+
+        # Selle vahe suurus, mis on sündmuserea teksti ja sellele järgneva kellaaja vahel.
+        self.sündmuseReaTekstiJaKellaVahe = 20
+
+        # Selle vahe suurus, mis on päevaruudus kõige ülemise sündmuse ja kuupäeva vahel, Täpsemalt kuupäeva keskkoha ja sündmuse keskkoha vahel.
+        self.sündmuseReadKuupäevast = 20
+
+
 
     # Funktsioon, mis loeb faili ja selle põhjal määrab klassimuutujate väärtusi. 
     def VõtaOlekFailist():

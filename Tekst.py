@@ -44,16 +44,14 @@ def wrap_multi_line(text, font, maxwidth):
 
 # Funktsioon võtab sisse teksti, pikkuse pikslites ja pygame fonti objekti.
 # Funktsioon tagastab esialgse teksti kahe tekstilise tuplena, millest esimene osa on nii pikk, et mahuks täpselt antud pikkusesse ja teine osa on kõik ülejäänud tekst.
-def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject):
+def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Font):
     kasvatatav = ""
-    täheVõtuKoht = 0
-    while True:
-        tekstilaius = fontObject.size(kasvatatav)[0]
-        if tekstilaius >= sobivPikkus or kasvatatav == algtekst:
-            return kasvatatav, algtekst[täheVõtuKoht:]
-        else:
-            kasvatatav += algtekst[täheVõtuKoht]
-            täheVõtuKoht += 1
+    for i in algtekst:
+        kasvatatav += i
+        laius = fontObject.size(kasvatatav)[0]
+        if laius > sobivPikkus:
+            return (kasvatatav[:-1], algtekst[len(kasvatatav):])
+    return (kasvatatav,"")
 
 
 
@@ -73,11 +71,20 @@ class Tekst:
         # Oke, see on scuffed ja töötab kindlalt ainult selle fondiga. 0.22 on silma järgi valitud, aga see arv aitab teha nii, et tekst joonistuks valitud kohta täpselt nii, et väiketähe kõrguse keskkoht oleks soovitud kõrgusel. Keskkoht selle pärast, et ss on bullet pointe lihtsam joondada. Seda peaks vist täiendama, kui on vaja kirjutada mitmerealine tekst. Scuffed on veel see, et height on fontide terminoloogias väiketähe kõrgus, aga siin imo on vahemik nt j tähe langusest l tähe tõusuni, seega u 2x väiketähe kõrgus.
         poolVäiketäheKõrgus = self.pygFont.get_height()*0.22
         
-
         tekstiAsuk = (self.asuk[0], self.asuk[1]-suurtäheKõrgus + poolVäiketäheKõrgus)
 
         img = self.pygFont.render(self.tekst, True, self.värv)
         self.pind.blit(img, tekstiAsuk)
+
+
+    def MääraAsukoht(self, asuk):
+        self.asuk = asuk
+
+    def MääraTekst(self, tekst):
+        self.tekst = tekst
+
+
+
 
 class MitmeReaTekst:
 
