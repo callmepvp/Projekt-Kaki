@@ -153,6 +153,7 @@ class PäevaRuudustik:
         self.asukoht = (0,0)
         self.päevaRuudud: List[PäevaRuut] = []
         for i in päevad:
+            print(olek.päevaruuduVärv)
             uusRuut = PäevaRuut(olek, pind, i)
             self.päevaRuudud.append(uusRuut)
 
@@ -188,11 +189,8 @@ class PäevaRuudustik:
         if mituReas == 0: mituReas = 1
         
         # Arvutab, kui palju ruumi jääb vahede kõrvalt ruutudele. Mis peab ühe reasoleva ruudu laius olema. 
-        print(mituReas)
         vahesidKokku = 2*äärevahe + (mituReas-1)*ruuduvahe
         ruudulaius = (taustaLaius - vahesidKokku)/mituReas
-        pygame.draw.rect(self.pind, (10,10,10,255), (taustaAsukx, 250, taustaLaius, 10))
-        pygame.draw.rect(self.pind, (10,10,10,255), (taustaAsukx, 240, vahesidKokku, 10))
 
         # Hakkab kõiki ruutusid paigutama.
         counter = 0
@@ -216,7 +214,7 @@ class PäevaRuudustik:
             i.MääraSuurus(ruudulaius, ruuduKõrgus)
             counter += 1
 
-        taustaKõrgus = 2*äärevahe + ridadeArv*ruuduKõrgus + (ridadeArv-1)*ruuduvahe
+        taustaKõrgus = 2*äärevahe + (ridadeArv+1)*ruuduKõrgus + (ridadeArv)*ruuduvahe
 
         # PAIGUTAMINE LÕPPES
 

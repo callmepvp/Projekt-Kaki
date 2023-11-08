@@ -2,20 +2,19 @@
 import win32gui
 import win32con
 from Kujundid import RistkülikAknas
-from Tekstikujundid import PäevaRuut, SündmuseRida, PäevaRuudustik
+from Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Sündmused import Sündmus
-from Tekst import Tekst, EraldaSobivaPikkusegaTekst
-import os
 from Päev import Päev
 
   
 
 #See on klass, mis luuakse main functionis. Kuna sellel klassil on ainult üks funktsioon, siis tehniliselt see klass võiks ka samahästi mitte klass olla, vaid lihtsalt see funktsioon olla
 class Programm:
-    def __init__(self, olek):
+    def __init__(self, olek:ProgrammiOlek):
         self.olek = olek
+        print(olek.päevaruuduVärv)
 
 
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
@@ -32,6 +31,7 @@ class Programm:
 
         clock = pygame.time.Clock()
         
+        print(self.olek.päevaruuduVärv)
 
         kp1 = Kuupäev(8, 11, 2023)
         s1 = Sündmus("Emadepäeva kontsert", kp1)
@@ -88,8 +88,7 @@ class Programm:
             ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
             ruudustik.MääraLaius(ekrLai*0.8)
             ruudustik.Joonista()
-
-            pygame.draw.rect(ekraan, (0,0,0,255), (300,50,100,100))
+            
             
             pygame.display.flip()
     
