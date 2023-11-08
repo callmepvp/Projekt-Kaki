@@ -144,7 +144,20 @@ class PäevaRuut:
 
 
 class PäevaRuudustik:
-    def __init__(self, olek, pind, )
+    def __init__(self, olek, pind, päevad):
+        self.olek = olek
+        self.pind = pind
+        self.suurus = (400, 400)
+        self.asukoht = (0,0)
+
+    def MääraSuurus(self, suurus):
+        self.suurus = suurus
+
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
+
+    def Joonista():
+        pass
 
 
 
