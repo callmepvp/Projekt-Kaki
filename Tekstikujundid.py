@@ -143,7 +143,8 @@ class PäevaRuut:
         
 
 
-
+class PäevaRuudustik:
+    def __init__(self, olek, pind, )
 
 
 
@@ -153,7 +154,7 @@ class PäevaRuut:
 
 
 
-class PäevaRuudustik:
+class PäevaRuudustikVana:
     def __init__(self, pind, kujuRistkülik:"Ristkülik", minLaius, kõrgus, vahesuurus, äärevahe, ruutudeArv):
         self.minLaius = minLaius
         self.kõrgus = kõrgus
