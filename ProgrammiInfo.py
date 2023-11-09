@@ -31,7 +31,16 @@ defaultDataBody = {
         "sündmuseRidadeVahe" : 30,
 
         "sündmuseReaTekstiJaKellaVahe" : 20,
-        "sündmuseReadKuupäevast" : 20
+        "sündmuseReadKuupäevast" : 20,
+
+        "päevaruuduMinLaius" : 200,
+        "päevaruutudeTaustaJaRuutudeVahe" : 20,
+
+        "päevaruutudeVahe" : 10,
+        "päevaruuduKõrgus" : 100,
+
+        "päevaruutudeTaustaVärv" : (220,220,220,255),
+        "päevaruutudeTaustaNurgaÜmardus" : 20
     },
 
     "fondiTüübid" : {
@@ -42,7 +51,7 @@ defaultDataBody = {
     },
 
     "sündmused" : {
-    
+
     }
 }
 
@@ -51,30 +60,35 @@ indent = 4 #json indent formatting
 indexDirectory = os.path.dirname(__file__) #Python scripti relatiivne path
 dataFileDirectory = os.path.join(indexDirectory, 'Data/data.json')
 
+def VõtaInfoJaAnnaVäärtused(Olek: object) -> None:
+    #Programm on varem käivitunud
+    with open(dataFileDirectory, encoding="utf-8") as fail:
+        programmiInfo = json.load(fail)
+
+    #Paneb kõik parameetrid paika
+    for key, value in programmiInfo["programmiInfo"].items():
+        setattr(Olek, key, value)
+
+    #Paneb kõik fondid paika
+    setattr(Olek, 'font', os.path.join("Fondid", getattr(Olek, 'fondiNimi')))
+    fondiVäärtus = getattr(Olek, 'font')
+    for item in programmiInfo["fondiTüübid"]:
+        suuruseVäärtus = getattr(Olek, programmiInfo["fondiTüübid"][item])
+        setattr(Olek, item, pygame.font.Font(fondiVäärtus, suuruseVäärtus))
+
 def VõtaOlek():
     Olek = ProgrammiOlek()
 
     #Võta info failist
     if os.path.isfile(dataFileDirectory):
-        #Programm on varem käivitunud
-        with open(dataFileDirectory, encoding="utf-8") as fail:
-            programmiInfo = json.load(fail)
-
-        #Paneb kõik parameetrid paika
-        for key, value in programmiInfo["programmiInfo"].items():
-            setattr(Olek, key, value)
-
-        #Paneb kõik fondid paika
-        setattr(Olek, 'font', os.path.join("Fondid", getattr(Olek, 'fondiNimi')))
-        fondiVäärtus = getattr(Olek, 'font')
-        for item in programmiInfo["fondiTüübid"]:
-            suuruseVäärtus = getattr(Olek, programmiInfo["fondiTüübid"][item])
-            setattr(Olek, item, pygame.font.Font(fondiVäärtus, suuruseVäärtus))
+        VõtaInfoJaAnnaVäärtused(Olek)
 
     else:
         #Programm ei ole varem käivitunud
         with open(dataFileDirectory, "w", encoding="utf-8") as fail:
             json.dump(defaultDataBody, fail, ensure_ascii=False, indent=indent)
+
+        VõtaInfoJaAnnaVäärtused(Olek)
 
     return Olek
 
