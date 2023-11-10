@@ -1,12 +1,13 @@
 ﻿import pygame
 from Kujundid import Ristkülik
 from Tekst import Tekst, EraldaSobivaPikkusegaTekst
-from Sündmused import Sündmus
+from Sündmus import Sündmus
 from math import floor
 from typing import List
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Päev import Päev
+from SündNimekFunktsioonid import *
 
 # SündmuseRida
 class SündmuseRida:
@@ -25,21 +26,11 @@ class SündmuseRida:
         täpiAsukx, asuky = self.asukoht[0], self.asukoht[1]
         raadius = self.olek.sündmuseReaTäpiRaadius
         pygame.draw.circle(self.pind, värv, (täpiAsukx, asuky), raadius)
-
-        # Kellaaeg
-        kellaLaius = 0
-        kellaFont = self.olek.sündmuseReaAjaFont
-        if self.sündmus.lõppKell.KasOnKell() == True:
-            kellaTekst = self.sündmus.lõppKell.VõtaStringina()
-            kellaLaius = kellaFont.size(kellaTekst)[0]
-            kellaAsukx = täpiAsukx + self.laius - kellaLaius
-            kell = Tekst(self.pind, kellaTekst, kellaFont, värv, (kellaAsukx, asuky))
-            kell.Joonista()
         
         # Pealkiri
         täpivahe = self.olek.sündmuseReaTäpiVahe
         pealkAsukx = täpiAsukx + täpivahe
-        pealkRuum = self.laius - täpivahe - kellaLaius
+        pealkRuum = self.laius - täpivahe
         pealkTekst = self.sündmus.VõtaNimi()
         pealkFont = self.olek.sündmuseReaKirjaFont
         pealkTekst = EraldaSobivaPikkusegaTekst(pealkTekst, pealkRuum, pealkFont)[0]
@@ -138,7 +129,7 @@ class PäevaRuut:
             uusRida = SündmuseRida(self.olek, self.pind, i)
             reaVahe = self.olek.sündmuseRidadeVahe
             uusRida.MääraAsukoht((asukx, asuky+counter*reaVahe))
-            laius = self.suurus[0] - self.olek.sündmuseRidaVasakult - self.olek.sündmuseRidaParemalt
+            laius = self.suurus[0] - self.olek.sündmuseRidaVasakult# - self.olek.sündmuseRidaParemalt
             uusRida.MääraLaius(laius)
             uusRida.Joonista()
             counter += 1
@@ -146,12 +137,13 @@ class PäevaRuut:
 
 
 class PäevaRuudustik:
-    def __init__(self, olek:ProgrammiOlek, pind, päevad:List[Päev]):
+    def __init__(self, olek:ProgrammiOlek, pind):
         self.olek = olek
         self.pind = pind
         self.laius = 400
         self.asukoht = (0,0)
         self.päevaRuudud: List[PäevaRuut] = []
+        päevad = VõtaKõikAlgusPäevad(olek.sündmusteNimekiri)
         for i in päevad:
             print(olek.päevaruuduVärv)
             uusRuut = PäevaRuut(olek, pind, i)

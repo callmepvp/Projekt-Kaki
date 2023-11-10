@@ -70,6 +70,32 @@ class Kuupäev:
         return str(self.aasta)
 
 
+    # Tagastab True, kui käesolev kuupäev on rangelt enne parameetriks antud kuupäeva ja false siis, kui on võrdne antud kuupäevaga v hiljem.
+    def KasOnEnne(self, kuupäev: "Kuupäev"):
+        # Kontrollib aastat.
+        if self.Aasta < kuupäev.aasta:
+            return True
+        if self.Aasta > kuupäev.aasta:
+            return False
+
+        # Kui sai aastakontrollist mööda, tähendab, et aastad on võrdsed. Hakkab kontrollima kuid.
+        if self.Kuu < kuupäev.kuu:
+            return True
+        if self.kuu > kuupäev.kuu:
+            return False
+
+        # Kui kood jõuab siiani, on kuud ka võrdsed. Kontrollib päevi. Ja tagastab false, kui käesolev päev on pärast antud päeva v samal päeval.
+        if self.päev < kuupäev.päev:
+            return True
+        else:
+            return False
+
+
+    def KasOnSama(self, kuupäev:"Kuupäev"):
+        if self.aasta == kuupäev.aasta and \
+           self.kuu   == kuupäev.kuu   and \
+           self.päev  == kuupäev.päev: return True
+        return False
 
 
 class Kellaaeg:
@@ -87,5 +113,4 @@ class Kellaaeg:
         if self.minut < 10:
             minutitekst = "0" + minutitekst
         return(str(self.tund) + "." + minutitekst)
-
 

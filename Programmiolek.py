@@ -5,6 +5,9 @@ import os
 class ProgrammiOlek:
     def __init__(self):
         pygame.init()
+
+        # See nimekiri on master sündmustenimekiri ja selle sisu tuleb programmi lõpus salvestada ja igal alustamisel sellesse nimekirja lugeda. Pärast alustamist läheb see nimekiri
+        self.sündmusteNimekiri = []
         
         # Päevaruutudel on taga taust, mis aitab ruute eraldada kõige taga olevast pildist. See mutuja kirjeldab selle tausta laiust aknas, kus 0 on olematu laius, 0.8 on 80% ekraani laiusest ja 1 on terve ekraani laius.
         self.ruutudeTaustaLaius = 0.8

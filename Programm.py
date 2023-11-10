@@ -5,7 +5,7 @@ from Kujundid import RistkülikAknas
 from Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
-from Sündmused import Sündmus
+from Sündmus import Sündmus
 from Päev import Päev
 
   
@@ -47,8 +47,9 @@ class Programm:
         s4.MääraLõppKell(23,0)
         p2 = Päev(kp2, [s3, s4])
 
+        self.olek.sündmusteNimekiri = [s1, s2, s3, s4]
 
-        ruudustik = PäevaRuudustik(self.olek, ekraan, [p1, p2])
+        ruudustik = PäevaRuudustik(self.olek, ekraan)
 
 
         def JoonistaAsjad():
