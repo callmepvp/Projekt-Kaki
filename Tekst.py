@@ -4,7 +4,7 @@ from itertools import chain
 
 
 # Ingliskeelne kood copy pastetud kusagilt lehelt, aga need funktsioonid teevad täpselt seda, mida vaja. Jagab antud teksti (stringi) tükkideks nii, et valitud fondi korral ei ületaks ükski tükk kindlat valitud laiust pikslites. Lühidalt jagab teksti tükkideks, et iga tüki saaks eraldi reale renderdada ja kõik oleksid roughly reapikkused.
-
+"""
 def truncline(text, font, maxwidth):
     real=len(text)       
     stext=text           
@@ -36,12 +36,12 @@ def wrapline(text, font, maxwidth):
     return wrapped
 
 def wrap_multi_line(text, font, maxwidth):
-    """ returns text taking new lines into account.
-    """
+    """ """returns text taking new lines into account."""
+"""
     lines = chain(*(wrapline(line, font, maxwidth) for line in text.splitlines()))
     return list(lines)
 
-
+"""
 # Funktsioon võtab sisse teksti, pikkuse pikslites ja pygame fonti objekti.
 # Funktsioon tagastab esialgse teksti kahe tekstilise tuplena, millest esimene osa on nii pikk, et mahuks täpselt antud pikkusesse ja teine osa on kõik ülejäänud tekst.
 def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Font):
@@ -87,34 +87,6 @@ class Tekst:
 
 
 class MitmeReaTekst:
-
-    def __init__(self, pind, tekst="Lorem Ipsum", reaLaius=400, font="CORBEL.TTF", värv=(255,0,0), asuk=(0,0), suurus=60, reavahe=50, mituRidaJoonistada=1):
-        self.font = font
-        print(os.path.join('Fondid', font))
-        self.pygfont = pygame.font.Font(font, suurus)
-        self.pind = pind
-        self.asuk = asuk
-        self.img = self.pygfont.render(tekst, True, värv)
-        self.värv = värv
-        self.tekst = tekst
-        self.reaLaius = reaLaius
-        self.reavahe = reavahe
-        self.suurus = suurus
-        self.mituRidaJoonistada = mituRidaJoonistada
-    
-    
-    def Joonista(self):
-        read = wrap_multi_line(self.tekst, self.pygfont, self.reaLaius)[0:self.mituRidaJoonistada]
-
-        mitmes = 0
-        for i in read:
-            print(self.font)
-            reaAsukoht = (self.asuk[0], self.asuk[1] + self.reavahe*mitmes)
-            rida = Tekst(self.pind, i, asuk=reaAsukoht, font=self.font, värv=self.värv, suurus=self.suurus)
-            rida.Joonista()
-            mitmes += 1
-
-    def MuudaReaLaiust(self, uusLaius):
-        self.reaLaius = uusLaius
+    pass
             
         

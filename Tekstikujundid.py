@@ -10,6 +10,7 @@ from Päev import Päev
 from SündNimekFunktsioonid import *
 
 # SündmuseRida
+# Vastutab loetelutäpi ja sündmuse nimest koosneva rea joonistamise eest päevaruudu sees. Kui päevaruudus on mitu sündmust, ss neid ridu on vastavalt nii mitu. Iga sündmuse jaoks 1.
 class SündmuseRida:
     # Oke, mu jaoks on see süntaks uus, aga pmst see on ainus viis pythonis märkida, et sisestatud parameeter peab olema mingi kindla klassi esindaja ja kui pole, ss ei tohiks joosta. Süntaks järgmine: parameeter: "klassiNimi". Klassinimi justkui oleks tekst, aga tegelt pole.
     def __init__(self, olek:"ProgrammiOlek", pind, sündmus: "Sündmus"):
@@ -33,9 +34,14 @@ class SündmuseRida:
         pealkRuum = self.laius - täpivahe
         pealkTekst = self.sündmus.VõtaNimi()
         pealkFont = self.olek.sündmuseReaKirjaFont
-        pealkTekst = EraldaSobivaPikkusegaTekst(pealkTekst, pealkRuum, pealkFont)[0]
+
+        # See, kui mitu rida võib sündmuserida olla.
+        lubatudRidu = 2
+        tekstid = EraldaSobivaPikkusegaTekst(pealkTekst, pealkRuum, pealkFont)
+        pealkTekst = tekstid[0]
         pealk = Tekst(self.pind, pealkTekst, pealkFont, värv, (pealkAsukx, asuky))
         pealk.Joonista()
+        teineRida = EraldaSobivaPikkusegaTekst(tekstid[1], pealkRuum, pealkFont)
             
 
 
