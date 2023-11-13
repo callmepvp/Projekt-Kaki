@@ -101,6 +101,7 @@ def VõtaOlek():
 
     return Olek
 
+#* Loo igale sündmusele unikaalne ID
 def SalvestaOlek(Olek):
     with open(dataFileDirectory, encoding="utf-8") as fail:
         programmiInfo = json.load(fail)

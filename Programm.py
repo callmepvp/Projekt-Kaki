@@ -15,7 +15,7 @@ from Päev import Päev
 class Programm:
     def __init__(self, olek:ProgrammiOlek):
         self.olek = olek
-        print(olek.päevaruuduVärv)
+        #print(olek.päevaruuduVärv)
 
 
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
@@ -32,7 +32,7 @@ class Programm:
 
         clock = pygame.time.Clock()
         
-        print(self.olek.päevaruuduVärv)
+        #print(self.olek.päevaruuduVärv)
 
         kp1 = Kuupäev(8, 11, 2023)
         s1 = Sündmus("Emadepäeva kontsert", kp1)

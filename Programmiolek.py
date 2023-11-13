@@ -38,7 +38,7 @@ class ProgrammiOlek:
 
         # Päevaruudu taustaks oleva ristküliku värv. Hiljem vb lisab transparency efecti ja ss see asi vb muutub kuidagi.
         self.päevaruuduVärv = (100,100,100, 255)
-        print(self.päevaruuduVärv)
+        #print(self.päevaruuduVärv)
         # Päevaruudu pealkirja asukoht päevaruudu suhtes
         self.päevaruuduPealkKaugusÜlaservast = 20
         self.päevaruuduPealkKaugusVasakult = 5
