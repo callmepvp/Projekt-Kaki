@@ -10,7 +10,8 @@ defaultDataBody = {
 
         "pvPealkKpSuurus" : 30, 
         "pvPealkAastaSuurus" : 10,
-        "fondiNimi" : "Gogh-ExtraBold.ttf",
+        "kuupäevaFondiNimi" : "Gogh-ExtraBold.ttf",
+        "sündmuseFondiNimi" : "Gidole-Regular.ttf",
 
         "ruuduTekstiVärv" : (30,30,30),
 
