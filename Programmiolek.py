@@ -20,10 +20,15 @@ class ProgrammiOlek:
         self.pvPealkAastaSuurus = 10
 
         # Pygame fondiobjektid eri kohtade jaoks. Ma arvan, et on parem, kui need on salvestatud programmiolekusse, mitte ei hakata võimalik et iga kaader looma seda fondiobjekti algusest peale.
-        self.fondiNimi = "Gogh-ExtraBold.ttf"
-        self.font = os.path.join("Fondid", self.fondiNimi)
-        self.päevaruuduPealkKpPygFont = pygame.font.Font(self.font, self.pvPealkKpSuurus)
-        self.päevaruuduPealkAastaPygFont = pygame.font.Font(self.font, self.pvPealkAastaSuurus)
+        self.kuupäevaFondiNimi = "Gogh-ExtraBold.ttf"
+        self.kuupäevaFondiPath = os.path.join("Fondid", self.kuupäevaFondiNimi)
+
+        self.sündmuseFondiNimi = "Gidole-Regular.ttf"
+        self.sündmuseFondiPath = os.path.join("Fondid", self.sündmuseFondiNimi)
+
+        #Päevaruudu pealkirja pygame fondid.
+        self.päevaruuduPealkKpPygFont = pygame.font.Font(self.kuupäevaFondiPath, self.pvPealkKpSuurus)
+        self.päevaruuduPealkAastaPygFont = pygame.font.Font(self.kuupäevaFondiPath, self.pvPealkAastaSuurus)
 
         # Teksti värv päevaruutudes
         self.ruuduTekstiVärv = (30, 30, 30)
@@ -43,8 +48,8 @@ class ProgrammiOlek:
         self.sündmuseReaAjaSuurus = 10
         
         # Päevaruudus olevate sündmuseridade fondid sündmuse pealkirja jaoks ja rea lõpus oleva kellaaja jaoks.
-        self.sündmuseReaKirjaFont = pygame.font.Font(self.font, self.sündmuseReaKirjaSuurus)
-        self.sündmuseReaAjaFont = pygame.font.Font(self.font, self.sündmuseReaAjaSuurus)
+        self.sündmuseReaKirjaFont = pygame.font.Font(self.sündmuseFondiPath, self.sündmuseReaKirjaSuurus)
+        self.sündmuseReaAjaFont = pygame.font.Font(self.kuupäevaFondiPath, self.sündmuseReaAjaSuurus)
 
         # Sündmuserea teksti ja loetelutäpi vahel oleva vahe suurus
         self.sündmuseReaTäpiVahe = 15
