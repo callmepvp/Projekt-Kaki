@@ -29,7 +29,7 @@ defaultDataBody = {
         "sündmuseRidaVasakult" : 10,
         "sündmuseRidaParemalt" : 10,
 
-        "sündmuseRidadeVahe" : 30,
+        "sündmuseRidadeVahe" : 100,
 
         "sündmuseReaTekstiJaKellaVahe" : 20,
         "sündmuseReadKuupäevast" : 20,

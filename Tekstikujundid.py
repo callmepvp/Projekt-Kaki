@@ -46,7 +46,6 @@ class SündmuseRida:
         tekst.MääraRidadeArv(ridu)
         viimaneRida = tekst.Joonista()
         print(viimaneRida)
-        pygame.draw.rect(self.pind, (0,0,0,255),(0,0,100,100))
         return viimaneRida
 
         
@@ -140,10 +139,12 @@ class PäevaRuut:
         counter = 0
         kuupäevast = self.olek.sündmuseReadKuupäevast
         asuky = pealkAsuky + kuupäevast
+        täpivahe = self.olek.sündmuseReaTäpiVahe
+        asukx = self.asuk[0] + täpivahe
         for i in self.sündmused:
             uusRida = SündmuseRida(self.olek, self.pind, i)
-            uusRida.MääraAsukoht((self.asuk[0], asuky))
-            uusRida.MääraLaius(self.suurus[0])
+            uusRida.MääraAsukoht((self.asuk[0] + täpivahe, asuky))
+            uusRida.MääraLaius(self.suurus[0] - täpivahe)
             sündRiddVahe = self.olek.sündmuseRidadeVahe
             asuky = uusRida.Joonista() + sündRiddVahe
         
