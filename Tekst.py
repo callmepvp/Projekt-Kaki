@@ -94,6 +94,8 @@ class MitmeReaTekst:
                 rida = Tekst(self.pind, joonistatav, reafont, värv, (asukx, asuky))
                 rida.Joonista()
 
+                if joonistadaJäänud == "":
+                    break
         else:
             while joonistadaJäänud != "":
                 tekstid = EraldaSobivaPikkusegaTekst(joonistadaJäänud, self.laius, reafont)
