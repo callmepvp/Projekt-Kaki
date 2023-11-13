@@ -30,7 +30,7 @@ defaultDataBody = {
         "sündmuseRidaVasakult" : 10,
         "sündmuseRidaParemalt" : 10,
 
-        "sündmuseRidadeVahe" : 100,
+        "sündmuseRidadeVahe" : 30,
 
         "sündmuseReaTekstiJaKellaVahe" : 20,
         "sündmuseReadKuupäevast" : 20,
@@ -72,11 +72,18 @@ def VõtaInfoJaAnnaVäärtused(Olek: object) -> None:
         setattr(Olek, key, value)
 
     #Paneb kõik fondid paika
-    setattr(Olek, 'font', os.path.join("Fondid", getattr(Olek, 'fondiNimi')))
-    fondiVäärtus = getattr(Olek, 'font')
+    setattr(Olek, 'kuupäevaFondiPath', os.path.join("Fondid", getattr(Olek, 'kuupäevaFondiNimi')))
+    setattr(Olek, 'sündmuseFondiPath', os.path.join("Fondid", getattr(Olek, 'sündmuseFondiNimi')))
+
+    kuupäevaFondiVäärtus = getattr(Olek, 'kuupäevaFondiPath')
+    sündmuseFondiVäärtus = getattr(Olek, 'sündmuseFondiPath')
+
     for item in programmiInfo["fondiTüübid"]:
         suuruseVäärtus = getattr(Olek, programmiInfo["fondiTüübid"][item])
-        setattr(Olek, item, pygame.font.Font(fondiVäärtus, suuruseVäärtus))
+        if item == "sündmuseReaKirjaFont":
+            setattr(Olek, item, pygame.font.Font(sündmuseFondiVäärtus, suuruseVäärtus))
+        else:
+            setattr(Olek, item, pygame.font.Font(kuupäevaFondiVäärtus, suuruseVäärtus))
 
 def VõtaOlek():
     Olek = ProgrammiOlek()
