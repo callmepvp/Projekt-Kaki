@@ -2,6 +2,7 @@
 import win32gui
 import win32con
 from Kujundid import RistkülikAknas
+from Tekst import MitmeReaTekst
 from Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
@@ -50,7 +51,8 @@ class Programm:
         self.olek.sündmusteNimekiri = [s1, s2, s3, s4]
 
         ruudustik = PäevaRuudustik(self.olek, ekraan)
-
+        tekst="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+        t1=MitmeReaTekst(self.olek, ekraan, tekst, self.olek.päevaruuduPealkAastaPygFont)
 
         def JoonistaAsjad():
             ekraan.fill((255, 255, 255, 255))
@@ -84,12 +86,11 @@ class Programm:
             
             ekrLai = ekraan.get_width()
             ekrKõrg = ekraan.get_height()
-            ruudAsukx = ekrLai * 0.1
-            ruudAsuky = ekrKõrg * 0.1
+            ruudAsukx = 30
+            ruudAsuky = 30
             ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
             ruudustik.MääraLaius(ekrLai*0.8)
             ruudustik.Joonista()
-            
             
             pygame.display.flip()
     

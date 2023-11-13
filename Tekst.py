@@ -1,47 +1,9 @@
 ﻿import pygame
 import os
-from itertools import chain
+
+from Programmiolek import ProgrammiOlek
 
 
-# Ingliskeelne kood copy pastetud kusagilt lehelt, aga need funktsioonid teevad täpselt seda, mida vaja. Jagab antud teksti (stringi) tükkideks nii, et valitud fondi korral ei ületaks ükski tükk kindlat valitud laiust pikslites. Lühidalt jagab teksti tükkideks, et iga tüki saaks eraldi reale renderdada ja kõik oleksid roughly reapikkused.
-"""
-def truncline(text, font, maxwidth):
-    real=len(text)       
-    stext=text           
-    l=font.size(text)[0]
-    cut=0
-    a=0                  
-    done=1
-    while l > maxwidth:
-        a=a+1
-        n=text.rsplit(None, a)[0]
-        if stext == n:
-            cut += 1
-            stext= n[:-cut]
-        else:
-            stext = n
-        l=font.size(stext)[0]
-        real=len(stext)               
-        done=0                        
-    return real, done, stext             
-        
-def wrapline(text, font, maxwidth): 
-    done=0                      
-    wrapped=[]                  
-                               
-    while not done:             
-        nl, done, stext=truncline(text, font, maxwidth) 
-        wrapped.append(stext.strip())                  
-        text=text[nl:]                                 
-    return wrapped
-
-def wrap_multi_line(text, font, maxwidth):
-    """ """returns text taking new lines into account."""
-"""
-    lines = chain(*(wrapline(line, font, maxwidth) for line in text.splitlines()))
-    return list(lines)
-
-"""
 # Funktsioon võtab sisse teksti, pikkuse pikslites ja pygame fonti objekti.
 # Funktsioon tagastab esialgse teksti kahe tekstilise tuplena, millest esimene osa on nii pikk, et mahuks täpselt antud pikkusesse ja teine osa on kõik ülejäänud tekst.
 def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Font):
@@ -50,7 +12,7 @@ def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Fon
         kasvatatav += i
         laius = fontObject.size(kasvatatav)[0]
         if laius > sobivPikkus:
-            return (kasvatatav[:-1], algtekst[len(kasvatatav):])
+            return (kasvatatav[:-1], algtekst[len(kasvatatav)-1:])
     return (kasvatatav,"")
 
 
@@ -85,8 +47,65 @@ class Tekst:
 
 
 
-
 class MitmeReaTekst:
-    pass
-            
-        
+    def __init__(self, olek:ProgrammiOlek, pind, tekst, pygfont):
+        self.olek = olek
+        self.pind = pind
+        self.tekst = tekst
+        self.laius = 100
+        self.asukoht = (0,0)
+        self.font = pygfont
+        self.värv = (10,10,10,255)
+        self.reavahe = 30
+        # Ridade arv vastab sellele, kui mitu rida joonistatakse. Väärtus 0 tähendab, et joonistatakse nii palju ridu kui kulub kogu teksti joonistamiseks.
+        self.ridadeArv = 3
+
+    def MääraRidadeArv(self, ridu):
+        self.ridadeArv = ridu
+
+    def MääraLaius(self, laius):
+        self.laius = laius
+    
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
+
+    def MääraVärv(self, värv):
+        self.värv = värv
+
+    def MääraReavahe(self, reavahe):
+        self.reavahe = reavahe
+
+    # Erinevalt peaaegu kõigi teiste objektide Joonista funktsioonidest see siin returnib midagi. See returnib viimase rekstirea asukoha. Kasutades seda infot saavad muud asjad väljaspool objekti end paigutada.
+    def Joonista(self):
+
+        reavahe = self.reavahe
+        reafont = self.font
+        värv = self.värv
+        joonistadaJäänud = self.tekst
+
+        if self.ridadeArv != 0:
+            for i in range(self.ridadeArv):
+                tekstid = EraldaSobivaPikkusegaTekst(joonistadaJäänud, self.laius, reafont)
+                joonistatav = tekstid[0]
+                joonistadaJäänud = tekstid[1]
+                
+                asukx = self.asukoht[0]
+                asuky = self.asukoht[1] + i * reavahe
+                rida = Tekst(self.pind, joonistatav, reafont, värv, (asukx, asuky))
+                rida.Joonista()
+
+        else:
+            while joonistadaJäänud != "":
+                tekstid = EraldaSobivaPikkusegaTekst(joonistadaJäänud, self.laius, reafont)
+                joonistatav = tekstid[0]
+                joonistadaJäänud = tekstid[1]
+                
+                asukx = self.asuk[0]
+                asuky = self.asuk[1] + i * reavahe
+                rida = Tekst(self.pind, joonistatav, reafont, värv, (asukx, asuky))
+                rida.Joonista()
+
+        return asuky
+
+
+

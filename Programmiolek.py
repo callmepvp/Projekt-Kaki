@@ -60,6 +60,12 @@ class ProgrammiOlek:
         # Sündmusteridade vahe suurus. Kui palju piksleid on üksteise all olevate sündmuseridade keskkohtade vahel.
         self.sündmuseRidadeVahe = 30
 
+        # See kui palju on ühe sündmuserea ridade vahe. Mõte on, et kui päevaruut läheb kitsaks, ss ei ole normaalne piirata sündmuserea teksti ühele reale, sest sinna mahub nii vähe, et on loetamatu. Ss läheb rida mitmele reale ja see suurus on nende ridade vahe.
+        self.sündmuseReaReavahe = 10
+
+        # See, kui mitu rida võib ühe sündmuse tekst päevaruudus võtta.
+        self.sündmuseReaRidu = 2
+
         # Selle vahe suurus, mis on sündmuserea teksti ja sellele järgneva kellaaja vahel.
         self.sündmuseReaTekstiJaKellaVahe = 20
 

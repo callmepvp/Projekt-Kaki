@@ -1,6 +1,6 @@
 ﻿import pygame
 from Kujundid import Ristkülik
-from Tekst import Tekst, EraldaSobivaPikkusegaTekst
+from Tekst import MitmeReaTekst, Tekst, EraldaSobivaPikkusegaTekst
 from Sündmus import Sündmus
 from math import floor
 from typing import List
@@ -36,12 +36,20 @@ class SündmuseRida:
         pealkFont = self.olek.sündmuseReaKirjaFont
 
         # See, kui mitu rida võib sündmuserida olla.
-        lubatudRidu = 2
-        tekstid = EraldaSobivaPikkusegaTekst(pealkTekst, pealkRuum, pealkFont)
-        pealkTekst = tekstid[0]
-        pealk = Tekst(self.pind, pealkTekst, pealkFont, värv, (pealkAsukx, asuky))
-        pealk.Joonista()
-        teineRida = EraldaSobivaPikkusegaTekst(tekstid[1], pealkRuum, pealkFont)
+        ridu = self.olek.sündmuseReaRidu
+        reavahe = self.olek.sündmuseReaReavahe
+        
+        tekst = MitmeReaTekst(self.olek, self.pind, pealkTekst, pealkFont)
+        tekst.MääraLaius(pealkRuum)
+        tekst.MääraAsukoht((pealkAsukx, self.asukoht[1]))
+        tekst.MääraReavahe(reavahe)
+        tekst.MääraRidadeArv(ridu)
+        viimaneRida = tekst.Joonista()
+        print(viimaneRida)
+        pygame.draw.rect(self.pind, (0,0,0,255),(0,0,100,100))
+        return viimaneRida
+
+        
             
 
 
@@ -113,32 +121,27 @@ class PäevaRuut:
         self.suurus = (x,y)
 
     def Joonista(self):
+        # Päevaruudu taust
         self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])
         self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
         self.taust.Joonista()
 
+        # Päevaruudu pealkiri – kuupäev ja aasta
         pealkAsukx = self.asuk[0] + self.olek.päevaruuduPealkKaugusVasakult
         pealkAsuky = self.asuk[1] + self.olek.päevaruuduPealkKaugusÜlaservast
         self.pealkiri.MääraAsukoht(pealkAsukx, pealkAsuky)
         self.pealkiri.Joonista()
 
+        # Päevaruudu sündmused
         counter = 0
+        kuupäevast = self.olek.sündmuseReadKuupäevast
+        asuky = pealkAsuky + kuupäevast
         for i in self.sündmused:
-            # Sündmuserea asukx
-            vasakult = self.olek.sündmuseRidaVasakult
-            asukx = self.asuk[0] + vasakult
-            pealkirjast = self.olek.sündmuseReadKuupäevast
-            asuky = pealkAsuky + pealkirjast
-
-            
-            asuky = pealkAsuky + 40
             uusRida = SündmuseRida(self.olek, self.pind, i)
-            reaVahe = self.olek.sündmuseRidadeVahe
-            uusRida.MääraAsukoht((asukx, asuky+counter*reaVahe))
-            laius = self.suurus[0] - self.olek.sündmuseRidaVasakult# - self.olek.sündmuseRidaParemalt
-            uusRida.MääraLaius(laius)
-            uusRida.Joonista()
-            counter += 1
+            uusRida.MääraAsukoht((self.asuk[0], asuky))
+            uusRida.MääraLaius(self.suurus[0])
+            sündRiddVahe = self.olek.sündmuseRidadeVahe
+            asuky = uusRida.Joonista() + sündRiddVahe
         
 
 
@@ -164,7 +167,7 @@ class PäevaRuudustik:
     def Joonista(self):
         # Tausta kõrgus leitakse selle põhjal mitu rida ruute tuleb ja see arvutatakse hiljem.
         taustaAsukx = self.asukoht[0]
-        taustaAsuky = self.asukoht[0]
+        taustaAsuky = self.asukoht[1]
         taustaLaius = self.laius
 
         # Mitu ruutu mahub ühte ritta.
