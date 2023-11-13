@@ -101,23 +101,20 @@ def VõtaOlek():
 
     return Olek
 
+#* Loo igale sündmusele unikaalne ID
 def SalvestaOlek(Olek):
     with open(dataFileDirectory, encoding="utf-8") as fail:
         programmiInfo = json.load(fail)
 
-    failiSündmused = programmiInfo["sündmused"]
+    failiSündmused = programmiInfo.get('sündmused', {})
     olemasolevadSündmused = Olek.sündmusteNimekiri #Sündmuste list
 
-    for sündmus in olemasolevadSündmused:
-        sündmuseSõnastik = sündmus.__dict__
-        for k, v in sündmuseSõnastik.items():
-            #print(k, v)
-            pass
+    #Tee list kõikidest sündmuste sõnastikest
+    sündmusteSõnastikud = [sündmus.KonverteeriSõnastikuks() for sündmus in olemasolevadSündmused]
+    for sündmus in sündmusteSõnastikud:
+        failiSündmused[sündmus['nimi']] = sündmus
 
-    Sündmus = olemasolevadSündmused[0].KonverteeriSõnastikuks()
-    with open("Data/dev.json", "w", encoding="utf-8") as fail:
-        json.dump(Sündmus, fail, ensure_ascii=False, indent=indent)
+    programmiInfo['sündmused'] = failiSündmused
 
-
-    sündmuseidKokku = len(olemasolevadSündmused)
-    #Programm peab vaatama, missugused sündmused tal on failis ja siis mis nendest klapivad olemasolevatega, (mida ta siis alles jätab), need mis on failis aga pole olemas tuleb kustutada
+    with open(dataFileDirectory, "w", encoding="utf-8") as fail:
+        json.dump(programmiInfo, fail, indent=indent, ensure_ascii=False)

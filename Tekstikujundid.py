@@ -45,7 +45,7 @@ class SündmuseRida:
         tekst.MääraReavahe(reavahe)
         tekst.MääraRidadeArv(ridu)
         viimaneRida = tekst.Joonista()
-        print(viimaneRida)
+        #print(viimaneRida)
         return viimaneRida
 
         
@@ -159,7 +159,7 @@ class PäevaRuudustik:
         self.päevaRuudud: List[PäevaRuut] = []
         päevad = VõtaKõikAlgusPäevad(olek.sündmusteNimekiri)
         for i in päevad:
-            print(olek.päevaruuduVärv)
+            #print(olek.päevaruuduVärv)
             uusRuut = PäevaRuut(olek, pind, i)
             self.päevaRuudud.append(uusRuut)
 
