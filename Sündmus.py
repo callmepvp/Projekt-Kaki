@@ -1,5 +1,5 @@
 ﻿from Kuupäev import Kuupäev, Kellaaeg
-
+import json
 
 
 # Sündmusel põhineb kõik selles programmis. See objekt peab olema piisavalt paindlik, et saada olla ühekordne Kuupäeva sündmus või olla igal kolmapäeval ja esmaspäeval kl 18 korduv sündmus või näiteks sündmus algusega kl 17 ja lõpuga kl 19.
@@ -70,3 +70,10 @@ class Sündmus:
             return True
         return False
 
+#Kodeerib sündmuse objekti json-loetavaks objektiks, tuleks muuta, kui lisada veel parameetreid sündmuse klassi, ! HETKEL POLE KASUTUSES !
+class SündmuseKodeerija(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Sündmus):
+            return {"nimi" : obj.nimi, "ajaTüüp" : obj.ajaTüüp, "algusKuupäev" : obj.alguskuupäev, "lõppKuupäev" : obj.lõppkuupäev, "algusaeg" : obj.algusaeg, "lõppaeg" : obj.lõppaeg, "kordumiseTüüp" : obj.kordumiseTüüp, "kordumiseAjavahemik" : obj.kordumiseAjavahemik}
+        
+        return super().default(obj)

@@ -113,6 +113,10 @@ class PäevaRuut:
         self.taust.MääraVärv(olek.päevaruuduVärv)
         self.pind = pind
         self.sündmused = päev.sündmusteNimekiri
+
+    #Kontrolli, kas hiir on päevaruudu peal ja tagasta bool väärtus
+    def KasHiirKohal():
+        pass
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)

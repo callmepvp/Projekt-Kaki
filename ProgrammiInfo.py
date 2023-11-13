@@ -1,6 +1,7 @@
 import os
 import json
 from Programmiolek import *
+from Sündmus import SündmuseKodeerija
 
 defaultDataBody = {
     "programmiInfo" : {
@@ -92,5 +93,17 @@ def VõtaOlek():
 
     return Olek
 
-def SalvestaOlek(olek):
-    pass
+def SalvestaOlek(Olek):
+    with open(dataFileDirectory, encoding="utf-8") as fail:
+        programmiInfo = json.load(fail)
+
+    failiSündmused = programmiInfo["sündmused"]
+    olemasolevadSündmused = Olek.sündmusteNimekiri #Sündmuste list
+
+    for sündmus in olemasolevadSündmused:
+        sündmuseSõnastik = sündmus.__dict__
+        for k, v in sündmuseSõnastik.items():
+            print(k, v)
+
+    sündmuseidKokku = len(olemasolevadSündmused)
+    #Programm peab vaatama, missugused sündmused tal on failis ja siis mis nendest klapivad olemasolevatega, (mida ta siis alles jätab), need mis on failis aga pole olemas tuleb kustutada
