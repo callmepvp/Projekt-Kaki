@@ -8,6 +8,7 @@ from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Sündmus import Sündmus
 from Päev import Päev
+from Nupp import LisaSündmuseNupp
 
   
 
@@ -51,8 +52,13 @@ class Programm:
         self.olek.sündmusteNimekiri = [s1, s2, s3, s4]
 
         ruudustik = PäevaRuudustik(self.olek, ekraan)
-        tekst="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-        t1=MitmeReaTekst(self.olek, ekraan, tekst, self.olek.päevaruuduPealkAastaPygFont)
+
+
+        a = LisaSündmuseNupp(0, ekraan)
+        a.MääraAsukoht((200, 250))
+        a.MääraSuurus((300, 100))
+        
+        
 
         def JoonistaAsjad():
             ekraan.fill((255, 255, 255, 255))
@@ -92,6 +98,8 @@ class Programm:
             ruudustik.MääraLaius(ekrLai*0.8)
             ruudustik.Joonista()
             
+            a.Joonista()
+
             pygame.display.flip()
     
 
