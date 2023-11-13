@@ -69,11 +69,40 @@ class Sündmus:
         if self.alguskuupäev.KasOnSama(kuupäev):
             return True
         return False
+    
 
-#Kodeerib sündmuse objekti json-loetavaks objektiks, tuleks muuta, kui lisada veel parameetreid sündmuse klassi, ! HETKEL POLE KASUTUSES !
-class SündmuseKodeerija(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, Sündmus):
-            return {"nimi" : obj.nimi, "ajaTüüp" : obj.ajaTüüp, "algusKuupäev" : obj.alguskuupäev, "lõppKuupäev" : obj.lõppkuupäev, "algusaeg" : obj.algusaeg, "lõppaeg" : obj.lõppaeg, "kordumiseTüüp" : obj.kordumiseTüüp, "kordumiseAjavahemik" : obj.kordumiseAjavahemik}
+
+    #Meetod, mis tagastab kõik sündmuse parameetrid json-loetavas sõnastikus, kusjuures kõik parameetrid, mille väärtuseks on teine objekt, on tagastatud teisejärgulise sõnastikuna
+    def KonverteeriSõnastikuks(self):
+        väljund = {
+            "nimi" : self.nimi,
+            "ajaTüüp" : self.ajaTüüp,
+            
+            "alguskuupäev" : self.TagastaOsaObjektid(self.alguskuupäev) if self.alguskuupäev else None,
+            "lõppkuupäev" : self.TagastaOsaObjektid(self.lõppkuupäev) if self.lõppkuupäev else None,
+            "algusaeg" : self.TagastaOsaObjektid(self.algusaeg) if self.algusaeg else None,
+            "lõppaeg" : self.TagastaOsaObjektid(self.lõppaeg) if self.lõppaeg else None,
+
+            "kordumiseTüüp" : self.kordumiseTüüp,
+            "kordumiseAjavahemik" : self.kordumiseAjavahemik
+        }
+
+        return väljund
+    
+    #Leiab ja tagastab kõik väärtused, mis on osaobjekti sees
+    def TagastaOsaObjektid(self, obj):
+        if obj is None:
+            return None
         
-        return super().default(obj)
+        elif isinstance(obj, list):
+            return [self.TagastaOsaObjektid(item) for item in obj]
+        
+        elif isinstance(obj, dict):
+            return {key: self.TagastaOsaObjektid(value) for key, value in obj.items()}
+        
+        elif hasattr(obj, '__dict__'):
+            return {key: self.TagastaOsaObjektid(value) for key, value in obj.__dict__.items()}
+        
+        else:
+            return obj
+
