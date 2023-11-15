@@ -1,5 +1,4 @@
 ﻿import pygame
-import 
 
 class LisaSündmuseNupp:
     def __init__(self, olek, pind:"pygame.Surface"):
