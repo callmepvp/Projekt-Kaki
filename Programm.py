@@ -9,6 +9,7 @@ from Kuupäev import Kuupäev
 from Sündmus import Sündmus
 from Päev import Päev
 from Nupp import LisaSündmuseNupp
+from PIL import Image
 
   
 
@@ -21,6 +22,26 @@ class Programm:
 
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
     def JaaaaLäks(self):
+
+        # Pluss
+        Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
+        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=(158,240,26,255))
+        Pmask = Image.open("Pildid/pluss2.png").convert('L')
+        Pp3 = Image.composite(Pp1, Pp0, Pmask)
+        Pp3.show()
+
+        # Dropshadow
+        Dp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
+        Dp1 = Image.new(mode="RGBA", size=(64, 64), color=(158,240,26,255))
+        Dmask = Image.open("Pildid/pluss2.png").convert('L')
+        Dmask = Dmask.filter(ImageFilter.GaussianBlur(10))
+        Dp3 = Image.composite(Dp1, Dp0, Dmask)
+        Dp3.show()
+
+
+
+
+
         def wndProc(oldWndProc, draw_callback, hWnd, message, wParam, lParam):
             if message == win32con.WM_SIZE:
                 draw_callback()
