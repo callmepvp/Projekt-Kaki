@@ -33,7 +33,7 @@ defaultDataBody = {
         "sündmuseRidadeVahe" : 30,
 
         "sündmuseReaTekstiJaKellaVahe" : 20,
-        "sündmuseReadKuupäevast" : 20,
+        "sündmuseReadKuupäevast" : 30,
 
         "päevaruuduMinLaius" : 200,
         "päevaruutudeTaustaJaRuutudeVahe" : 20,

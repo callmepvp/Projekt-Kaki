@@ -1,6 +1,6 @@
 ﻿import pygame
-import 
-
+from PIL import Image, ImageChops 
+import PIL
 class LisaSündmuseNupp:
     def __init__(self, olek, pind:"pygame.Surface"):
         self.pind = pind
@@ -41,5 +41,21 @@ class LisaSündmuseNupp:
         pygame.draw.rect(pind, paremVärv, paremRect,
                          border_top_right_radius = nurgaÜmardus, 
                          border_bottom_right_radius = nurgaÜmardus)
-
+    
+        
+        p1 = PIL.Image.new(mode="RGB", size=(64, 64), color=paremVärv).convert("RGBA")
+        p2 = Image.open("Pildid/pluss2.png").convert("RGBA")
+        p3 = ImageChops.multiply(p1, p2) 
+        
+        p3.show()
+        
+        """
+        im = Image.open('Pildid/pluss2.png')
+        im = im.convert('RGB')
+        r, g, b = im.split()
+        r = r.point(lambda i: i * 1.5)
+        out = Image.merge('RGB', (r, g, b))
+        """
+        
+        
         self.pind.blit(self.pildipind, (pildiAsukx, pildiAsuky))
