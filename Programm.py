@@ -59,8 +59,6 @@ class Programm:
 
 
         a = LisaSündmuseNupp(self.olek, ekraan)
-        a.MääraAsukoht((200, 250))
-        a.MääraSuurus((300, 100))
         
         
 
@@ -102,6 +100,14 @@ class Programm:
             ruudustik.MääraLaius(ekrLai*0.8)
             ruudustik.Joonista()
             
+
+            aknaSuur = ekraan.get_size()
+            nupuAsukx = aknaSuur[0] * 0.4
+            nupuAsuky = aknaSuur[1] * 0.8
+            nupuSuurx = aknaSuur[0] - 2*nupuAsukx
+            nupuSuury = aknaSuur[1] * 0.1
+            a.MääraAsukoht((nupuAsukx, nupuAsuky))
+            a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
 
             pygame.display.flip()
