@@ -43,6 +43,7 @@ defaultDataBody = {
 
         "päevaruutudeTaustaVärv" : (220,220,220,255),
         "päevaruutudeTaustaNurgaÜmardus" : 20,
+        "hoverTooniKordaja" : 0.8,
         
         "LisaSündmusNupuVärv" : (158, 240, 26, 255),
         "LisaSündmusNupuPlussiAluneVärv" : (40,40,40,255),
@@ -122,7 +123,9 @@ def SalvestaOlek(Olek):
     #Tee list kõikidest sündmuste sõnastikest
     sündmusteSõnastikud = [sündmus.KonverteeriSõnastikuks() for sündmus in olemasolevadSündmused]
     for sündmus in sündmusteSõnastikud:
-        failiSündmused[sündmus['id']] = sündmus
+        if str(sündmus['id']) not in failiSündmused:
+            print(f"Salvestan sündmuse ID'ga {sündmus['id']}")
+            failiSündmused[sündmus['id']] = sündmus
 
     programmiInfo['sündmused'] = failiSündmused
 

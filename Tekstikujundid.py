@@ -8,6 +8,7 @@ from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Päev import Päev
 from SündNimekFunktsioonid import *
+from UtilityFunktsioonid import *
 
 # SündmuseRida
 # Vastutab loetelutäpi ja sündmuse nimest koosneva rea joonistamise eest päevaruudu sees. Kui päevaruudus on mitu sündmust, ss neid ridu on vastavalt nii mitu. Iga sündmuse jaoks 1.
@@ -108,14 +109,13 @@ class PäevaRuut:
         self.asuk = (10,10)
         self.pealkiri = PäevaPealkiri(olek, pind, self.kuupäev)
         self.olek = olek
+
+        self.originaalVärv = olek.päevaruuduVärv
+        self.HoverTooniKordaja = olek.hoverTooniKordaja
+    
         self.taust = Ristkülik(pind, self.asuk, self.suurus)
-        self.taust.MääraVärv(olek.päevaruuduVärv)
         self.pind = pind
         self.sündmused = päev.sündmusteNimekiri
-
-    #Kontrolli, kas hiir on päevaruudu peal ja tagasta bool väärtus
-    def KasHiirKohal():
-        pass
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)
@@ -124,9 +124,18 @@ class PäevaRuut:
         self.suurus = (x,y)
 
     def Joonista(self):
+        #Kontrolli hiire asukohta
+        if KasHiirÜmarnelinurgas(self):
+            HoverVärv = KorrutaRGB(self.HoverTooniKordaja, self.originaalVärv)
+            self.olek.päevaruuduVärv = HoverVärv
+        else:
+            self.olek.päevaruuduVärv = self.originaalVärv
+            
+
         # Päevaruudu taust
         self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])
         self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
+        self.taust.MääraVärv(self.olek.päevaruuduVärv)
         self.taust.Joonista()
 
         # Päevaruudu pealkiri – kuupäev ja aasta
