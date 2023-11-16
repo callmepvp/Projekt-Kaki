@@ -44,7 +44,7 @@ defaultDataBody = {
         "päevaruutudeTaustaVärv" : (220,220,220,255),
         "päevaruutudeTaustaNurgaÜmardus" : 20,
         
-        "LisaSündmusNupuVärv" : (255, 51, 102, 255),
+        "LisaSündmusNupuVärv" : (158, 240, 26, 255),
         "LisaSündmusNupuPlussiAluneVärv" : (40,40,40,255),
 
         "suureNupuTekstiSuurus" : 30
