@@ -1,5 +1,5 @@
 ﻿import pygame
-from PIL import Image, ImageChops 
+from PIL import Image, ImageFilter 
 import PIL
 class LisaSündmuseNupp:
     def __init__(self, olek, pind:"pygame.Surface"):
@@ -43,4 +43,21 @@ class LisaSündmuseNupp:
                          border_bottom_right_radius = nurgaÜmardus)
         
         
+        # Pluss
+        Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
+        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=(158,240,26,255))
+        Pmask = Image.open("Pildid/pluss2.png").convert('L')
+        Pp3 = Image.composite(Pp1, Pp0, Pmask)
+
+        # Dropshadow
+        Dp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
+        Dp1 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,255))
+        Dmask = Image.open("Pildid/pluss2.png").convert('L')
+        Dmask = Dmask.filter(ImageFilter.GaussianBlur(3))
+        Dp3 = Image.composite(Dp1, Dp0, Dmask)
+
+        # Kokku
+        valmis = Image.composite(Pp3, Dp3, Pp3)
+        valmis.show()
+
         self.pind.blit(self.pildipind, (pildiAsukx, pildiAsuky))
