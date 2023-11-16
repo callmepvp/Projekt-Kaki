@@ -6,7 +6,7 @@ def GenereeriID(Olek: "ProgrammiOlek"):
     Nimekiri = Olek.sündmusteNimekiri
     #* kontrolli pikkust
     
-    if len(Nimekiri) != 1:
+    if len(Nimekiri) != 0:
         kasutatudID = [sündmus.id for sündmus in Nimekiri]
         sorteeritudID = sorted(kasutatudID)
 
@@ -17,7 +17,6 @@ def GenereeriID(Olek: "ProgrammiOlek"):
             elif num > vähimPuudu:
                 break
 
-        print(vähimPuudu)
         return vähimPuudu
     else:
         return 1

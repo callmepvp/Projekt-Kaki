@@ -10,6 +10,7 @@ from Sündmus import Sündmus
 from Päev import Päev
 from Nupp import LisaSündmuseNupp
 from PIL import Image, ImageFilter
+from UtilityFunktsioonid import GenereeriID
 
   
 
@@ -40,18 +41,21 @@ class Programm:
         #print(self.olek.päevaruuduVärv)
 
         kp1 = Kuupäev(8, 11, 2023)
-        s1 = Sündmus("Emadepäeva kontsert", kp1, )
+        s1 = Sündmus("Emadepäeva kontsert", kp1, GenereeriID(self.olek))
         s1.MääraLõppKell(15, 34)
-        s2 = Sündmus("MMP Moodle'i testi tähtaeg", kp1)
+        self.olek.sündmusteNimekiri.append(s1)
+        
+        s2 = Sündmus("MMP Moodle'i testi tähtaeg", kp1, GenereeriID(self.olek))
         s2.MääraLõppKell(21,0)
+        self.olek.sündmusteNimekiri.append(s2)
 
         kp2 = Kuupäev(12, 11, 2023)
-        s3 = Sündmus("Rong läheb Rakverre", kp2)
+        s3 = Sündmus("Rong läheb Rakverre", kp2, GenereeriID(self.olek))
         s3.MääraLõppKell(13, 0)
-        s4 = Sündmus("Pakk kaob pakiautomaadist ära", kp2)
+        self.olek.sündmusteNimekiri.append(s3)
+        s4 = Sündmus("Pakk kaob pakiautomaadist ära", kp2, GenereeriID(self.olek))
         s4.MääraLõppKell(23,0)
-
-        self.olek.sündmusteNimekiri = [s1, s2, s3, s4]
+        self.olek.sündmusteNimekiri.append(s4)
 
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
