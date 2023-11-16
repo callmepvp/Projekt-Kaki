@@ -92,6 +92,9 @@ class ProgrammiOlek:
         self.päevaruutudeTaustaVärv = (220,220,220,255)
 
         self.päevaruutudeTaustaNurgaÜmardus = 20
+       
+        self.suureNupuTekstiSuurus = 30
+        self.suureNupuTekstiPygFont = pygame.font.Font(self.kuupäevaFondiPath, self.suureNupuTekstiSuurus)
 
-
+        self.LisaSündmusNupuVärv = (255, 51, 102, 255)
         

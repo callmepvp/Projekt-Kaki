@@ -23,26 +23,6 @@ class Programm:
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
     def JaaaaLäks(self):
 
-        # Pluss
-        Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
-        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=(158,240,26,255))
-        Pmask = Image.open("Pildid/pluss2.png").convert('L')
-        Pp3 = Image.composite(Pp1, Pp0, Pmask)
-
-        # Dropshadow
-        Dp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
-        Dp1 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,255))
-        Dmask = Image.open("Pildid/pluss2.png").convert('L')
-        Dmask = Dmask.filter(ImageFilter.GaussianBlur(3))
-        Dp3 = Image.composite(Dp1, Dp0, Dmask)
-
-        # Kokku
-        valmis = Image.composite(Pp3, Dp3, Pp3)
-        valmis.show()
-        
-
-
-
 
 
         def wndProc(oldWndProc, draw_callback, hWnd, message, wParam, lParam):
@@ -116,7 +96,7 @@ class Programm:
             
             ekrLai = ekraan.get_width()
             ekrKõrg = ekraan.get_height()
-            ruudAsukx = 30
+            ruudAsukx = ekrLai * 0.1
             ruudAsuky = 30
             ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
             ruudustik.MääraLaius(ekrLai*0.8)

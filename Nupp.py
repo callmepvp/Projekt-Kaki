@@ -1,14 +1,35 @@
 ﻿import pygame
 from PIL import Image, ImageFilter 
 import PIL
+from UtilityFunktsioonid import PILpiltPinnaks
+from Tekst import Tekst
+from Programmiolek import ProgrammiOlek
+
 class LisaSündmuseNupp:
-    def __init__(self, olek, pind:"pygame.Surface"):
+    def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
+        self.olek = olek
         self.pind = pind
         self.asukoht = (0,0)
         self.suurus = (200, 80)
+        self.värv = olek.LisaSündmusNupuVärv
 
-        self.pildipind = pygame.image.load("pildid/pluss.png").convert_alpha()
-        self.pildipind = pygame.transform.scale(self.pildipind, (45,45))
+        # Pluss
+        Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
+        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=self.värv)
+        Pmask = Image.open("Pildid/pluss2.png").convert('L')
+        Pp3 = Image.composite(Pp1, Pp0, Pmask)
+
+        # Dropshadow
+        Dp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
+        Dp1 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,255))
+        Dmask = Image.open("Pildid/pluss2.png").convert('L')
+        Dmask = Dmask.filter(ImageFilter.GaussianBlur(3))
+        Dp3 = Image.composite(Dp1, Dp0, Dmask)
+
+        # Kokku
+        valmis = Image.composite(Pp3, Dp3, Pp3)
+        self.pildipind = PILpiltPinnaks(valmis)
+
 
     def MääraSuurus(self, suurus):
         self.suurus = suurus
@@ -19,10 +40,13 @@ class LisaSündmuseNupp:
     def Joonista(self):
         pind = self.pind
         vasakVärv = (40,40,40,255)
-        paremVärv = (158,240,26, 255)
+        
+        #paremVärv = (158,240,26, 255)
+        paremVärv = (255, 51, 102, 255)
 
         suhe = 0.2
-        kiri = "Lisa sündmus"
+        
+        nupuKiri = "Lisa sündmus"
         kõrgus = self.suurus[1]
         vasakLaius = self.suurus[0]*suhe
         paremLaius = self.suurus[0] - vasakLaius
@@ -43,21 +67,10 @@ class LisaSündmuseNupp:
                          border_bottom_right_radius = nurgaÜmardus)
         
         
-        # Pluss
-        Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
-        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=(158,240,26,255))
-        Pmask = Image.open("Pildid/pluss2.png").convert('L')
-        Pp3 = Image.composite(Pp1, Pp0, Pmask)
-
-        # Dropshadow
-        Dp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
-        Dp1 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,255))
-        Dmask = Image.open("Pildid/pluss2.png").convert('L')
-        Dmask = Dmask.filter(ImageFilter.GaussianBlur(3))
-        Dp3 = Image.composite(Dp1, Dp0, Dmask)
-
-        # Kokku
-        valmis = Image.composite(Pp3, Dp3, Pp3)
-        valmis.show()
-
         self.pind.blit(self.pildipind, (pildiAsukx, pildiAsuky))
+        
+
+        # Tekst nupu peale:
+        #print(self.olek)
+        #kiri = Tekst(self.pind, nupuKiri, font)
+        
