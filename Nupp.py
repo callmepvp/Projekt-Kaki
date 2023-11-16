@@ -45,14 +45,14 @@ class LisaSündmuseNupp:
 
         suhe = 0.2
         
-        nupuKiri = "Lisa sündmus"
+        
         kõrgus = self.suurus[1]
         vasakLaius = self.suurus[0]*suhe
         paremLaius = self.suurus[0] - vasakLaius
         paremAsukx = self.asukoht[0] + vasakLaius
         nurgaÜmardus = 15
 
-        vasakRect = (self.asukoht[0], self.asukoht[1], vasakLaius, kõrgus)
+        vasakRect = (self.asukoht[0], self.asukoht[1], vasakLaius*1.1, kõrgus)
         paremRect = (paremAsukx, self.asukoht[1], paremLaius, kõrgus)
 
         pildiAsukx = self.asukoht[0] + vasakLaius / 2 - self.pildipind.get_size()[0]/2
@@ -69,6 +69,7 @@ class LisaSündmuseNupp:
         self.pind.blit(self.pildipind, (pildiAsukx, pildiAsuky))
         
 
+        nupuKiri = "Lisa sündmus"
         # Tekst nupu peale:
         #print(self.olek)
         #kiri = Tekst(self.pind, nupuKiri, font)
