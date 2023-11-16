@@ -112,7 +112,6 @@ def VõtaOlek():
 
     return Olek
 
-#* Loo igale sündmusele unikaalne ID
 def SalvestaOlek(Olek):
     with open(dataFileDirectory, encoding="utf-8") as fail:
         programmiInfo = json.load(fail)
@@ -123,7 +122,7 @@ def SalvestaOlek(Olek):
     #Tee list kõikidest sündmuste sõnastikest
     sündmusteSõnastikud = [sündmus.KonverteeriSõnastikuks() for sündmus in olemasolevadSündmused]
     for sündmus in sündmusteSõnastikud:
-        failiSündmused[sündmus['nimi']] = sündmus
+        failiSündmused[sündmus['id']] = sündmus
 
     programmiInfo['sündmused'] = failiSündmused
 

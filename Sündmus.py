@@ -80,6 +80,7 @@ class Sündmus:
         väljund = {
             "nimi" : self.nimi,
             "ajaTüüp" : self.ajaTüüp,
+            "id" : self.id,
             
             "alguskuupäev" : self.TagastaOsaObjektid(self.alguskuupäev) if self.alguskuupäev else None,
             "lõppkuupäev" : self.TagastaOsaObjektid(self.lõppkuupäev) if self.lõppkuupäev else None,
