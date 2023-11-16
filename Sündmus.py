@@ -8,7 +8,10 @@ import json
 class Sündmus:
     
     # Ürituse pealkiri on string ja kuupäev on Kuupäeva objekt.
-    def __init__(self, nimi, kuupäev:Kuupäev):
+    def __init__(self, nimi, kuupäev:Kuupäev, id):
+
+        self.id = id
+
         self.nimi = nimi
 
         # Need on sündmuseolekud
