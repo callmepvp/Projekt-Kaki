@@ -40,18 +40,16 @@ class Programm:
         #print(self.olek.päevaruuduVärv)
 
         kp1 = Kuupäev(8, 11, 2023)
-        s1 = Sündmus("Emadepäeva kontsert", kp1)
+        s1 = Sündmus("Emadepäeva kontsert", kp1, )
         s1.MääraLõppKell(15, 34)
         s2 = Sündmus("MMP Moodle'i testi tähtaeg", kp1)
         s2.MääraLõppKell(21,0)
-        p1 = Päev(kp1, [s1, s2])
 
         kp2 = Kuupäev(12, 11, 2023)
         s3 = Sündmus("Rong läheb Rakverre", kp2)
         s3.MääraLõppKell(13, 0)
         s4 = Sündmus("Pakk kaob pakiautomaadist ära", kp2)
         s4.MääraLõppKell(23,0)
-        p2 = Päev(kp2, [s3, s4])
 
         self.olek.sündmusteNimekiri = [s1, s2, s3, s4]
 
