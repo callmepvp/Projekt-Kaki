@@ -42,14 +42,20 @@ defaultDataBody = {
         "päevaruuduKõrgus" : 100,
 
         "päevaruutudeTaustaVärv" : (220,220,220,255),
-        "päevaruutudeTaustaNurgaÜmardus" : 20
+        "päevaruutudeTaustaNurgaÜmardus" : 20,
+        
+        "LisaSündmusNupuVärv" : (255, 51, 102, 255),
+        "LisaSündmusNupuPlussiAluneVärv" : (40,40,40,255),
+
+        "suureNupuTekstiSuurus" : 30
     },
 
     "fondiTüübid" : {
         "päevaruuduPealkKpPygFont" : "pvPealkKpSuurus",
         "päevaruuduPealkAastaPygFont" : "pvPealkAastaSuurus",
         "sündmuseReaKirjaFont" : "sündmuseReaKirjaSuurus",
-        "sündmuseReaAjaFont" : "sündmuseReaAjaSuurus"
+        "sündmuseReaAjaFont" : "sündmuseReaAjaSuurus",
+        "suureNupuTekstiPygFont" : "suureNupuTekstiSuurus"
     },
 
     "sündmused" : {
@@ -69,7 +75,12 @@ def VõtaInfoJaAnnaVäärtused(Olek: object) -> None:
 
     #Paneb kõik parameetrid paika
     for key, value in programmiInfo["programmiInfo"].items():
-        setattr(Olek, key, value)
+        if isinstance(value, list):
+            #Kontrollib kas antud väärtus on list, mille ta peaks tegema ennikuks tagasi
+            setattr(Olek, key, tuple(value))
+        else:
+            #Kui väärtus ei ole list
+            setattr(Olek, key, value)
 
     #Paneb kõik fondid paika
     setattr(Olek, 'kuupäevaFondiPath', os.path.join("Fondid", getattr(Olek, 'kuupäevaFondiNimi')))

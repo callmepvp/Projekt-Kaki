@@ -58,7 +58,7 @@ class Programm:
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
 
-        a = LisaSündmuseNupp(0, ekraan)
+        a = LisaSündmuseNupp(self.olek, ekraan)
         a.MääraAsukoht((200, 250))
         a.MääraSuurus((300, 100))
         

@@ -97,4 +97,5 @@ class ProgrammiOlek:
         self.suureNupuTekstiPygFont = pygame.font.Font(self.kuupäevaFondiPath, self.suureNupuTekstiSuurus)
 
         self.LisaSündmusNupuVärv = (255, 51, 102, 255)
+        self.LisaSündmusNupuPlussiAluneVärv = (40,40,40,255)
         

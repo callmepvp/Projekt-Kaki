@@ -11,11 +11,12 @@ class LisaSündmuseNupp:
         self.pind = pind
         self.asukoht = (0,0)
         self.suurus = (200, 80)
-        self.värv = olek.LisaSündmusNupuVärv
+        self.peamineVärv = olek.LisaSündmusNupuVärv
+        self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
 
         # Pluss
         Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
-        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=self.värv)
+        Pp1 = Image.new(mode="RGBA", size=(64, 64), color=self.peamineVärv)
         Pmask = Image.open("Pildid/pluss2.png").convert('L')
         Pp3 = Image.composite(Pp1, Pp0, Pmask)
 
@@ -39,10 +40,8 @@ class LisaSündmuseNupp:
     
     def Joonista(self):
         pind = self.pind
-        vasakVärv = (40,40,40,255)
-        
-        #paremVärv = (158,240,26, 255)
-        paremVärv = (255, 51, 102, 255)
+        vasakVärv = self.sekundaarneVärv
+        paremVärv = self.peamineVärv
 
         suhe = 0.2
         
