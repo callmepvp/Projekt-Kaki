@@ -45,10 +45,7 @@ class SündmuseRida:
         tekst.MääraAsukoht((pealkAsukx, self.asukoht[1]))
         tekst.MääraReavahe(reavahe)
         tekst.MääraRidadeArv(ridu)
-        viimaneRida = tekst.Joonista()
-        #print(viimaneRida)
-        return viimaneRida
-    
+        tekst.Joonista()    
  
 
 
@@ -58,12 +55,26 @@ class SündmuseRida:
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
 
-    def VõtaSuurus(self):
-        suurus = self.olek.sündmuseReaKirjaFont.size(self.sündmus.VõtaNimi())
-        return suurus
+    def KuiPaljuRuumiOnVaja(self):
+        
+        täpivahe = self.olek.sündmuseReaTäpiVahe
+        pealkRuum = self.laius - täpivahe
+        pealkTekst = self.sündmus.VõtaNimi()
+        pealkFont = self.olek.sündmuseReaKirjaFont
 
-
-
+        # See, kui mitu rida võib sündmuserida olla.
+        ridu = self.olek.sündmuseReaRidu
+        reavahe = self.olek.sündmuseReaReavahe
+        
+        tekst = MitmeReaTekst(self.olek, self.pind, pealkTekst, pealkFont)
+        tekst.MääraLaius(pealkRuum)
+        tekst.MääraReavahe(reavahe)
+        tekst.MääraRidadeArv(ridu)
+        
+        tulemus = tekst.KuiPaljuRuumiOnVaja()
+        return tulemus
+        
+        
 
 
 # PäevaPealkiri
@@ -84,11 +95,13 @@ class PäevaPealkiri:
         pk = self.kuupäev.VõtaPäevKuuTekstina()
         a = self.kuupäev.VõtaAastaTekstina()
 
-        päevKuuTekst = Tekst(self.pind, pk, self.kpFont, self.värv, self.asukoht)
+        päevKuuTekst = Tekst(self.pind, pk, self.kpFont, self.värv)
+        päevKuuTekst.MääraAsukoht(self.asukoht)
         päevKuuTekst.Joonista()
         
         aAsuk = (self.asukoht[0] + self.kpFont.size(pk)[0] + 10, self.asukoht[1])
-        aastaTekst = Tekst(self.pind, a, self.aFont, self.värv,aAsuk)
+        aastaTekst = Tekst(self.pind, a, self.aFont, self.värv)
+        aastaTekst.MääraAsukoht(aAsuk)
         aastaTekst.Joonista()
 
     def VõtaLaius(self):
@@ -124,6 +137,27 @@ class PäevaRuut:
         if x != None: self.suurus = (x, self.suurus[1])
         if y != None: self.suurus = (self.suurus[0], y)
 
+
+    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius. Seda meetodit kasutab päevaruudustik, et saada teada, kui kõrgeks on mõistlik teha üks päevaruutude rida. Päevaruudustik uurib selle funktsiooni abil, mis on ruumivajaduse seis sama rea teistel ruutudel ja selle järgi valib mingi kõrguse, mis keskmiselt sobiks kõigile rea ruutudele ja mille see siis tegelikult annab igale ruudule joonistamiseks. On crazy, kui see lõpuks töötab kah.
+    # Meetod uurib välja, kui kõrge oleks ruut antud laiuse korral. Kõrgus oleneb peamiselt sellest kui mitu sündmuserida on ja kui palju kordi need sündmuseread peavad enda joonistamisel uuele reale minema. Aga sellele liituvad veel kuupäeva ja teksti vahe, ruudu alumise ja ülemise osa kaugused ülemisest tekstist, alumisest tekstist, ridade vahede suurused ja mõni muu kaugus veel.
+    def KuiPaljuRuumiOnVaja(self):
+        ülevalt = self.olek.päevaruuduPealkKaugusÜlaservast
+        ridaKuupäevast = self.olek.sündmuseReadKuupäevast
+        sündmuseRidadeRead = 0
+        
+        täpivahe = self.olek.sündmuseReaTäpiVahe
+        for i in self.sündmused:
+            uusRida = SündmuseRida(self.olek, self.pind, i)
+            laius = self.suurus[0] - täpivahe
+            uusRida.MääraLaius(laius)
+            sündmuseRidadeRead += uusRida.KuiPaljuRuumiOnVaja()
+        
+        ridadeVahe = (max(0, len(self.sündmused)-1)) * self.olek.sündmuseRidadeVahe
+        alt = ülevalt        
+
+        return ülevalt + ridaKuupäevast + sündmuseRidadeRead + ridadeVahe + alt
+
+
     def Joonista(self):
         #Kontrolli hiire asukohta
         if KasHiirÜmarnelinurgas(self):
@@ -139,61 +173,27 @@ class PäevaRuut:
         self.taust.MääraVärv(self.olek.päevaruuduVärv)
         self.taust.Joonista()
 
-        # Päevaruudu pealkiri – kuupäev ja aasta
+        # Kuupäev ja aasta
         pealkAsukx = self.asuk[0] + self.olek.päevaruuduPealkKaugusVasakult
         pealkAsuky = self.asuk[1] + self.olek.päevaruuduPealkKaugusÜlaservast
         self.pealkiri.MääraAsukoht(pealkAsukx, pealkAsuky)
         self.pealkiri.Joonista()
 
         # Päevaruudu sündmused
-        counter = 0
         kuupäevast = self.olek.sündmuseReadKuupäevast
         asuky = pealkAsuky + kuupäevast
         täpivahe = self.olek.sündmuseReaTäpiVahe
-        asukx = self.asuk[0] + täpivahe
         for i in self.sündmused:
             uusRida = SündmuseRida(self.olek, self.pind, i)
             uusRida.MääraAsukoht((self.asuk[0] + täpivahe, asuky))
-            uusRida.MääraLaius(self.suurus[0] - täpivahe)
-            sündRiddVahe = self.olek.sündmuseRidadeVahe
-            asuky = uusRida.Joonista() + sündRiddVahe
+            laius = self.suurus[0] - täpivahe
+            uusRida.MääraLaius(laius)
+            uusRida.Joonista()
+            
+            
+            vahe = self.olek.sündmuseRidadeVahe
+            asuky = asuky + uusRida.KuiPaljuRuumiOnVaja() + vahe
       
-
-    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius. Seda meetodit kasutab päevaruudustik, et saada teada, kui kõrgeks on mõistlik teha üks päevaruutude rida. Päevaruudustik uurib selle funktsiooni abil, mis on ruumivajaduse seis sama rea teistel ruutudel ja selle järgi valib mingi kõrguse, mis keskmiselt sobiks kõigile rea ruutudele ja mille see siis tegelikult annab igale ruudule joonistamiseks. On crazy, kui see lõpuks töötab kah.
-    # Meetod uurib välja, kui kõrge oleks ruut antud laiuse korral. Kõrgus oleneb peamiselt sellest kui mitu sündmuserida on ja kui palju kordi need sündmuseread peavad enda joonistamisel uuele reale minema. Aga sellele liituvad veel kuupäeva ja teksti vahe, ruudu alumise ja ülemise osa kaugused ülemisest tekstist, alumisest tekstist, ridade vahede suurused ja mõni muu kaugus veel.
-
-    def KuiPaljuOnRuumiVaja(self):
-        # Pealkiri ruudu ülevalt:
-        ülevalt = self.olek.päevaruuduPealkKaugusÜlaservast
-        
-        # Kuna tekst joonistatakse keskkohaga soovitud asukohta, ss pole vaja arvestada joonistatava teksti kõrgust.
-
-        # Pealkirjast esimese sündmusereani:
-        esimeseReani = self.olek.sündmuseReadKuupäevast
-        
-        # Käiakse üle kõigi sündmuste ja vaadatakse, mitu rida kuluks sündmuse teksti joonistamiseks. Ridade arv, kui vaja, piiratakse selleks, mitmele reale on sündmusereal maksimaalselt lubatud minna. Tulemus on, et on salvestatud, kui palju ruumi võtab sündmusteridade uutele ridadele minemine
-        reaRidadeVahed = 0
-        for i in self.sündmused:
-            riduVaja = MituRidaOnVaja(i.nimi, self.olek.sündmuseReaKirjaFont, self.suurus[0])
-            if riduVaja > self.olek.sündmuseReaRidu: 
-                riduVaja = self.olek.sündmuseReaRidu
-            ruumiVaja = self.olek.sündmuseReaReavahe * (riduVaja-1)
-            reaRidadeVahed += ruumiVaja
-        
-        # Sündmuseridade vahed:
-        ridadeVahed = (len(self.sündmused)-1) * self.olek.sündmuseRidadeVahe
-        
-        # Alumine rida alt on sama, mis ülemine ülevalt.
-        alt = ülevalt
-        
-        summa = ülevalt + esimeseReani + reaRidadeVahed + ridadeVahed + alt
-        
-        return summa
-
-
-
-
-
 
 
 
@@ -255,22 +255,22 @@ class PäevaRuudustik:
         for i in self.päevaRuudud:
             i.MääraSuurus(ruudulaius, None)
 
+        ridadeKõrgused = []
         reaKõrgus = 0
         counter = 0
         for i in self.päevaRuudud:
             # Kui ollakse rea alguses paigutamisega käiakse läbi selle rea tulevad ruudud ja küsitakse kui palju neil ruumi oleks vaja.
             
             antavRuum = 0
-            print(counter % mituReas)
             if counter % (mituReas) == 0:
                 ruumivajadused = []
                 for j in self.päevaRuudud[counter:counter+mituReas]:
-                    ruumivajadused.append(j.KuiPaljuOnRuumiVaja())
+                    ruumivajadused.append(j.KuiPaljuRuumiOnVaja())
                     
                 #Antavaks ruumiks määratakse vajaduste keskmine, aga vb tulevikus võib mingi intelligentsema otsustaja teha
-                print(ruumivajadused)
                 antavRuum = sum(ruumivajadused)/len(ruumivajadused)
                 reaKõrgus = antavRuum
+                ridadeKõrgused.append(reaKõrgus)
             
             
                 
@@ -287,7 +287,7 @@ class PäevaRuudustik:
             i.MääraSuurus(ruudulaius, reaKõrgus)
             counter += 1
         
-        taustaKõrgus = 2*äärevahe + reaKõrgus + (ridadeArv)*ruuduvahe
+        taustaKõrgus = 2*äärevahe + sum(ridadeKõrgused)+ (ridadeArv)*ruuduvahe
 
         # PAIGUTAMINE LÕPPES
 
@@ -304,63 +304,4 @@ class PäevaRuudustik:
             
 
 
-        
-
-
-
-        
-
-
-
-
-
-class PäevaRuudustikVana:
-    def __init__(self, pind, kujuRistkülik:"Ristkülik", minLaius, kõrgus, vahesuurus, äärevahe, ruutudeArv):
-        self.minLaius = minLaius
-        self.kõrgus = kõrgus
-        self.vahe = vahesuurus
-        self.ruudud: List[Ristkülik] = []
-        self.taust = kujuRistkülik
-        for i in range(ruutudeArv):
-            uusRuut = Ristkülik(pind, (0,0),(0,0))
-            self.ruudud.append(uusRuut)
-        self.äärevahe = äärevahe
-        self.ridadeArv = 0
-
-
-    def Paiguta(self):
-        taustaLaius = self.taust.VõtaSuurus()[0]
-        mituReas = floor(taustaLaius/self.minLaius)
-        if mituReas == 0: mituReas = 1
-        vahesidKokku = 2*self.äärevahe + (mituReas-1)*self.vahe
-        ruudulaius = (taustaLaius - vahesidKokku)/mituReas
-
-        counter = 0
-        vasakServ = self.taust.VõtaAsukoht()[0]
-        ülemServ = self.taust.VõtaAsukoht()[1]
-        for i in self.ruudud:
-
-            
-            mitmesTulp = counter % mituReas
-            mitmesRida = floor(counter/mituReas)
-            ridadeArv = mitmesRida
-
-
-            asukx = vasakServ + self.äärevahe + mitmesTulp*(ruudulaius + self.vahe)
-            asuky = ülemServ + self.äärevahe + mitmesRida*(self.minLaius + self.vahe)
-
-            i.MääraAsukoht(asukx, asuky)
-            i.MääraSuurus(ruudulaius, self.minLaius)
-
-            counter += 1
-
-
-    # Seda meetodit kutsuda ainult pärast seda, kui on kasutatud Paiguta meetodit, sest see tagab, et self.ridadeArv omab õiget väärtust. Väljastab kauguse ülemise ruudu ülemisest servast alumise ruudu alumise servani. Vajalik selleks, et väljaspool klassi saaks taustaks olev kujund enda suuruse õigeks panna.
-    def VõtaRuutudeKõrgus(self):
-        kõrgus = self.ridadeArv * kõrgus + (self.ridadeArv-1) * self.vahesuurus
-        return kõrgus
-
-
-    def Joonista(self):
-        for i in self.ruudud:
-            i.Joonista()
+  

@@ -16,13 +16,28 @@ def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Fon
     return (kasvatatav,"")
 
 
+def TekstRidadeks(tekst, pygFont, laius):
+    read = []
+    paar = EraldaSobivaPikkusegaTekst(tekst, laius, pygFont)
+    read.append(paar[0])
+    while paar[1] != "":
+        paar = EraldaSobivaPikkusegaTekst(paar[1], laius, pygFont)
+        read.append(paar[0])
+    return read
+        
+        
+def MituRidaOnVaja(tekst, font, laius):
+    kogus = len(TekstRidadeks(tekst, font, laius))
+    return kogus
+
+
 
 class Tekst:
 
-    def __init__(self, pind, tekst, pygFont, värv=(255,0,0), asuk=(0,0)):
+    def __init__(self, pind, tekst, pygFont, värv=(255,0,0)):
         self.pygFont = pygFont
         self.pind = pind
-        self.asuk = asuk
+        self.asuk = (0,0)
         self.tekst = tekst
         self.värv = värv
     
@@ -51,12 +66,13 @@ class MitmeReaTekst:
     def __init__(self, olek:ProgrammiOlek, pind, tekst, pygfont):
         self.olek = olek
         self.pind = pind
-        self.tekst = tekst
         self.laius = 100
         self.asukoht = (0,0)
         self.font = pygfont
         self.värv = (10,10,10,255)
         self.reavahe = 30
+        self.tekst = tekst
+
         # Ridade arv vastab sellele, kui mitu rida joonistatakse. Väärtus 0 tähendab, et joonistatakse nii palju ridu kui kulub kogu teksti joonistamiseks.
         self.ridadeArv = 3
 
@@ -75,52 +91,36 @@ class MitmeReaTekst:
     def MääraReavahe(self, reavahe):
         self.reavahe = reavahe
 
-    # Erinevalt peaaegu kõigi teiste objektide Joonista funktsioonidest see siin returnib midagi. See returnib viimase rekstirea asukoha. Kasutades seda infot saavad muud asjad väljaspool objekti end paigutada.
+    # Erinevalt peaaegu kõigi teiste objektide Joonista funktsioonidest see siin returnib midagi. See  viimase rekstirea asukoha. Kasutades seda infot saavad muud asjad väljaspreturnibool objekti end paigutada.
     def Joonista(self):
-
+        read = TekstRidadeks(self.tekst, self.font, self.laius)
         reavahe = self.reavahe
-        reafont = self.font
-        värv = self.värv
-        joonistadaJäänud = self.tekst
+        ridadeArv = self.ridadeArv
+        
 
-        if self.ridadeArv != 0:
-            for i in range(self.ridadeArv):
-                tekstid = EraldaSobivaPikkusegaTekst(joonistadaJäänud, self.laius, reafont)
-                joonistatav = tekstid[0]
-                joonistadaJäänud = tekstid[1]
+        # Joonistab kõik read
+        if ridadeArv == 0:
+            for i in read:
+                asuky = self.asukoht[1] + counter * reavahe
+                tekst = Tekst(self.pind, i, self.font, self.värv)
+                tekst.MääraAsukoht((self.asukoht[0], asuky))
+                tekst.Joonista()
                 
-                asukx = self.asukoht[0]
-                asuky = self.asukoht[1] + i * reavahe
-                rida = Tekst(self.pind, joonistatav, reafont, värv, (asukx, asuky))
-                rida.Joonista()
-
-                if joonistadaJäänud == "":
-                    break
+                
+        # Joonistab ainult nõutud arvu ridu
         else:
-            while joonistadaJäänud != "":
-                tekstid = EraldaSobivaPikkusegaTekst(joonistadaJäänud, self.laius, reafont)
-                joonistatav = tekstid[0]
-                joonistadaJäänud = tekstid[1]
-                
-                asukx = self.asuk[0]
-                asuky = self.asuk[1] + i * reavahe
-                rida = Tekst(self.pind, joonistatav, reafont, värv, (asukx, asuky))
-                rida.Joonista()
+            counter = 0
+            while counter < ridadeArv and counter < len(read):
+                asuky = self.asukoht[1] + counter * reavahe
+                tekst = Tekst(self.pind, read[counter], self.font, self.värv)
+                tekst.MääraAsukoht((self.asukoht[0], asuky))
+                tekst.Joonista()
+                counter += 1
 
-        return asuky
-
-
-def TekstRidadeks(tekst, pygFont, laius):
-    read = []
-    paar = EraldaSobivaPikkusegaTekst(tekst, laius, pygFont)
-    read.append(paar[0])
-    while paar[1] != "":
-        paar = EraldaSobivaPikkusegaTekst(paar[1], laius, pygFont)
-        read.append(paar[0])
-    return read
-        
+      
+    def KuiPaljuRuumiOnVaja(self):
+        ridu = len(TekstRidadeks(self.tekst, self.font, self.laius))
+        vajadus = min((ridu-1) * self.reavahe, (self.ridadeArv-1)*self.reavahe)
+        return vajadus
         
 
-def MituRidaOnVaja(tekst, font, laius):
-    kogus = len(TekstRidadeks(tekst, font, laius))
-    return kogus
