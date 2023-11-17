@@ -6,5 +6,8 @@ def main():
     programm = Programm(AlgOlek)
     LõppOlek = programm.JaaaaLäks()
     SalvestaOlek(LõppOlek)
+    
+
 
 main()
+

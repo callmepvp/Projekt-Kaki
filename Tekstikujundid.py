@@ -157,8 +157,24 @@ class PäevaRuut:
             sündRiddVahe = self.olek.sündmuseRidadeVahe
             asuky = uusRida.Joonista() + sündRiddVahe
       
-    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius.
-    def KuiPaljuOnRuumiVaja():
+
+    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius. Seda meetodit kasutab päevaruudustik, et saada teada, kui kõrgeks on mõistlik teha üks päevaruutude rida. Päevaruudustik uurib selle funktsiooni abil, mis on ruumivajaduse seis sama rea teistel ruutudel ja selle järgi valib mingi kõrguse, mis keskmiselt sobiks kõigile rea ruutudele ja mille see siis tegelikult annab igale ruudule joonistamiseks.
+    # Meetod uurib välja, kui kõrge oleks ruut antud laiuse korral. Kõrgus oleneb peamiselt sellest kui mitu sündmuserida on ja kui palju kordi need sündmuseread peavad enda joonistamisel uuele reale minema. Aga sellele liituvad veel kuupäeva ja teksti vahe, ruudu alumise ja ülemise osa kaugused ülemisest tekstist, alumisest tekstist, ridade vahede suurused ja mõni muu kaugus veel.
+    def KuiPaljuOnRuumiVaja(self):
+        # Pealkiri ruudu ülevalt:
+        ülevalt = self.olek.päevaruuduPealkKaugusÜlaservast
+        
+        # Kuna tekst joonistatakse keskkohaga soovitud asukohta, ss pole vaja arvestada joonistatava teksti kõrgust.
+
+        # Pealkirjast esimese sündmusereani:
+        esimeseReani = self.olek.sündmuseReadKuupäevast
+        
+        # Sündmuseridade võetav ruum. Sündmuseridu võib olla mitu ja iga rida võib omakorda olnud läinud uutele ridadele.
+        
+        
+
+
+
         
         
 

@@ -122,4 +122,4 @@ def TekstRidadeks(tekst, pygFont, laius):
         
 
 def MituRidaOnVaja(tekst, font, laius):
-    
+    pass
