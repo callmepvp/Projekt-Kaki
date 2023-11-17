@@ -251,27 +251,29 @@ class PäevaRuudustik:
         vasakServ = taustaAsukx
         ülemServ = taustaAsuky
 
-        ruuduKõrgus = self.olek.päevaruuduKõrgus
         # KÕigile ruutudele määratakse ühtne laius.
         for i in self.päevaRuudud:
             i.MääraSuurus(ruudulaius, None)
 
-        ridadeKõrgused = []
+        reaKõrgus = 0
         counter = 0
         for i in self.päevaRuudud:
             # Kui ollakse rea alguses paigutamisega käiakse läbi selle rea tulevad ruudud ja küsitakse kui palju neil ruumi oleks vaja.
             
             antavRuum = 0
-            if counter % mituReas == 0:
+            print(counter % mituReas)
+            if counter % (mituReas) == 0:
                 ruumivajadused = []
-                for i in self.päevaRuudud[counter:counter+mituReas]:
-                    ruumivajadused.append(i.KuiPaljuOnRuumiVaja())
+                for j in self.päevaRuudud[counter:counter+mituReas]:
+                    ruumivajadused.append(j.KuiPaljuOnRuumiVaja())
                     
-                #Antavaks ruumiks määratakse vajaduste keskmine, aga vb tulevikus võib mingi intelligentsema otsustaja teha.
+                #Antavaks ruumiks määratakse vajaduste keskmine, aga vb tulevikus võib mingi intelligentsema otsustaja teha
+                print(ruumivajadused)
                 antavRuum = sum(ruumivajadused)/len(ruumivajadused)
-                ridadeKõrgused.append(antavRuum)
+                reaKõrgus = antavRuum
+            
+            
                 
-
             mitmesTulp = counter % mituReas
             mitmesRida = floor(counter/mituReas)
             # Kui kõik ruudud on läbi käidud, ss on ridadeArv võrdne sellega, kui palju ridasid on ruudustikus. Seda väärtust kasutab taust, et oma kõrgus leida.
@@ -282,11 +284,10 @@ class PäevaRuudustik:
             asuky = ülemServ + äärevahe + mitmesRida*(antavRuum + ruuduvahe)
 
             i.MääraAsukoht(asukx, asuky)
-            i.MääraSuurus(ruudulaius, antavRuum)
+            i.MääraSuurus(ruudulaius, reaKõrgus)
             counter += 1
-
         
-        taustaKõrgus = 2*äärevahe + sum(ridadeKõrgused) + (ridadeArv)*ruuduvahe
+        taustaKõrgus = 2*äärevahe + reaKõrgus + (ridadeArv)*ruuduvahe
 
         # PAIGUTAMINE LÕPPES
 
