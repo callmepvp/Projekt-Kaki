@@ -110,4 +110,16 @@ class MitmeReaTekst:
         return asuky
 
 
+def TekstRidadeks(tekst, pygFont, laius):
+    read = []
+    paar = EraldaSobivaPikkusegaTekst(tekst, laius, pygFont)
+    read.append[paar]
+    while paar[1] != "":
+        paar = EraldaSobivaPikkusegaTekst(paar[1], laius, pygFont)
+        read.append(paar)
+    return read
+        
+        
 
+def MituRidaOnVaja(tekst, font, laius):
+    

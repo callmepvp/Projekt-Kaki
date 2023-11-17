@@ -24,8 +24,6 @@ class Programm:
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
     def JaaaaLäks(self):
 
-
-
         def wndProc(oldWndProc, draw_callback, hWnd, message, wParam, lParam):
             if message == win32con.WM_SIZE:
                 draw_callback()

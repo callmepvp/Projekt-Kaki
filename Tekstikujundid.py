@@ -47,9 +47,8 @@ class SündmuseRida:
         viimaneRida = tekst.Joonista()
         #print(viimaneRida)
         return viimaneRida
-
-        
-            
+    
+ 
 
 
     def MääraLaius(self, laius):
@@ -100,6 +99,7 @@ class PäevaPealkiri:
 
 
 
+
 # PäevaRuut
 class PäevaRuut:
     def __init__(self, olek:"ProgrammiOlek", pind, päev:"Päev"):
@@ -147,7 +147,13 @@ class PäevaRuut:
             uusRida.MääraLaius(self.suurus[0] - täpivahe)
             sündRiddVahe = self.olek.sündmuseRidadeVahe
             asuky = uusRida.Joonista() + sündRiddVahe
+      
+    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius.
+    def KuiPaljuOnRuumiVaja():
         
+        
+
+
 
 
 class PäevaRuudustik:
