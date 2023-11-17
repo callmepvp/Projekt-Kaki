@@ -113,13 +113,14 @@ class MitmeReaTekst:
 def TekstRidadeks(tekst, pygFont, laius):
     read = []
     paar = EraldaSobivaPikkusegaTekst(tekst, laius, pygFont)
-    read.append[paar]
+    read.append(paar[0])
     while paar[1] != "":
         paar = EraldaSobivaPikkusegaTekst(paar[1], laius, pygFont)
-        read.append(paar)
+        read.append(paar[0])
     return read
         
         
 
 def MituRidaOnVaja(tekst, font, laius):
-    pass
+    kogus = len(TekstRidadeks(tekst, font, laius))
+    return kogus

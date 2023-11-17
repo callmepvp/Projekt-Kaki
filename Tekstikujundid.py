@@ -1,6 +1,6 @@
 ﻿import pygame
 from Kujundid import Ristkülik
-from Tekst import MitmeReaTekst, Tekst, EraldaSobivaPikkusegaTekst
+from Tekst import MitmeReaTekst, MituRidaOnVaja, Tekst, EraldaSobivaPikkusegaTekst
 from Sündmus import Sündmus
 from math import floor
 from typing import List
@@ -158,8 +158,9 @@ class PäevaRuut:
             asuky = uusRida.Joonista() + sündRiddVahe
       
 
-    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius. Seda meetodit kasutab päevaruudustik, et saada teada, kui kõrgeks on mõistlik teha üks päevaruutude rida. Päevaruudustik uurib selle funktsiooni abil, mis on ruumivajaduse seis sama rea teistel ruutudel ja selle järgi valib mingi kõrguse, mis keskmiselt sobiks kõigile rea ruutudele ja mille see siis tegelikult annab igale ruudule joonistamiseks.
+    # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius. Seda meetodit kasutab päevaruudustik, et saada teada, kui kõrgeks on mõistlik teha üks päevaruutude rida. Päevaruudustik uurib selle funktsiooni abil, mis on ruumivajaduse seis sama rea teistel ruutudel ja selle järgi valib mingi kõrguse, mis keskmiselt sobiks kõigile rea ruutudele ja mille see siis tegelikult annab igale ruudule joonistamiseks. On crazy, kui see lõpuks töötab kah.
     # Meetod uurib välja, kui kõrge oleks ruut antud laiuse korral. Kõrgus oleneb peamiselt sellest kui mitu sündmuserida on ja kui palju kordi need sündmuseread peavad enda joonistamisel uuele reale minema. Aga sellele liituvad veel kuupäeva ja teksti vahe, ruudu alumise ja ülemise osa kaugused ülemisest tekstist, alumisest tekstist, ridade vahede suurused ja mõni muu kaugus veel.
+
     def KuiPaljuOnRuumiVaja(self):
         # Pealkiri ruudu ülevalt:
         ülevalt = self.olek.päevaruuduPealkKaugusÜlaservast
@@ -169,9 +170,24 @@ class PäevaRuut:
         # Pealkirjast esimese sündmusereani:
         esimeseReani = self.olek.sündmuseReadKuupäevast
         
-        # Sündmuseridade võetav ruum. Sündmuseridu võib olla mitu ja iga rida võib omakorda olnud läinud uutele ridadele.
+        # Käiakse üle kõigi sündmuste ja vaadatakse, mitu rida kuluks sündmuse teksti joonistamiseks. Ridade arv, kui vaja, piiratakse selleks, mitmele reale on sündmusereal maksimaalselt lubatud minna. Tulemus on, et on salvestatud, kui palju ruumi võtab sündmusteridade uutele ridadele minemine
+        reaRidadeVahed = 0
+        for i in self.sündmused:
+            riduVaja = MituRidaOnVaja(i.nimi, self.olek.sündmuseReaKirjaFont, self.suurus[0])
+            if riduVaja > self.olek.sündmuseReaRidu: 
+                riduVaja = self.olek.sündmuseReaRidu
+            ruumiVaja = self.olek.sündmuseReaReavahe * (riduVaja-1)
+            reaRidadeVahed += ruumiVaja
         
+        # Sündmuseridade vahed:
+        ridadeVahed = (len(self.sündmused)-1) * self.olek.sündmuseRidadeVahe
         
+        # Alumine rida alt on sama, mis ülemine ülevalt.
+        alt = ülevalt
+        
+        summa = ülevalt + esimeseReani + reaRidadeVahed + ridadeVahed + alt
+        
+        return summa
 
 
 
