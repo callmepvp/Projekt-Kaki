@@ -121,7 +121,8 @@ class PäevaRuut:
         self.asuk = (x,y)
 
     def MääraSuurus(self, x, y):
-        self.suurus = (x,y)
+        if x != None: self.suurus = (x, self.suurus[1])
+        if y != None: self.suurus = (self.suurus[0], y)
 
     def Joonista(self):
         #Kontrolli hiire asukohta
@@ -236,7 +237,6 @@ class PäevaRuudustik:
                 break
             else:
                 mituVahet += 1
-
         
         # Võib olla olukord, kus aken läheb nii kitsaks, et isegi, kui reas on ainult 1 ruut, on sellel ikkagi nii vähe ruumi, et reas peaks olema null ruutu. See kood parandab olukorra ja lic lepib sellega, et ruudu laius on väiksem, kui minlaius.
         if mituReas == 0: mituReas = 1
@@ -245,14 +245,32 @@ class PäevaRuudustik:
         vahesidKokku = 2*äärevahe + (mituReas-1)*ruuduvahe
         ruudulaius = (taustaLaius - vahesidKokku)/mituReas
 
-        # Hakkab kõiki ruutusid paigutama.
-        counter = 0
+        # RUUTUDE PAIGUTAMINE ALGAB:
+
         ridadeArv = 0
         vasakServ = taustaAsukx
         ülemServ = taustaAsuky
 
         ruuduKõrgus = self.olek.päevaruuduKõrgus
+        # KÕigile ruutudele määratakse ühtne laius.
         for i in self.päevaRuudud:
+            i.MääraSuurus(ruudulaius, None)
+
+        ridadeKõrgused = []
+        counter = 0
+        for i in self.päevaRuudud:
+            # Kui ollakse rea alguses paigutamisega käiakse läbi selle rea tulevad ruudud ja küsitakse kui palju neil ruumi oleks vaja.
+            
+            antavRuum = 0
+            if counter % mituReas == 0:
+                ruumivajadused = []
+                for i in self.päevaRuudud[counter:counter+mituReas]:
+                    ruumivajadused.append(i.KuiPaljuOnRuumiVaja())
+                    
+                #Antavaks ruumiks määratakse vajaduste keskmine, aga vb tulevikus võib mingi intelligentsema otsustaja teha.
+                antavRuum = sum(ruumivajadused)/len(ruumivajadused)
+                ridadeKõrgused.append(antavRuum)
+                
 
             mitmesTulp = counter % mituReas
             mitmesRida = floor(counter/mituReas)
@@ -261,13 +279,14 @@ class PäevaRuudustik:
 
 
             asukx = vasakServ + äärevahe + mitmesTulp*(ruudulaius + ruuduvahe)
-            asuky = ülemServ + äärevahe + mitmesRida*(ruuduKõrgus + ruuduvahe)
+            asuky = ülemServ + äärevahe + mitmesRida*(antavRuum + ruuduvahe)
 
             i.MääraAsukoht(asukx, asuky)
-            i.MääraSuurus(ruudulaius, ruuduKõrgus)
+            i.MääraSuurus(ruudulaius, antavRuum)
             counter += 1
 
-        taustaKõrgus = 2*äärevahe + (ridadeArv+1)*ruuduKõrgus + (ridadeArv)*ruuduvahe
+        
+        taustaKõrgus = 2*äärevahe + sum(ridadeKõrgused) + (ridadeArv)*ruuduvahe
 
         # PAIGUTAMINE LÕPPES
 
