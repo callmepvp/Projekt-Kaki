@@ -95,9 +95,11 @@ class ProgrammiOlek:
 
         self.hoverTooniKordaja = 1.1
        
-        self.suureNupuTekstiSuurus = 30
-        self.suureNupuTekstiPygFont = pygame.font.Font(self.kuupäevaFondiPath, self.suureNupuTekstiSuurus)
+        self.suureNupuTekstiSuurus = 10
+        self.suureNupuTekstiPygFont = pygame.font.Font(self.sündmuseFondiPath, self.suureNupuTekstiSuurus)
 
         self.LisaSündmusNupuVärv = (255, 51, 102, 255)
         self.LisaSündmusNupuPlussiAluneVärv = (40,40,40,255)
+        
+        self.suureNupuNurgaRaadius = 20
         

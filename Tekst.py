@@ -34,7 +34,7 @@ def MituRidaOnVaja(tekst, font, laius):
 
 class Tekst:
 
-    def __init__(self, pind, tekst, pygFont, värv=(255,0,0)):
+    def __init__(self, pind, tekst, pygFont:pygame.font.Font, värv=(255,0,0)):
         self.pygFont = pygFont
         self.pind = pind
         self.asuk = (0,0)
@@ -59,11 +59,16 @@ class Tekst:
 
     def MääraTekst(self, tekst):
         self.tekst = tekst
+        
+    # Annab teksti laiuse
+    def VõtaLaius(self):
+        laius = self.pygFont.size(self.tekst)[0]
+        return laius
 
 
 
 class MitmeReaTekst:
-    def __init__(self, olek:ProgrammiOlek, pind, tekst, pygfont):
+    def __init__(self, olek:ProgrammiOlek, pind, tekst, pygfont:pygame.font.Font):
         self.olek = olek
         self.pind = pind
         self.laius = 100
@@ -72,6 +77,9 @@ class MitmeReaTekst:
         self.värv = (10,10,10,255)
         self.reavahe = 30
         self.tekst = tekst
+        self.keskeleJoondus = False
+        self.kasArvestadaLaiust = True
+        self.read = []
 
         # Ridade arv vastab sellele, kui mitu rida joonistatakse. Väärtus 0 tähendab, et joonistatakse nii palju ridu kui kulub kogu teksti joonistamiseks.
         self.ridadeArv = 3
@@ -90,36 +98,58 @@ class MitmeReaTekst:
 
     def MääraReavahe(self, reavahe):
         self.reavahe = reavahe
+        
+    def MääraKeskeleJoondus(self, väärtus:bool):
+        self.keskeleJoondus = väärtus
+        
+    # See funktsioon võtab sisse nimekirja stringidest, millest igaüks tuleb joonistada omale reale. Ühtlasi see funktsioon lülitab välja laiuse kontrolli ja ridade piirarvu
+    def MääraRead(self, read):
+        self.read = read
+        self.kasArvestadaLaiust = False
+        self.ridadeArv = len(read)
 
     # Erinevalt peaaegu kõigi teiste objektide Joonista funktsioonidest see siin returnib midagi. See  viimase rekstirea asukoha. Kasutades seda infot saavad muud asjad väljaspreturnibool objekti end paigutada.
     def Joonista(self):
-        read = TekstRidadeks(self.tekst, self.font, self.laius)
-        reavahe = self.reavahe
-        ridadeArv = self.ridadeArv
+        # Määrab read, mida joonistada:
+        if self.read != []:
+            read = self.read
+        elif self.ridadeArv == 0:
+            read = TekstRidadeks(self.tekst, self.font, self.laius)
+        elif self.ridadeArv > 0:
+            read = TekstRidadeks(self.tekst, self.font, self.laius)[0:self.ridadeArv]
         
 
-        # Joonistab kõik read
-        if ridadeArv == 0:
+        
+        if self.keskeleJoondus == True:
+            counter = 0
             for i in read:
-                asuky = self.asukoht[1] + counter * reavahe
                 tekst = Tekst(self.pind, i, self.font, self.värv)
-                tekst.MääraAsukoht((self.asukoht[0], asuky))
+                laius = tekst.VõtaLaius()
+                asukx = self.asukoht[0] - laius/2
+                asuky = self.asukoht[1] + counter * self.reavahe
+                tekst.MääraAsukoht((asukx, asuky))
+                counter += 1
                 tekst.Joonista()
-                
-                
-        # Joonistab ainult nõutud arvu ridu
         else:
             counter = 0
-            while counter < ridadeArv and counter < len(read):
-                asuky = self.asukoht[1] + counter * reavahe
-                tekst = Tekst(self.pind, read[counter], self.font, self.värv)
-                tekst.MääraAsukoht((self.asukoht[0], asuky))
-                tekst.Joonista()
+            for i in read:
+                tekst = Tekst(self.pind, i, self.font, self.värv)
+                asukx = self.asukoht[0]
+                asuky = self.asukoht[1] + counter * self.reavahe
+                tekst.MääraAsukoht((asukx, asuky))
                 counter += 1
+                tekst.Joonista()
+        
+
 
       
     def KuiPaljuRuumiOnVaja(self):
-        ridu = len(TekstRidadeks(self.tekst, self.font, self.laius))
+        ridu = 0
+        if self.read != []:
+            ridu = len(self.read)
+        else:
+            ridu = len(TekstRidadeks(self.tekst, self.font, self.laius))
+            
         vajadus = min((ridu-1) * self.reavahe, (self.ridadeArv-1)*self.reavahe)
         return vajadus
         

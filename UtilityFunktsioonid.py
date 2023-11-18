@@ -2,6 +2,14 @@
 from Programmiolek import ProgrammiOlek
 from PIL import Image
 
+def KasAsukRingiSees(asukoht, ringiAsukoht, ringiRaadius):
+    vahex = asukoht[0] - ringiAsukoht[0]
+    vahey = asukoht[1] - ringiAsukoht[1]
+    kaugus = (vahex**2 + vahey**2)**0.5
+    if kaugus <= ringiRaadius:
+        return True
+    return False
+
 def KorrutaRGB(TooniKordaja, RGB):
     heledamRGB = tuple(min(int(value * TooniKordaja), 255) for value in RGB)
     return heledamRGB

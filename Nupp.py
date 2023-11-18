@@ -1,12 +1,9 @@
 ﻿import pygame
-<<<<<<< HEAD
 from PIL import Image, ImageFilter 
 import PIL
-from UtilityFunktsioonid import PILpiltPinnaks
-from Tekst import Tekst
+from UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees
+from Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
-=======
->>>>>>> f7a91d0e7b76d75810cb28edc7126d8bb6626ed0
 
 class LisaSündmuseNupp:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
@@ -34,6 +31,24 @@ class LisaSündmuseNupp:
         valmis = Image.composite(Pp3, Dp3, Pp3)
         self.pildipind = PILpiltPinnaks(valmis)
 
+    # See funktsioon muudab nupu värvi, kui hiir on selle kohal
+    def HiireKontroll(self):
+        asukx = self.asukoht[0]
+        asuky = self.asukoht[1]
+        suurx = self.suurus[0]
+        suury = self.suurus[1]
+        raad = self.olek.suureNupuNurgaRaadius
+        hiireAsuk = pygame.mouse.get_pos()
+        hiirx = hiireAsuk[0]
+        hiiry = hiireAsuk[1]
+        
+        """if hiirx > asukx and hiirx < asukx + suurx or\
+           hiiry > asuky and hiiry < asuky + suury or\
+           KasAsukRingiSees(hiireAsuk, (asukx+raad,asuky+raad), raad) or\
+           KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
+           KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
+           KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad):
+            self.peamineVärv = ()"""
 
     def MääraSuurus(self, suurus):
         self.suurus = suurus
@@ -46,14 +61,13 @@ class LisaSündmuseNupp:
         vasakVärv = self.sekundaarneVärv
         paremVärv = self.peamineVärv
 
-        suhe = 0.2
-        
+        suhe = 0.3
         
         kõrgus = self.suurus[1]
         vasakLaius = self.suurus[0]*suhe
         paremLaius = self.suurus[0] - vasakLaius
         paremAsukx = self.asukoht[0] + vasakLaius
-        nurgaÜmardus = 15
+        nurgaÜmardus = self.olek.suureNupuNurgaRaadius
 
         vasakRect = (self.asukoht[0], self.asukoht[1], vasakLaius*1.1, kõrgus)
         paremRect = (paremAsukx, self.asukoht[1], paremLaius, kõrgus)
@@ -71,9 +85,25 @@ class LisaSündmuseNupp:
         
         self.pind.blit(self.pildipind, (pildiAsukx, pildiAsuky))
         
-
+        
         nupuKiri = "Lisa sündmus"
+        
+        
         # Tekst nupu peale:
-        #print(self.olek)
-        #kiri = Tekst(self.pind, nupuKiri, font)
+        nupuKirjaFont = self.olek.suureNupuTekstiPygFont
+        
+        kiri = MitmeReaTekst(self.olek, self.pind, nupuKiri, nupuKirjaFont)
+        
+        kiri.MääraRead(["Lisa", "sündmus"])
+        kiri.MääraReavahe(self.olek.suureNupuTekstiSuurus * 1.1)
+        ridadevahe = kiri.KuiPaljuRuumiOnVaja()
+        
+        asuky = self.asukoht[1] + self.suurus[1]/2 - ridadevahe/2
+        asukx = paremAsukx + paremLaius/2
+        kiri.MääraAsukoht((asukx, asuky))
+        
+        kiri.MääraKeskeleJoondus(True)
+        
+        kiri.Joonista()
+        
         

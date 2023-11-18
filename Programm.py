@@ -52,6 +52,7 @@ class Programm:
         s3 = Sündmus("Rong läheb Rakverre", kp2, GenereeriID(self.olek))
         s3.MääraLõppKell(13, 0)
         self.olek.sündmusteNimekiri.append(s3)
+        
         s4 = Sündmus("Pakk kaob pakiautomaadist ära", kp2, GenereeriID(self.olek))
         s4.MääraLõppKell(23,0)
         self.olek.sündmusteNimekiri.append(s4)
@@ -103,10 +104,10 @@ class Programm:
             
 
             aknaSuur = ekraan.get_size()
-            nupuAsukx = aknaSuur[0] * 0.4
-            nupuAsuky = aknaSuur[1] * 0.8
+            nupuAsukx = aknaSuur[0] * 0.3
+            nupuAsuky = aknaSuur[1] * 0.75
             nupuSuurx = aknaSuur[0] - 2*nupuAsukx
-            nupuSuury = aknaSuur[1] * 0.1
+            nupuSuury = aknaSuur[1] * 0.2
             a.MääraAsukoht((nupuAsukx, nupuAsuky))
             a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
