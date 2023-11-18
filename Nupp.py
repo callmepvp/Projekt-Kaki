@@ -1,9 +1,12 @@
 ﻿import pygame
+<<<<<<< HEAD
 from PIL import Image, ImageFilter 
 import PIL
 from UtilityFunktsioonid import PILpiltPinnaks
 from Tekst import Tekst
 from Programmiolek import ProgrammiOlek
+=======
+>>>>>>> f7a91d0e7b76d75810cb28edc7126d8bb6626ed0
 
 class LisaSündmuseNupp:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
