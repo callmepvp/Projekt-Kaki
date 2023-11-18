@@ -259,8 +259,8 @@ class PäevaRuudustik:
         reaKõrgus = 0
         counter = 0
         for i in self.päevaRuudud:
-            # Kui ollakse rea alguses paigutamisega käiakse läbi selle rea tulevad ruudud ja küsitakse kui palju neil ruumi oleks vaja.
             
+            # Kui ollakse paigutamisega rea alguses, käiakse läbi sellele reale tulevad ruudud ja küsitakse kui palju neil ruumi oleks vaja.
             antavRuum = 0
             if counter % (mituReas) == 0:
                 ruumivajadused = []
@@ -281,7 +281,7 @@ class PäevaRuudustik:
 
 
             asukx = vasakServ + äärevahe + mitmesTulp*(ruudulaius + ruuduvahe)
-            asuky = ülemServ + äärevahe + mitmesRida*(antavRuum + ruuduvahe)
+            asuky = ülemServ + äärevahe + sum(ridadeKõrgused[:-1]) + max(len(ridadeKõrgused)-1, 0) * ruuduvahe
 
             i.MääraAsukoht(asukx, asuky)
             i.MääraSuurus(ruudulaius, reaKõrgus)
