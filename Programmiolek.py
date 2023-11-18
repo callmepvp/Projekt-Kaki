@@ -103,3 +103,5 @@ class ProgrammiOlek:
         
         self.suureNupuNurgaRaadius = 20
         
+        self.pygameEvents = None
+        

@@ -5,6 +5,80 @@ from UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees, MuudaHeledust
 from Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
 
+
+class NupuAlus:
+    def __init__(self, olek:"ProgrammiOlek", pind):
+        self.programmiOlek = olek        
+        self.pind = pind
+
+        self.tavalineVärv = (100, 100, 100)
+        self.vajutatudVärv = (70,70,70)
+        self.hiirKohalVärv = (140,140,140)
+        self.kasutatavVärv = self.tavalineVärv
+        
+        self.suurus = (500,200)
+        self.asukoht = (100,100)
+        self.nurgaRaadius = (30)
+        
+        # 0 – tavaline, 1 – hiirKohal, 2 – allavajutatud
+        self.olek = 0
+        
+        self.hiireVajutusKoht = None
+        # 0 – üleval, 1 – allavajutatud
+        self.eelmineHiireOlek = 0
+
+    def RakendaOlek(self):
+        if self.olek == 0:
+            self.kasutatavVärv = self.tavalineVärv
+        elif self.olek == 1:
+            self.kasutatavVärv = self.hiirKohalVärv
+        elif self.olek == 2:
+            self.kasutatavVärv = self.vajutatudVärv
+
+
+    def KasHiirKohal(self, asuk=None):
+        asukx = self.asukoht[0]
+        asuky = self.asukoht[1]
+        suurx = self.suurus[0]
+        suury = self.suurus[1]
+        raad = self.nurgaRaadius
+        hiireAsuk = pygame.mouse.get_pos()
+        if asuk == None:
+            hiirx = hiireAsuk[0]
+            hiiry = hiireAsuk[1]
+        else:
+            hiirx = asuk[0]
+            hiiry = asuk[1]
+        if hiirx > asukx+raad and hiirx < asukx + suurx-raad and hiiry > asuky and hiiry < asuky+suury or\
+           hiiry > asuky+raad and hiiry < asuky + suury-raad and hiirx > asukx and hiirx < asukx+suurx or\
+           (KasAsukRingiSees(hiireAsuk, (asukx+raad,asuky+raad), raad) or\
+            KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
+            KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
+            KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad)):
+            return True
+        return False
+
+
+    def TegeleNupuga(self):
+        if self.KasHiirKohal() == False:
+            self.olek = 0    
+        
+        else:
+            if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
+                pass
+            else:
+                self.olek = 1
+                for event in self.programmiOlek.pygameEvents:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        print("Tere")
+                        self.olek = 2
+                self.olek 
+        
+        self.RakendaOlek()
+        
+    def Joonista(self):
+        pygame.draw.rect(self.pind, self.kasutatavVärv, (self.asukoht, self.suurus), border_radius=self.nurgaRaadius)
+
 class LisaSündmuseNupp:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
         self.olek = olek

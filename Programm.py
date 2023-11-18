@@ -8,7 +8,7 @@ from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Sündmus import Sündmus
 from Päev import Päev
-from Nupp import LisaSündmuseNupp
+from Nupp import LisaSündmuseNupp, NupuAlus
 from PIL import Image, ImageFilter
 from UtilityFunktsioonid import GenereeriID
 
@@ -62,6 +62,7 @@ class Programm:
 
         a = LisaSündmuseNupp(self.olek, ekraan)
         
+        b = NupuAlus(self.olek, ekraan)
         
 
         def JoonistaAsjad():
@@ -111,6 +112,10 @@ class Programm:
             a.MääraAsukoht((nupuAsukx, nupuAsuky))
             a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
+            
+
+            b.TegeleNupuga()
+            b.Joonista()
 
             pygame.display.flip()
     
@@ -122,7 +127,8 @@ class Programm:
         # Main loop
         running = True
         while running:
-            for event in pygame.event.get():
+            self.olek.pygameEvents = pygame.event.get()
+            for event in self.olek.pygameEvents:
                 if event.type == pygame.QUIT:
                     running = False
 

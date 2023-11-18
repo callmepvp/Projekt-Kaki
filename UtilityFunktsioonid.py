@@ -26,9 +26,9 @@ def MuudaHeledust(liidetav, värv):
     tegur = liidetav/(rR+gR+bR)
     
     # Uued värvid
-    rU = värv[0]+rR*tegur
-    gU = värv[1]+gR*tegur
-    bU = värv[2]+bR*tegur
+    rU = min(255, värv[0]+rR*tegur)
+    gU = min(255, värv[1]+gR*tegur)
+    bU = min(255, värv[2]+bR*tegur)
     
     if len(värv) == 4:
         return (rU,gU,bU, värv[3])
