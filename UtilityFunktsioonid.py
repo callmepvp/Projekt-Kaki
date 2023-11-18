@@ -11,8 +11,31 @@ def KasAsukRingiSees(asukoht, ringiAsukoht, ringiRaadius):
     return False
 
 def KorrutaRGB(TooniKordaja, RGB):
+    
     heledamRGB = tuple(min(int(value * TooniKordaja), 255) for value in RGB)
     return heledamRGB
+
+
+# Veidi huvitavam variant
+def MuudaHeledust(liidetav, värv):
+    # Kui palju on Ruumi täisminekuni
+    rR = 255-värv[0]
+    gR = 255-värv[1]
+    bR = 255-värv[2]
+    
+    tegur = liidetav/(rR+gR+bR)
+    
+    # Uued värvid
+    rU = värv[0]+rR*tegur
+    gU = värv[1]+gR*tegur
+    bU = värv[2]+bR*tegur
+    
+    if len(värv) == 4:
+        return (rU,gU,bU, värv[3])
+    return (rU, gU, bU)
+
+    
+
 
 def KasHiirÜmarnelinurgas(Objekt):
     kursoriPosx, kursorPosy = pygame.mouse.get_pos()

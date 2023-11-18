@@ -1,0 +1,18 @@
+See fail kirjeldab, kuidas üleüldine programmi süsteem töötab.
+
+
+Programmis on objektid, näiteks päevaruudustik. Objektil võib olla alamobjekte. Päevaruudustiku puhul on need päevaruudud. Päevaruutude puhul on need sündmuseread ja päevapealkiri. Päevapealkirja puhul on need kaks teksti: üks kuupäeva joonistamiseks, teine aasta joonistamiseks. Sündmuserea puhul on alamobjekt mitmereatekst. Mitmereateksti puhul on alamobjektid klassist tekst (seesama tüüp, mida kasutas päevapealkiri), iga tekst ühe sündmuserea rea joonistamiseks. Objekte võib rohkem olla.
+
+
+Põhimõte on, et iga objekt peab olema võimeline ennast joonistama teades vähemalt kaht asja. Enda asukohta ja enda suurust. Kui objektile on need antud vastavate meetoditega, ss on selle objekti Joonista() funktsiooni ülesanne alamobjektidele anda nende asukoht ja suurus ja pärast seda omakorda nende Joonista() funktsioon välja kutsuda. Selle peale teevad alamobjketid sama kuni alla välja.
+
+
+Igal klassil peab olema vähemalt 3 meetodit ja neid kolme tuleb välja kutsuda iga kaader:
+	1. Suuruse määramiseks – MääraSuurus()
+	2. Asukoha määramiseks – MääraAsukoht()
+	3. Joonistamiseks      – Joonista()
+
+Meetodeid võib olla ka rohkem olenevalt klassi iseärasustest. Näiteks mitmereatekstil on meetod MääraReaVahed(), mis ütleb, kui palju jätta joonistamisel ridade vahele vahet.
+
+
+

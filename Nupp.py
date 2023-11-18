@@ -1,7 +1,7 @@
 ﻿import pygame
 from PIL import Image, ImageFilter 
 import PIL
-from UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees
+from UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees, MuudaHeledust
 from Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
 
@@ -42,13 +42,17 @@ class LisaSündmuseNupp:
         hiirx = hiireAsuk[0]
         hiiry = hiireAsuk[1]
         
-        """if hiirx > asukx and hiirx < asukx + suurx or\
-           hiiry > asuky and hiiry < asuky + suury or\
-           KasAsukRingiSees(hiireAsuk, (asukx+raad,asuky+raad), raad) or\
-           KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
-           KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
-           KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad):
-            self.peamineVärv = ()"""
+        if hiirx > asukx+raad and hiirx < asukx + suurx-raad and hiiry > asuky and hiiry < asuky+suury or\
+           hiiry > asuky+raad and hiiry < asuky + suury-raad and hiirx > asukx and hiirx < asukx+suurx or\
+           (KasAsukRingiSees(hiireAsuk, (asukx+raad,asuky+raad), raad) or\
+            KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
+            KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
+            KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad)):
+            self.peamineVärv = MuudaHeledust(100, self.olek.LisaSündmusNupuVärv)
+            self.sekundaarneVärv = MuudaHeledust(100, self.olek.LisaSündmusNupuPlussiAluneVärv)
+        else:
+            self.peamineVärv = self.olek.LisaSündmusNupuVärv
+            self.sekundaarneVärv = self.olek.LisaSündmusNupuPlussiAluneVärv
 
     def MääraSuurus(self, suurus):
         self.suurus = suurus
@@ -58,6 +62,7 @@ class LisaSündmuseNupp:
     
     def Joonista(self):
         pind = self.pind
+        self.HiireKontroll()
         vasakVärv = self.sekundaarneVärv
         paremVärv = self.peamineVärv
 
