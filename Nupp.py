@@ -10,9 +10,11 @@ from Programmiolek import ProgrammiOlek
 
 # Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
-    def __init__(self, olek:"ProgrammiOlek"):
+    def __init__(self, olek:"ProgrammiOlek", funktsioon, args = None):
         self.programmiOlek = olek        
         self.pind = None
+        self.funktsioon = funktsioon
+        self.args = args
 
         self.tavalineVärv = (100, 100, 100)
         self.vajutatudVärv = (70,70,70)
@@ -85,7 +87,7 @@ class NupuAlus:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        print("Tere")
+                        self.funktsioon(self.args) #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
                 self.olek 
         

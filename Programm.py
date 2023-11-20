@@ -31,6 +31,9 @@ class Programm:
         ekraan = pygame.display.set_mode((640, 420), pygame.RESIZABLE)
         pygame.display.set_caption('Indie kalender')
 
+        pygameIkoon = pygame.image.load('Pildid/iconDesign.png')
+        pygame.display.set_icon(pygameIkoon)
+
         clock = pygame.time.Clock()
         
         #print(self.olek.päevaruuduVärv)
