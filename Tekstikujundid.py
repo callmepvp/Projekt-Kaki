@@ -180,7 +180,6 @@ class PäevaRuut:
         elif olek == 2:
             self.värv = MuudaHeledust(-50, origVärv)
         
-        print(olek)
 
         # Päevaruudu taust
         self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])

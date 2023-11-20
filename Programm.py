@@ -108,6 +108,11 @@ class Programm:
             a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
             
+            if self.olek.TäpsemaVaatePäev != None:
+                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev)
+                vaade.MääraSuurus()
+                vaade.MääraAsukoht()
+                vaade.Joonista()
 
             pygame.display.flip()
     

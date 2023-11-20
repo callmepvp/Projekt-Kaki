@@ -72,11 +72,13 @@ class NupuAlus:
         return False
 
 
-    def TegeleNupuga(self):
+    def TegeleNupuga(self):        
+
         if self.KasHiirKohal() == False:
-            self.olek = 0    
+            self.olek = 0
         
         else:
+            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
             else:
@@ -118,6 +120,8 @@ class LisaSündmuseNupp:
         self.suurus = (200, 80)
         self.peamineVärv = olek.LisaSündmusNupuVärv
         self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
+        self.nupp = NupuAlus(olek)
+
 
         # Pluss
         Pp0 = Image.new(mode="RGBA", size=(64, 64), color=(0,0,0,0))
@@ -136,38 +140,30 @@ class LisaSündmuseNupp:
         valmis = Image.composite(Pp3, Dp3, Pp3)
         self.pildipind = PILpiltPinnaks(valmis)
 
-    # See funktsioon muudab nupu värvi, kui hiir on selle kohal
-    def HiireKontroll(self):
-        asukx = self.asukoht[0]
-        asuky = self.asukoht[1]
-        suurx = self.suurus[0]
-        suury = self.suurus[1]
-        raad = self.olek.suureNupuNurgaRaadius
-        hiireAsuk = pygame.mouse.get_pos()
-        hiirx = hiireAsuk[0]
-        hiiry = hiireAsuk[1]
-        
-        if hiirx > asukx+raad and hiirx < asukx + suurx-raad and hiiry > asuky and hiiry < asuky+suury or\
-           hiiry > asuky+raad and hiiry < asuky + suury-raad and hiirx > asukx and hiirx < asukx+suurx or\
-           (KasAsukRingiSees(hiireAsuk, (asukx+raad,asuky+raad), raad) or\
-            KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
-            KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
-            KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad)):
-            self.peamineVärv = MuudaHeledust(100, self.olek.LisaSündmusNupuVärv)
-            self.sekundaarneVärv = MuudaHeledust(100, self.olek.LisaSündmusNupuPlussiAluneVärv)
-        else:
-            self.peamineVärv = self.olek.LisaSündmusNupuVärv
-            self.sekundaarneVärv = self.olek.LisaSündmusNupuPlussiAluneVärv
 
     def MääraSuurus(self, suurus):
         self.suurus = suurus
+        self.nupp.MääraSuurus(suurus)
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
+        self.nupp.MääraAsukoht(asukoht)
     
     def Joonista(self):
+        self.nupp.TegeleNupuga()
+        olek = self.nupp.VõtaOlek()
+        
+        origVärv = self.olek.LisaSündmusNupuVärv        
+        värv = origVärv
+        if olek == 0:
+            värv = origVärv
+        elif olek == 1:
+            värv = MuudaHeledust(60, origVärv)
+        else:
+            värv = MuudaHeledust(-40, origVärv)
+
         vasakVärv = self.sekundaarneVärv
-        paremVärv = self.peamineVärv
+        paremVärv = värv
 
         suhe = 0.3
         
