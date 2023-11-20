@@ -9,6 +9,7 @@ from Kuupäev import Kuupäev
 from Päev import Päev
 from SündNimekFunktsioonid import *
 from UtilityFunktsioonid import *
+from Nupp import NupuAlus
 
 # SündmuseRida
 # Vastutab loetelutäpi ja sündmuse nimest koosneva rea joonistamise eest päevaruudu sees. Kui päevaruudus on mitu sündmust, ss neid ridu on vastavalt nii mitu. Iga sündmuse jaoks 1.
@@ -123,19 +124,25 @@ class PäevaRuut:
         self.pealkiri = PäevaPealkiri(olek, pind, self.kuupäev)
         self.olek = olek
 
-        self.originaalVärv = olek.päevaruuduVärv
-        self.HoverTooniKordaja = olek.hoverTooniKordaja
+        self.värv = olek.päevaruuduVärv
     
         self.taust = Ristkülik(pind, self.asuk, self.suurus)
         self.pind = pind
         self.sündmused = päev.sündmusteNimekiri
         
+        self.nupp = NupuAlus(olek)
+        
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)
+        self.nupp.MääraAsukoht((x,y))
 
     def MääraSuurus(self, x, y):
-        if x != None: self.suurus = (x, self.suurus[1])
-        if y != None: self.suurus = (self.suurus[0], y)
+        if x != None: 
+            self.suurus = (x, self.suurus[1])
+            self.nupp.MääraSuurus((x, self.suurus[1]))
+        if y != None: 
+            self.suurus = (self.suurus[0], y)
+            self.nupp.MääraSuurus((self.suurus[0], y))
 
 
     # Seda on vaja kutsuda peale seda, kui on määratud ruudu laius. Seda meetodit kasutab päevaruudustik, et saada teada, kui kõrgeks on mõistlik teha üks päevaruutude rida. Päevaruudustik uurib selle funktsiooni abil, mis on ruumivajaduse seis sama rea teistel ruutudel ja selle järgi valib mingi kõrguse, mis keskmiselt sobiks kõigile rea ruutudele ja mille see siis tegelikult annab igale ruudule joonistamiseks. On crazy, kui see lõpuks töötab kah.
@@ -159,18 +166,26 @@ class PäevaRuut:
 
 
     def Joonista(self):
-        #Kontrolli hiire asukohta
-        if KasHiirÜmarnelinurgas(self):
-            HoverVärv = KorrutaRGB(self.HoverTooniKordaja, self.originaalVärv)
-            self.olek.päevaruuduVärv = HoverVärv
-        else:
-            self.olek.päevaruuduVärv = self.originaalVärv
-            
+        self.nupp.TegeleNupuga()
+        olek = self.nupp.VõtaOlek() 
+        
+        origVärv = self.olek.päevaruuduVärv        
+
+        if olek == 0:
+            self.värv = origVärv
+
+        elif olek == 1:
+            self.värv = MuudaHeledust(30, origVärv)
+
+        elif olek == 2:
+            self.värv = MuudaHeledust(-50, origVärv)
+        
+        print(olek)
 
         # Päevaruudu taust
         self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])
         self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
-        self.taust.MääraVärv(self.olek.päevaruuduVärv)
+        self.taust.MääraVärv(self.värv)
         self.taust.Joonista()
 
         # Kuupäev ja aasta
@@ -301,6 +316,12 @@ class PäevaRuudustik:
         # Ruudud
         for i in self.päevaRuudud:
             i.Joonista()
+        
+        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+        for i in self.päevaRuudud:
+            if i.nupp.olek == 1 or i.nupp.olek == 2:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
+                break
             
 
 

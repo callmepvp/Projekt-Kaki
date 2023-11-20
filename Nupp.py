@@ -6,10 +6,13 @@ from Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
 
 
+# Iga nupp oleva objekti sees, näiteks päevaruudu sees, on nähtamatu nupualuse objekt, mis tegeleb hiireklõpsude tajumisega, ja vastava outputi tegemisega. Ülemobjket hoolitseb kogu aeg selle eest, et selle nupualuse objekti suurus ja asukoht vastaksid objekti enda omaga. Ja kui see on kogu aeg nii, ss saab nupualuse objekti erinevate meetodite outputi järgi valida ülemobjekt oma värvi.
+
+# Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
-    def __init__(self, olek:"ProgrammiOlek", pind):
+    def __init__(self, olek:"ProgrammiOlek"):
         self.programmiOlek = olek        
-        self.pind = pind
+        self.pind = None
 
         self.tavalineVärv = (100, 100, 100)
         self.vajutatudVärv = (70,70,70)
@@ -26,6 +29,16 @@ class NupuAlus:
         self.hiireVajutusKoht = None
         # 0 – üleval, 1 – allavajutatud
         self.eelmineHiireOlek = 0
+
+
+    def MääraHelendavVärv( self, värv):
+        self.hiirKohalVärv = värv
+       
+    def MääraVajutatudVärv(self, värv):
+        self.vajutatavVärv = värv
+
+    def MääraTavalineVärv(self, värv):
+        self.tavalineVärv = värv
 
     def RakendaOlek(self):
         if self.olek == 0:
@@ -75,9 +88,27 @@ class NupuAlus:
                 self.olek 
         
         self.RakendaOlek()
-        
-    def Joonista(self):
+    
+    # Seda funktsiooni ei kasutata päris programmis kunagi. See on ainult debuggimiseks j kontrollimaks, kas nupualuse asukoht j suurus klapivad ülemobjekti omaga.
+    def Joonista(self, pind):
+        self.pind = pind
         pygame.draw.rect(self.pind, self.kasutatavVärv, (self.asukoht, self.suurus), border_radius=self.nurgaRaadius)
+    
+    # See on funktsioon, mida ülemobjekt küsib iga kaader enne joonistamist nupualuselt ja mille põhjal ülemobjekt valib oma värvi. Funktsioon tagastab üht kolmest väärtusest. 0 - tavaline, 1 - hiir on kohal, 2 - nupp on allavajutatud.
+    def VõtaOlek(self):
+        return self.olek
+    
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
+       
+    def MääraSuurus(self, suurus):
+        self.suurus = suurus
+
+
+
+
+
+
 
 class LisaSündmuseNupp:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
@@ -135,8 +166,6 @@ class LisaSündmuseNupp:
         self.asukoht = asukoht
     
     def Joonista(self):
-        pind = self.pind
-        self.HiireKontroll()
         vasakVärv = self.sekundaarneVärv
         paremVärv = self.peamineVärv
 
@@ -154,10 +183,10 @@ class LisaSündmuseNupp:
         pildiAsukx = self.asukoht[0] + vasakLaius / 2 - self.pildipind.get_size()[0]/2
         pildiAsuky = self.asukoht[1] + kõrgus / 2 - self.pildipind.get_size()[1]/2
 
-        pygame.draw.rect(pind, vasakVärv, vasakRect,
+        pygame.draw.rect(self.pind, vasakVärv, vasakRect,
                          border_top_left_radius = nurgaÜmardus, 
                          border_bottom_left_radius = nurgaÜmardus)
-        pygame.draw.rect(pind, paremVärv, paremRect,
+        pygame.draw.rect(self.pind, paremVärv, paremRect,
                          border_top_right_radius = nurgaÜmardus, 
                          border_bottom_right_radius = nurgaÜmardus)
         

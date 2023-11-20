@@ -1,15 +1,11 @@
 ﻿import pygame
 import win32gui
 import win32con
-from Kujundid import RistkülikAknas
-from Tekst import MitmeReaTekst, TekstRidadeks
 from Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
 from Sündmus import Sündmus
-from Päev import Päev
 from Nupp import LisaSündmuseNupp, NupuAlus
-from PIL import Image, ImageFilter
 from UtilityFunktsioonid import GenereeriID
 
   
@@ -60,9 +56,8 @@ class Programm:
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
 
-        a = LisaSündmuseNupp(self.olek, ekraan)
+        a = LisaSündmuseNupp(self.olek, ekraan, )
         
-        b = NupuAlus(self.olek, ekraan)
         
 
         def JoonistaAsjad():
@@ -113,9 +108,6 @@ class Programm:
             a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
             
-
-            b.TegeleNupuga()
-            b.Joonista()
 
             pygame.display.flip()
     
