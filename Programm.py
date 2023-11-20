@@ -112,10 +112,11 @@ class Programm:
             a.Joonista()
             
             if self.olek.TäpsemaVaatePäev != None:
-                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev)
+                print(self.olek.TäpsemaVaatePäev.kuupäev.päev)
+                """vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev)
                 vaade.MääraSuurus()
                 vaade.MääraAsukoht()
-                vaade.Joonista()
+                vaade.Joonista()"""
 
             pygame.display.flip()
     

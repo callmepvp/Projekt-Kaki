@@ -87,7 +87,7 @@ class NupuAlus:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.funktsioon(self.args) #Kutsub välja anonüümse funktsiooni
+                        self.funktsioon() #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
                 self.olek 
         
@@ -122,7 +122,7 @@ class LisaSündmuseNupp:
         self.suurus = (200, 80)
         self.peamineVärv = olek.LisaSündmusNupuVärv
         self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
-        self.nupp = NupuAlus(olek)
+        self.nupp = NupuAlus(olek, None)
 
 
         # Pluss

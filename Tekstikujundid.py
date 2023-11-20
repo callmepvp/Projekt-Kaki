@@ -130,11 +130,11 @@ class PäevaRuut:
         self.pind = pind
         self.sündmused = päev.sündmusteNimekiri
         
-        def päevaRuuduDetailsemVaade(päevaRuut: "PäevaRuut"):
-            #* Loo detailsema vaate objekt
-            print(päevaRuut.kuupäev.päev)
+        def päevaRuuduDetailsemVaade():
+            päev = Päev(self.kuupäev, self.sündmused)
+            self.olek.TäpsemaVaatePäev = päev
 
-        self.nupp = NupuAlus(olek, päevaRuuduDetailsemVaade, self)
+        self.nupp = NupuAlus(olek, päevaRuuduDetailsemVaade)
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)
