@@ -325,6 +325,8 @@ class PäevaRuudustik:
             if i.nupp.olek == 1 or i.nupp.olek == 2:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
                 break
+            else:
+                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
             
 
 
