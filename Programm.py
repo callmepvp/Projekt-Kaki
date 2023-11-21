@@ -1,6 +1,7 @@
 ﻿import pygame
 import win32gui
 import win32con
+from Tekstikast import Tekstikast
 from Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Kuupäev import Kuupäev
@@ -62,7 +63,7 @@ class Programm:
 
 
         a = LisaSündmuseNupp(self.olek, ekraan, )
-        
+        c = Tekstikast(self.olek, ekraan)
         
 
         def JoonistaAsjad():
@@ -131,11 +132,15 @@ class Programm:
                 suurx = aknaSuur[0] * 0.8
                 suury = 1000
                 asukx = (aknaSuur[0]-suurx)/2
-                asuky = asukx
+                asuky = asukx/2
                 b = SündmuseLisamiseAken(self.olek, ekraan)
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
+                
+            c.MääraAsukoht((100,250))
+            c.MääraSuurus((400, None))
+            c.Joonista()
                 
             pygame.display.flip()
     
