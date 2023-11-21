@@ -122,7 +122,10 @@ class LisaSündmuseNupp:
         self.suurus = (200, 80)
         self.peamineVärv = olek.LisaSündmusNupuVärv
         self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
-        self.nupp = NupuAlus(olek, None)
+
+        def lisaSündmus():
+            print("Sündmus lisatud!")
+        self.nupp = NupuAlus(olek, lisaSündmus)
 
 
         # Pluss
