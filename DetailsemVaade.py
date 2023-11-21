@@ -5,8 +5,8 @@ from Programmiolek import ProgrammiOlek
 from Nupp import NupuAlus
 
 class DetailsemVaade:
-    def __init__(self, päevaObjekt: "Päev", pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
-        self.päevaObjekt = päevaObjekt
+    def __init__(self, pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
+        self.päevaObjekt = None
         self.asukoht = (0, 0)
         self.suurus = (400, 200)
         self.pind = pind
@@ -30,6 +30,9 @@ class DetailsemVaade:
 
         self.font = pygame.font.Font(os.path.join("Fondid", 'CORBEL.TTF'), 36)
 
+    def MääraPäev(self, päev:"Päev"):
+        self.päevaObjekt = päev
+
     def MääraSuurus(self, suurus):
         self.suurus = suurus
         self.nupp.MääraSuurus(suurus)
@@ -39,6 +42,7 @@ class DetailsemVaade:
         self.nupp.MääraAsukoht(asukoht)
 
     def Joonista(self):
+        self.nupp.TegeleNupuga()
         self.KäsitleSündmusi()
         
 

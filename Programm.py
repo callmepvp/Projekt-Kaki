@@ -86,6 +86,9 @@ class Programm:
         c = Tekstikast(self.olek, ekraan)
         
         d = NupuAlus(self.olek,)
+        
+        vaade = DetailsemVaade(ekraan, self.olek)
+
 
         def JoonistaAsjad():
             ekraan.fill((255, 255, 255, 255))
@@ -141,12 +144,10 @@ class Programm:
             a.Joonista()
             
             if self.olek.TäpsemaVaatePäev != None:
-                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev, ekraan, self.olek)
+                vaade.MääraPäev(self.olek.TäpsemaVaatePäev)
                 ekraaniW = aknaSuur[0]
                 ekraaniH = aknaSuur[1]
                 wProtsent, hProtsent = 0.6, 0.6
-
-
                 # Määrab suuruse, asukoha, joonistab.
                 vaadeSuurusX = 0.6 * ekraaniW
                 vaadeSuurusY = 0.6 * ekraaniH
