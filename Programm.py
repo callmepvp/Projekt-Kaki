@@ -65,7 +65,6 @@ class Programm:
         
 
         def JoonistaAsjad():
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
             ekraan.fill((255, 255, 255, 255))
             
             """rk1Asuk = (0.1, 0.1)
