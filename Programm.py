@@ -8,6 +8,7 @@ from Sündmus import Sündmus
 from Nupp import LisaSündmuseNupp, NupuAlus
 from UtilityFunktsioonid import GenereeriID
 from DetailsemVaade import DetailsemVaade
+from SündLisamiseAken import SündmuseLisamiseAken
 
   
 
@@ -129,6 +130,7 @@ class Programm:
             nupuAsuky = aknaSuur[1] * 0.75
             nupuSuurx = aknaSuur[0] - 2*nupuAsukx
             nupuSuury = aknaSuur[1] * 0.2
+            a = LisaSündmuseNupp(self.olek, ekraan)
             a.MääraAsukoht((nupuAsukx, nupuAsuky))
             a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
@@ -149,6 +151,18 @@ class Programm:
                 vaade.Joonista()
 
                 vaade.KäsitleSündmusi()
+                
+            if self.olek.SündmuseLisamine != False:
+                suurx = aknaSuur[0] * 0.8
+                suury = 1000
+                asukx = (aknaSuur[0]-suurx)/2
+                asuky = asukx
+                b = SündmuseLisamiseAken(self.olek, ekraan)
+                b.MääraAsukoht((asukx, asuky))
+                b.MääraSuurus((suurx, suury))
+                b.Joonista()
+                
+                
 
             pygame.display.flip()
     

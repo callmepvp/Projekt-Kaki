@@ -106,7 +106,16 @@ class ProgrammiOlek:
         
         self.pygameEvents = None
         
+        # See muutuja on Päevaobjekt siis, kui on klõpsatud mingi päevaruudu peale ja seega peaks olema lahti selle päeva detailsem vaade. Muutuja on None, kui ei pea olema avatud ühegi päeva vaade.
         self.TäpsemaVaatePäev = None
-
-        self.scrollOffset = 0
         
+        # See muutuja on True siis, kui peab olema lahti sünmduse lisamise aken. False siis, kui aken ei pea avatud olema. Suht elementaarne.
+        self.SündmuseLisamine = False
+        
+        # See on sündmuse lisamise valikuakna nurgaraadiused.
+        self.sündmuseLisamiseNurgaRaadius = 30
+        
+        # See o sündmuse lisamise valikuakna tausta värv
+        self.sündmuseLisamiseTaustaVärv = (200,200,200,255)
+        
+        self.scrollOffset = 0
