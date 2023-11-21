@@ -45,7 +45,7 @@ class DetailsemVaade:
         self.nupp.TegeleNupuga()
         self.KäsitleSündmusi()
         
-
+        
         päevaObjekt = self.päevaObjekt
 
         rect = (self.asukoht, self.suurus)
