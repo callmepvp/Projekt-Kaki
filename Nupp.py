@@ -123,7 +123,10 @@ class LisaSündmuseNupp:
         self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
 
         def lisaSündmus():
-            print("Sündmus lisatud!")
+            if self.olek.SündmuseLisamine == True:
+                self.olek.SündmuseLisamine = False
+            else:
+                self.olek.SündmuseLisamine = True
         self.nupp = NupuAlus(olek, lisaSündmus)
 
 
