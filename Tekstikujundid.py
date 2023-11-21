@@ -320,7 +320,7 @@ class PäevaRuudustik:
         for i in self.päevaRuudud:
             i.Joonista()
         
-        pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+
         for i in self.päevaRuudud:
             if i.nupp.olek == 1 or i.nupp.olek == 2:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
