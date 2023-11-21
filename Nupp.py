@@ -80,7 +80,6 @@ class NupuAlus:
             self.olek = 0
         
         else:
-  
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
             else:
