@@ -114,9 +114,14 @@ class Programm:
             
             if self.olek.TäpsemaVaatePäev != None:
                 print(self.olek.TäpsemaVaatePäev.kuupäev.päev)
-                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev)
-                vaade.MääraSuurus()
-                vaade.MääraAsukoht()
+                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev, ekraan)
+
+                vaadeSuurusX = 100
+                vaadeSuurusY = 50
+                vaadeAsukohtX = ekraan.get_size()[0] / 2
+                vaadeAsukohtY = ekraan.get_size()[1] / 2
+                vaade.MääraSuurus((vaadeSuurusX, vaadeSuurusY))
+                vaade.MääraAsukoht((vaadeAsukohtX, vaadeAsukohtY))
                 vaade.Joonista()
 
             pygame.display.flip()
