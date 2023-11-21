@@ -83,13 +83,17 @@ class Programm:
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
 
-        a = LisaSündmuseNupp(self.olek, ekraan, )
         c = Tekstikast(self.olek, ekraan)
         
+        d = NupuAlus(self.olek,)
 
         def JoonistaAsjad():
             ekraan.fill((255, 255, 255, 255))
             
+
+            d.MääraAsukoht((10,10))
+            d.MääraSuurus((20,20))
+            d.Joonista(ekraan)
             """rk1Asuk = (0.1, 0.1)
             rk1.MääraAsukoht(rk1Asuk[0], rk1Asuk[1])
             rk1.MääraSuurus(0.8,0.8)
@@ -116,9 +120,10 @@ class Programm:
             ruut.MääraSuurus(ekrLaius*0.8, ekrKõrgus*0.8)
             ruut.Joonista()"""
 
+            aknaSuur = ekraan.get_size()
             
-            ekrLai = ekraan.get_width()
-            ekrKõrg = ekraan.get_height()
+
+            ekrLai = aknaSuur[0]
             ruudAsukx = ekrLai * 0.1
             ruudAsuky = 30
             ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
@@ -126,7 +131,6 @@ class Programm:
             ruudustik.Joonista()
             
 
-            aknaSuur = ekraan.get_size()
             nupuAsukx = aknaSuur[0] * 0.3
             nupuAsuky = aknaSuur[1] * 0.75
             nupuSuurx = aknaSuur[0] - 2*nupuAsukx
@@ -138,24 +142,23 @@ class Programm:
             
             if self.olek.TäpsemaVaatePäev != None:
                 vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev, ekraan, self.olek)
-                ekraaniW = pygame.display.Info().current_w
-                ekraaniH = pygame.display.Info().current_h
+                ekraaniW = aknaSuur[0]
+                ekraaniH = aknaSuur[1]
                 wProtsent, hProtsent = 0.6, 0.6
 
+
+                # Määrab suuruse, asukoha, joonistab.
                 vaadeSuurusX = 0.6 * ekraaniW
                 vaadeSuurusY = 0.6 * ekraaniH
                 vaadeAsukohtX = (ekraaniW - wProtsent * ekraaniW) / 2
                 vaadeAsukohtY = (ekraaniH - hProtsent * ekraaniH) / 2
-
                 vaade.MääraSuurus((vaadeSuurusX, vaadeSuurusY))
                 vaade.MääraAsukoht((vaadeAsukohtX, vaadeAsukohtY))
                 vaade.Joonista()
-
-                vaade.KäsitleSündmusi()
                 
             if self.olek.SündmuseLisamine != False:
                 suurx = aknaSuur[0] * 0.8
-                suury = 1000
+                suury = 300
                 asukx = (aknaSuur[0]-suurx)/2
                 asuky = asukx/2
                 b = SündmuseLisamiseAken(self.olek, ekraan)

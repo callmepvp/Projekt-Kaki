@@ -39,6 +39,9 @@ class DetailsemVaade:
         self.nupp.MääraAsukoht(asukoht)
 
     def Joonista(self):
+        self.KäsitleSündmusi()
+        
+
         päevaObjekt = self.päevaObjekt
 
         rect = (self.asukoht, self.suurus)

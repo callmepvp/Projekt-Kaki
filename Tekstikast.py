@@ -42,7 +42,6 @@ class Tekstikast:
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
         self.nupp.MääraAsukoht(asukoht)
-        print(self.nupp.asukoht)
         
 
     def MääraSuurus(self, suurus):

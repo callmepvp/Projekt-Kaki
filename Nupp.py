@@ -10,14 +10,19 @@ from Programmiolek import ProgrammiOlek
 
 # Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
-    def __init__(self, olek:"ProgrammiOlek", funktsioon, funktsioon2 = None, args = None):
-        def tühiFn(): pass
+    def __init__(self, olek:"ProgrammiOlek", funktsioon = None, funktsioon2 = None, args = None):
         self.programmiOlek = olek        
         self.pind = None
-        self.funktsioon = funktsioon
-        self.funktsioon2 = funktsioon2
-        if funktsioon2 is None:
-            self.funktsioon2 = tühiFn
+        
+        # Funktsioonide määramine.
+        def tühiFn(): pass
+        
+        if funktsioon != None: self.funktsioon = funktsioon
+        else: self.funktsioon = tühiFn
+        
+        if funktsioon2 != None: self.funktsioon2 = funktsioon2
+        else: self.funktsioon2 = tühiFn
+            
 
         self.args = args
 
@@ -55,7 +60,6 @@ class NupuAlus:
         elif self.olek == 2:
             self.kasutatavVärv = self.vajutatudVärv
 
-
     def KasHiirKohal(self, asuk=None):
         asukx = self.asukoht[0]
         asuky = self.asukoht[1]
@@ -78,31 +82,27 @@ class NupuAlus:
             return True
         return False
 
-
     def TegeleNupuga(self):        
-
+        
         if self.KasHiirKohal() == False:
             self.olek = 0
-            self.välineOlek = 0
-
             if self.välineOlek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
             else:
                 self.välineOlek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        print(1)
                         self.funktsioon2() #Kutsub välja anonüümse funktsiooni
                         self.välineOlek = 2
         
         else:
+            self.välineOlek = 0
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
             else:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        print(2)
                         self.funktsioon() #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
         
@@ -110,6 +110,8 @@ class NupuAlus:
     
     # Seda funktsiooni ei kasutata päris programmis kunagi. See on ainult debuggimiseks j kontrollimaks, kas nupualuse asukoht j suurus klapivad ülemobjekti omaga.
     def Joonista(self, pind):
+        self.TegeleNupuga()
+        
         self.pind = pind
         pygame.draw.rect(self.pind, self.kasutatavVärv, (self.asukoht, self.suurus), border_radius=self.nurgaRaadius)
     
@@ -143,7 +145,9 @@ class LisaSündmuseNupp:
                 self.olek.SündmuseLisamine = False
             else:
                 self.olek.SündmuseLisamine = True
-        self.nupp = NupuAlus(olek, lisaSündmus)
+        def f1():print("Lisamisnupu peal")
+        def f2():print("Lisamisnupust väljas")
+        self.nupp = NupuAlus(olek, f1, f2)
 
 
         # Pluss
