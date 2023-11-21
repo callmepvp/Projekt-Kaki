@@ -48,7 +48,9 @@ defaultDataBody = {
         "LisaSündmusNupuVärv" : (158, 240, 26, 255),
         "LisaSündmusNupuPlussiAluneVärv" : (40,40,40,255),
 
-        "suureNupuTekstiSuurus" : 14
+        "suureNupuTekstiSuurus" : 14,
+        
+        "suureNupuNurgaRaadius" : 20
     },
 
     "fondiTüübid" : {
