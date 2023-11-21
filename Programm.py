@@ -57,6 +57,27 @@ class Programm:
         s4.MääraLõppKell(23,0)
         self.olek.sündmusteNimekiri.append(s4)
 
+        #Testimissündmused
+        s5 = Sündmus("aaaaaaaaaa", kp2, GenereeriID(self.olek))
+        s5.MääraLõppKell(23,0)
+        self.olek.sündmusteNimekiri.append(s5)
+
+        s6 = Sündmus("jjjllljljljljljljljljj", kp2, GenereeriID(self.olek))
+        s6.MääraLõppKell(23,0)
+        self.olek.sündmusteNimekiri.append(s6)
+
+        s7 = Sündmus("Pakk kaob pakiautomaadist ära3", kp2, GenereeriID(self.olek))
+        s7.MääraLõppKell(23,0)
+        self.olek.sündmusteNimekiri.append(s7)
+
+        s8 = Sündmus("Pakk kaob pakiautomaadist ära4", kp2, GenereeriID(self.olek))
+        s8.MääraLõppKell(23,0)
+        self.olek.sündmusteNimekiri.append(s8)
+
+        s9 = Sündmus("Pakk kaob pakiautomaadist ära5", kp2, GenereeriID(self.olek))
+        s9.MääraLõppKell(23,0)
+        self.olek.sündmusteNimekiri.append(s9)
+
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
 
@@ -65,7 +86,6 @@ class Programm:
         
 
         def JoonistaAsjad():
-            pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
             ekraan.fill((255, 255, 255, 255))
             
             """rk1Asuk = (0.1, 0.1)
@@ -114,16 +134,21 @@ class Programm:
             a.Joonista()
             
             if self.olek.TäpsemaVaatePäev != None:
-                print(self.olek.TäpsemaVaatePäev.kuupäev.päev)
-                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev, ekraan)
+                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev, ekraan, self.olek)
+                ekraaniW = pygame.display.Info().current_w
+                ekraaniH = pygame.display.Info().current_h
+                wProtsent, hProtsent = 0.6, 0.6
 
-                vaadeSuurusX = 100
-                vaadeSuurusY = 50
-                vaadeAsukohtX = ekraan.get_size()[0] / 2
-                vaadeAsukohtY = ekraan.get_size()[1] / 2
+                vaadeSuurusX = 0.6 * ekraaniW
+                vaadeSuurusY = 0.6 * ekraaniH
+                vaadeAsukohtX = (ekraaniW - wProtsent * ekraaniW) / 2
+                vaadeAsukohtY = (ekraaniH - hProtsent * ekraaniH) / 2
+
                 vaade.MääraSuurus((vaadeSuurusX, vaadeSuurusY))
                 vaade.MääraAsukoht((vaadeAsukohtX, vaadeAsukohtY))
                 vaade.Joonista()
+
+                vaade.KäsitleSündmusi()
 
             pygame.display.flip()
     

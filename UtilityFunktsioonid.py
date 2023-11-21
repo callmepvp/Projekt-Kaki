@@ -69,3 +69,14 @@ def PILpiltPinnaks(PILpilt):
     image_dimensions = PILpilt.size
     pygame_surface = pygame.image.fromstring(image_data, image_dimensions, "RGBA")
     return pygame_surface
+
+
+def võrdleObjektiParameetreid(obj1, obj2):
+    if set(dir(obj1)) != set(dir(obj2)):
+        return False
+
+    for attribute_name in dir(obj1):
+        if not attribute_name.startswith("__") and not callable(getattr(obj1, attribute_name)):
+            if getattr(obj1, attribute_name) != getattr(obj2, attribute_name):
+                return False
+    return True

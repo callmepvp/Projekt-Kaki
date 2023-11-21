@@ -107,4 +107,6 @@ class ProgrammiOlek:
         self.pygameEvents = None
         
         self.TäpsemaVaatePäev = None
+
+        self.scrollOffset = 0
         
