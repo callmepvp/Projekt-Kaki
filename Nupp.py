@@ -10,10 +10,15 @@ from Programmiolek import ProgrammiOlek
 
 # Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
-    def __init__(self, olek:"ProgrammiOlek", funktsioon, args = None):
+    def __init__(self, olek:"ProgrammiOlek", funktsioon, funktsioon2 = None, args = None):
+        def tühiFn(): pass
         self.programmiOlek = olek        
         self.pind = None
         self.funktsioon = funktsioon
+        self.funktsioon2 = funktsioon2
+        if funktsioon2 is None:
+            self.funktsioon2 = tühiFn
+
         self.args = args
 
         self.tavalineVärv = (100, 100, 100)
@@ -27,11 +32,11 @@ class NupuAlus:
         
         # 0 – tavaline, 1 – hiirKohal, 2 – allavajutatud
         self.olek = 0
+        self.välineOlek = 0
         
         self.hiireVajutusKoht = None
         # 0 – üleval, 1 – allavajutatud
         self.eelmineHiireOlek = 0
-
 
     def MääraHelendavVärv( self, värv):
         self.hiirKohalVärv = värv
@@ -78,6 +83,17 @@ class NupuAlus:
 
         if self.KasHiirKohal() == False:
             self.olek = 0
+            self.välineOlek = 0
+
+            if self.välineOlek == 2 and pygame.mouse.get_pressed()[0] == True:
+                pass
+            else:
+                self.välineOlek = 1
+                for event in self.programmiOlek.pygameEvents:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        print(1)
+                        self.funktsioon2() #Kutsub välja anonüümse funktsiooni
+                        self.välineOlek = 2
         
         else:
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
@@ -86,9 +102,9 @@ class NupuAlus:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        print(2)
                         self.funktsioon() #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
-                self.olek 
         
         self.RakendaOlek()
     

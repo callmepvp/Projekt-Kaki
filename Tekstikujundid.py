@@ -132,7 +132,15 @@ class PäevaRuut:
         
         def päevaRuuduDetailsemVaade():
             päev = Päev(self.kuupäev, self.sündmused)
-            self.olek.TäpsemaVaatePäev = päev
+            
+            if self.olek.TäpsemaVaatePäev is None:
+                self.olek.TäpsemaVaatePäev = päev
+            elif self.olek.TäpsemaVaatePäev is not None and võrdleObjektiParameetreid(päev, self.olek.TäpsemaVaatePäev):
+                self.olek.TäpsemaVaatePäev = None
+            else:
+                self.olek.TäpsemaVaatePäev = päev
+            
+            self.olek.scrollOffset = 0
 
         self.nupp = NupuAlus(olek, päevaRuuduDetailsemVaade)
         

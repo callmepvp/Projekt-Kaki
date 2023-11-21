@@ -118,3 +118,4 @@ class ProgrammiOlek:
         # See o sündmuse lisamise valikuakna tausta värv
         self.sündmuseLisamiseTaustaVärv = (200,200,200,255)
         
+        self.scrollOffset = 0
