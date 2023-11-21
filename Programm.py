@@ -7,6 +7,7 @@ from Kuupäev import Kuupäev
 from Sündmus import Sündmus
 from Nupp import LisaSündmuseNupp, NupuAlus
 from UtilityFunktsioonid import GenereeriID
+from DetailsemVaade import DetailsemVaade
 
   
 
@@ -113,10 +114,10 @@ class Programm:
             
             if self.olek.TäpsemaVaatePäev != None:
                 print(self.olek.TäpsemaVaatePäev.kuupäev.päev)
-                """vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev)
+                vaade = DetailsemVaade(self.olek.TäpsemaVaatePäev)
                 vaade.MääraSuurus()
                 vaade.MääraAsukoht()
-                vaade.Joonista()"""
+                vaade.Joonista()
 
             pygame.display.flip()
     
