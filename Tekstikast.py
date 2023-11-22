@@ -1,6 +1,8 @@
-﻿import pygame
+﻿from Kujundid import Ristkülik
+import pygame
 from Nupp import NupuAlus
 from Programmiolek import ProgrammiOlek
+from Tekst import MitmeReaTekst
 
 class Tekstikast:
     def __init__(self, olek:"ProgrammiOlek", pind):
@@ -8,7 +10,7 @@ class Tekstikast:
         self.pind = pind
     
         self.asukoht = (0,0)
-        self.suurus = (300, 40)
+        self.maxLaius = 500
         
         def funk(): pass
         self.nupp = NupuAlus(olek, funk)
@@ -22,28 +24,20 @@ class Tekstikast:
         self.kasKirjutamine = False
         
         self.tekstiPygFont = self.olek.sündmuseReaKirjaFont
-        self.tekst = ""
+        
+        self.mitmeReaTekst = MitmeReaTekst(self.olek, self.pind, "", self.tekstiPygFont)
+        
+        self.raam = Ristkülik(self.pind)
+        self.raam.MääraRaamiPaksus(5)
+        
 
-
-    def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if self.active:
-                if event.key == pygame.K_RETURN:
-                    print(self.text)
-                    self.text = ''
-                elif event.key == pygame.K_BACKSPACE:
-                    self.text = self.text[:-1]
-                else:
-                    self.text += event.unicode
-                # Re-render the text.
-                self.txt_surface = FONT.render(self.text, True, self.color)
-
-
+    
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
         self.nupp.MääraAsukoht(asukoht)
         
 
+    """
     def MääraSuurus(self, suurus):
         if suurus[0] != None:
             self.suurus = (suurus[0], self.suurus[1])
@@ -51,25 +45,35 @@ class Tekstikast:
         if suurus[1] != None:
             self.suurus = (self.suurus[0], suurus[1])
             self.nupp.MääraSuurus((self.suurus[0], suurus[1]))
-
+    """
     
+
+
+    def MääraMaxLaius(self, maxLaius):
+        self.maxLaius = maxLaius
+        self.mitmeReaTekst.MääraLaius(maxLaius)
+        
+
     def TegeleTekstiVõtuga(self):
         for event in self.olek.pygameEvents:
             if event.type == pygame.KEYDOWN:
                 if self.kasKirjutamine == True:
                     if event.key == pygame.K_RETURN:
-                        self.tekst = ''
-                        return(self.tekst)
+                        lõppTekst = self.mitmeReaTekst.tekst
+                        self.mitmeReaTekst.MääraTekst("")
+                        return lõppTekst
                     elif event.key == pygame.K_BACKSPACE:
-                        self.tekst = self.tekst[:-1]
+                        self.mitmeReaTekst.tekst = self.mitmeReaTekst.tekst[:-1]
                     else:
-                        self.tekst += event.unicode
+                        self.mitmeReaTekst.tekst += event.unicode
 
 
     def Joonista(self):
-        pind = self.pind
-        self.nupp.TegeleNupuga()
         
+        self.nupp.TegeleNupuga()
+        pind = self.pind
+        print(self.nupp.suurus)
+
         if self.nupp.VõtaOlek() == 0:
             self.kasutatavVärv = self.tavaline
         elif self.nupp.VõtaOlek() == 1:
@@ -79,19 +83,33 @@ class Tekstikast:
             self.kasKirjutamine = True
             
         self.nupp.Joonista(self.pind)
+       
             
 
         self.TegeleTekstiVõtuga()
         
 
-        self.txt_surface = self.tekstiPygFont.render(self.tekst, True, self.kasutatavVärv)
+        raamiVaheX = 5
+        raamiVaheY = 10
         
+        # Joonistab ristküliku
+        asukx = self.asukoht[0]
+        asuky = self.asukoht[1]
+        suurx = max(100, raamiVaheX + self.mitmeReaTekst.VõtaLaius() + raamiVaheX)
+        suury = raamiVaheY + self.mitmeReaTekst.KuiPaljuRuumiOnVaja() + raamiVaheY
         
-        # Valib ristkülikule sobiva laiuse
-        self.suurus = (max(200, self.txt_surface.get_width()+10), self.suurus[1])
-
+        self.raam.MääraAsukoht(asukx, asuky)
+        self.raam.MääraSuurus(suurx, suury)
+        self.raam.Joonista()
+        
+        # Määrab nupualuse suuruse
+        self.nupp.MääraSuurus((suurx, suury))
+        
         # Joonistab teksti
-        pind.blit(self.txt_surface, (self.asukoht[0]+5, self.asukoht[1]+5))
+        asukx = self.asukoht[0]+raamiVaheX
+        asuky = self.asukoht[1]+raamiVaheY
         
-        # Joonistab teksti ümber oleva ristküliku piirjoone
-        pygame.draw.rect(pind, self.kasutatavVärv, (self.asukoht, self.suurus), 10)
+        self.mitmeReaTekst.MääraAsukoht((asukx, asuky))
+        self.mitmeReaTekst.Joonista()
+        
+

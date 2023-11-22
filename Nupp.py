@@ -145,8 +145,9 @@ class LisaSündmuseNupp:
                 self.olek.SündmuseLisamine = False
             else:
                 self.olek.SündmuseLisamine = True
-        def f1():print("Lisamisnupu peal")
-        def f2():print("Lisamisnupust väljas")
+                
+        def f1():pass #print("Lisamisnupu peal")
+        def f2():pass #print("Lisamisnupust väljas")
         self.nupp = NupuAlus(olek, f1, f2)
 
 

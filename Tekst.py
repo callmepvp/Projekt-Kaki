@@ -139,10 +139,25 @@ class MitmeReaTekst:
                 tekst.MääraAsukoht((asukx, asuky))
                 counter += 1
                 tekst.Joonista()
-        
+                
+    # Funktsioon annab selle, kui palju võtab tekst ruumi laiupidi. Saadav väärtus on kindlasti väiksem, kui määratud laius, sest sellest ei tohi tekst üle minna. Tagastab selle, kui palju tegelikult laiust läheb. Võrdub kõige pikema rea laiusega.
+    def VõtaLaius(self):
+        if self.read != []:
+            read = self.read
+        elif self.ridadeArv == 0:
+            read = TekstRidadeks(self.tekst, self.font, self.laius)
+        elif self.ridadeArv > 0:
+            read = TekstRidadeks(self.tekst, self.font, self.laius)[0:self.ridadeArv]
+
+        maxLaius = 0
+        for i in read:
+            tekst = Tekst(self.pind, i, self.font, self.värv)
+            laius = tekst.VõtaLaius()
+            if laius > maxLaius:
+                maxLaius = laius
+        return maxLaius
 
 
-      
     def KuiPaljuRuumiOnVaja(self):
         ridu = 0
         if self.read != []:
@@ -154,3 +169,5 @@ class MitmeReaTekst:
         return vajadus
         
 
+    def MääraTekst(self, tekst):
+        self.tekst = tekst

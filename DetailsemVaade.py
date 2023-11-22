@@ -14,7 +14,6 @@ class DetailsemVaade:
         def tühiFn(): pass
 
         def KõrvaleVajutus():
-            print("ter")
             self.olek.TäpsemaVaatePäev = None
             self.olek.scrollOffset = 0
 

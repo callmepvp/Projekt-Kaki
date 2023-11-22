@@ -169,7 +169,7 @@ class Programm:
                 
 
             c.MääraAsukoht((100,250))
-            c.MääraSuurus((400, None))
+            c.MääraMaxLaius(400)
             c.Joonista()
                
             pygame.display.flip()

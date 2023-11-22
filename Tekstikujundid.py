@@ -126,7 +126,7 @@ class PäevaRuut:
 
         self.värv = olek.päevaruuduVärv
     
-        self.taust = Ristkülik(pind, self.asuk, self.suurus)
+        self.taust = Ristkülik(pind)
         self.pind = pind
         self.sündmused = päev.sündmusteNimekiri
         
