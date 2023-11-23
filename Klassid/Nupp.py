@@ -94,8 +94,9 @@ class NupuAlus:
                 self.välineOlek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        if self.kasVäljaLülitatud != True:
-                            self.funktsioon2() #Kutsub välja anonüümse funktsiooni
+                        if event.button != 4 and event.button != 5:
+                            if self.kasVäljaLülitatud != True:
+                                self.funktsioon2() #Kutsub välja anonüümse funktsiooni
                         self.välineOlek = 2
         
         else:
@@ -106,9 +107,10 @@ class NupuAlus:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.programmiOlek.pygameEvents.remove(event)
-                        if self.kasVäljaLülitatud != True:
-                            self.funktsioon() #Kutsub välja anonüümse funktsiooni
+                        if event.button != 4 and event.button != 5:
+                            self.programmiOlek.pygameEvents.remove(event)
+                            if self.kasVäljaLülitatud != True:
+                                self.funktsioon() #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
         
         self.RakendaOlek()
