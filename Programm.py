@@ -82,6 +82,9 @@ class Programm:
 
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
+        a = LisaSündmuseNupp(self.olek, ekraan)
+        
+        b = SündmuseLisamiseAken(self.olek, ekraan)
 
         c = Tekstikast(self.olek, ekraan)
         
@@ -138,7 +141,6 @@ class Programm:
             nupuAsuky = aknaSuur[1] * 0.75
             nupuSuurx = aknaSuur[0] - 2*nupuAsukx
             nupuSuury = aknaSuur[1] * 0.2
-            a = LisaSündmuseNupp(self.olek, ekraan)
             a.MääraAsukoht((nupuAsukx, nupuAsuky))
             a.MääraSuurus((nupuSuurx, nupuSuury))
             a.Joonista()
@@ -162,7 +164,6 @@ class Programm:
                 suury = 300
                 asukx = (aknaSuur[0]-suurx)/2
                 asuky = asukx/2
-                b = SündmuseLisamiseAken(self.olek, ekraan)
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()

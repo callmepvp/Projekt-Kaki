@@ -1,4 +1,5 @@
-﻿from Kujundid import Ristkülik
+﻿from pprint import pp
+from Kujundid import Ristkülik
 import pygame
 from Nupp import NupuAlus
 from Programmiolek import ProgrammiOlek
@@ -16,9 +17,9 @@ class Tekstikast:
         self.nupp = NupuAlus(olek, funk)
         self.nupp.nurgaRaadius = 0
         
-        self.helendav = (50,50,238, 255)
-        self.allavajutatud = (10,10,123, 255)
-        self.tavaline = (30,30,178,255)
+        self.helendav = (248,237,239, 255)
+        self.allavajutatud = (158,139,135, 255)
+        self.tavaline = (200,191,189,255)
         self.kasutatavVärv = self.tavaline
         
         self.kasKirjutamine = False
@@ -29,6 +30,9 @@ class Tekstikast:
         
         self.raam = Ristkülik(self.pind)
         self.raam.MääraRaamiPaksus(5)
+        self.raam.MääraNurgaRaadius(0)
+        
+        self.valmisTekst = ""
         
 
     
@@ -61,7 +65,7 @@ class Tekstikast:
                     if event.key == pygame.K_RETURN:
                         lõppTekst = self.mitmeReaTekst.tekst
                         self.mitmeReaTekst.MääraTekst("")
-                        return lõppTekst
+                        self.valmisTekst = lõppTekst
                     elif event.key == pygame.K_BACKSPACE:
                         self.mitmeReaTekst.tekst = self.mitmeReaTekst.tekst[:-1]
                     else:
@@ -71,26 +75,24 @@ class Tekstikast:
     def Joonista(self):
         
         self.nupp.TegeleNupuga()
-        pind = self.pind
-        print(self.nupp.suurus)
 
         if self.nupp.VõtaOlek() == 0:
-            self.kasutatavVärv = self.tavaline
+            self.raam.MääraVärv(self.tavaline)
         elif self.nupp.VõtaOlek() == 1:
-            self.kasutatavVärv = self.helendav
+            self.raam.MääraVärv(self.helendav)
         elif self.nupp.VõtaOlek() == 2:
-            self.kasutatavVärv = self.allavajutatud
+            self.raam.MääraVärv(self.allavajutatud)
             self.kasKirjutamine = True
             
-        self.nupp.Joonista(self.pind)
+        #self.nupp.Joonista(self.pind)
        
             
 
         self.TegeleTekstiVõtuga()
         
 
-        raamiVaheX = 5
-        raamiVaheY = 10
+        raamiVaheX = 10
+        raamiVaheY = 15
         
         # Joonistab ristküliku
         asukx = self.asukoht[0]

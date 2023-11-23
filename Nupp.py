@@ -33,7 +33,7 @@ class NupuAlus:
         
         self.suurus = (500,200)
         self.asukoht = (100,100)
-        self.nurgaRaadius = (30)
+        self.nurgaRaadius = 0
         
         # 0 – tavaline, 1 – hiirKohal, 2 – allavajutatud
         self.olek = 0
@@ -42,6 +42,8 @@ class NupuAlus:
         self.hiireVajutusKoht = None
         # 0 – üleval, 1 – allavajutatud
         self.eelmineHiireOlek = 0
+        
+        self.kasVäljaLülitatud = False
 
     def MääraHelendavVärv( self, värv):
         self.hiirKohalVärv = värv
@@ -82,7 +84,8 @@ class NupuAlus:
             return True
         return False
 
-    def TegeleNupuga(self):        
+
+    def TegeleNupuga(self):  
         
         if self.KasHiirKohal() == False:
             self.olek = 0
@@ -92,7 +95,8 @@ class NupuAlus:
                 self.välineOlek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.funktsioon2() #Kutsub välja anonüümse funktsiooni
+                        if self.kasVäljaLülitatud != True:
+                            self.funktsioon2() #Kutsub välja anonüümse funktsiooni
                         self.välineOlek = 2
         
         else:
@@ -103,7 +107,9 @@ class NupuAlus:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        self.funktsioon() #Kutsub välja anonüümse funktsiooni
+                        self.programmiOlek.pygameEvents.remove(event)
+                        if self.kasVäljaLülitatud != True:
+                            self.funktsioon() #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
         
         self.RakendaOlek()
@@ -139,16 +145,15 @@ class LisaSündmuseNupp:
         self.suurus = (200, 80)
         self.peamineVärv = olek.LisaSündmusNupuVärv
         self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
-
-        def lisaSündmus():
-            if self.olek.SündmuseLisamine == True:
-                self.olek.SündmuseLisamine = False
-            else:
-                self.olek.SündmuseLisamine = True
-                
-        def f1():pass #print("Lisamisnupu peal")
-        def f2():pass #print("Lisamisnupust väljas")
-        self.nupp = NupuAlus(olek, f1, f2)
+        
+        def f1(): 
+            print("Nupp välja lülitatud")
+            print("Sündmuste lisamine: True")
+            self.olek.SündmuseLisamine = True
+            self.nupp.kasVäljaLülitatud = True
+        #def f1():pass #print("Lisamisnupu peal")
+        #def f2():pass #print("Lisamisnupust väljas")
+        self.nupp = NupuAlus(olek, f1)
 
 
         # Pluss
