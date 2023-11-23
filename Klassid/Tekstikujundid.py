@@ -1,15 +1,15 @@
 ﻿import pygame
-from Kujundid import Ristkülik
-from Tekst import MitmeReaTekst, MituRidaOnVaja, Tekst, EraldaSobivaPikkusegaTekst
-from Sündmus import Sündmus
+from Klassid.Kujundid import Ristkülik
+from Klassid.Tekst import MitmeReaTekst, Tekst
+from Klassid.Sündmus import Sündmus
 from math import floor
 from typing import List
 from Programmiolek import ProgrammiOlek
-from Kuupäev import Kuupäev
-from Päev import Päev
-from SündNimekFunktsioonid import *
-from UtilityFunktsioonid import *
-from Nupp import NupuAlus
+from Klassid.Kuupäev import Kuupäev
+from Klassid.Päev import Päev
+from Funktsioonid.SündNimekFunktsioonid import *
+from Funktsioonid.UtilityFunktsioonid import *
+from Klassid.Nupp import NupuAlus
 
 # SündmuseRida
 # Vastutab loetelutäpi ja sündmuse nimest koosneva rea joonistamise eest päevaruudu sees. Kui päevaruudus on mitu sündmust, ss neid ridu on vastavalt nii mitu. Iga sündmuse jaoks 1.

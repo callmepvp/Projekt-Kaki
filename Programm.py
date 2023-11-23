@@ -1,15 +1,15 @@
 ﻿import pygame
 import win32gui
 import win32con
-from Tekstikast import Tekstikast
-from Tekstikujundid import PäevaRuudustik
+from Klassid.Tekstikast import Tekstikast
+from Klassid.Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
-from Kuupäev import Kuupäev
-from Sündmus import Sündmus
-from Nupp import LisaSündmuseNupp, NupuAlus
-from UtilityFunktsioonid import GenereeriID
-from DetailsemVaade import DetailsemVaade
-from SündLisamiseAken import SündmuseLisamiseAken
+from Klassid.Kuupäev import Kuupäev
+from Klassid.Sündmus import Sündmus
+from Klassid.Nupp import LisaSündmuseNupp, NupuAlus
+from Funktsioonid.UtilityFunktsioonid import GenereeriID
+from Klassid.DetailsemVaade import DetailsemVaade
+from Klassid.SündLisamiseAken import SündmuseLisamiseAken
 
   
 

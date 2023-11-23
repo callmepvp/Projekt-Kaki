@@ -1,8 +1,8 @@
-﻿from Kujundid import Ristkülik
+﻿from Klassid.Kujundid import Ristkülik
 from Programmiolek import ProgrammiOlek
 import pygame
-from Sündmus import Sündmus
-from Nupp import NupuAlus
+from Klassid.Sündmus import Sündmus
+from Klassid.Nupp import NupuAlus
 
 class SündmuseLisamiseAken:
     def __init__(self, olek:"ProgrammiOlek", pind:pygame.surface.Surface):

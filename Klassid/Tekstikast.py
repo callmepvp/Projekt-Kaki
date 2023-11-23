@@ -1,9 +1,8 @@
-﻿from pprint import pp
-from Kujundid import Ristkülik
+﻿from Klassid.Kujundid import Ristkülik
 import pygame
-from Nupp import NupuAlus
+from Klassid.Nupp import NupuAlus
 from Programmiolek import ProgrammiOlek
-from Tekst import MitmeReaTekst
+from Klassid.Tekst import MitmeReaTekst
 
 class Tekstikast:
     def __init__(self, olek:"ProgrammiOlek", pind):

@@ -1,5 +1,5 @@
-﻿from Kuupäev import Kuupäev, Kellaaeg
-import json
+﻿from Klassid.Kuupäev import Kuupäev, Kellaaeg
+
 
 
 # Sündmusel põhineb kõik selles programmis. See objekt peab olema piisavalt paindlik, et saada olla ühekordne Kuupäeva sündmus või olla igal kolmapäeval ja esmaspäeval kl 18 korduv sündmus või näiteks sündmus algusega kl 17 ja lõpuga kl 19.

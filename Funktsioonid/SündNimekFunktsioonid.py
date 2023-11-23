@@ -1,7 +1,7 @@
 ﻿from typing import List
-from Sündmus import Sündmus
-from Kuupäev import Kuupäev
-from Päev import Päev
+from Klassid.Sündmus import Sündmus
+from Klassid.Kuupäev import Kuupäev
+from Klassid.Päev import Päev
 
 
 def VõtaKindlalKuupäeval(nimekiri:"List[Sündmus]", kuupäev:"Kuupäev"):

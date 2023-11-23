@@ -1,6 +1,6 @@
-﻿from Kuupäev import Kuupäev
+﻿from Klassid.Kuupäev import Kuupäev
 from typing import List
-from Sündmus import Sündmus
+from Klassid.Sündmus import Sündmus
 
 
 # Päev on objekt milles on kuupäeva objekt ja sellel päeval olevad sündmused nimekirjas. Nende objekti nimekirja võtab sisse päevaruudustiku klass, et 

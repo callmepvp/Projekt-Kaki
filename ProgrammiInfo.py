@@ -1,7 +1,7 @@
 import os
 import json
 from Programmiolek import *
-from Sündmus import *
+from Klassid.Sündmus import *
 
 defaultDataBody = {
     "programmiInfo" : {

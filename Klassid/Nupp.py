@@ -1,8 +1,7 @@
 ﻿import pygame
 from PIL import Image, ImageFilter 
-import PIL
-from UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees, MuudaHeledust
-from Tekst import MitmeReaTekst, Tekst
+from Funktsioonid.UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees, MuudaHeledust
+from Klassid.Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
 
 
