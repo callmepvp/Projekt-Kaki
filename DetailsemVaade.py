@@ -3,10 +3,12 @@ import pygame
 import os
 from Programmiolek import ProgrammiOlek
 from Nupp import NupuAlus
+from UtilityFunktsioonid import võrdleObjektiParameetreid
 
 class DetailsemVaade:
     def __init__(self, pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
         self.päevaObjekt = None
+        self.eelminePäevaObjekt = None
         self.asukoht = (0, 0)
         self.suurus = (400, 200)
         self.pind = pind
@@ -15,7 +17,7 @@ class DetailsemVaade:
 
         def KõrvaleVajutus():
             self.olek.TäpsemaVaatePäev = None
-            self.olek.scrollOffset = 0
+            self.scrollOffset = 0
 
         self.olek = olek
         self.nupp = NupuAlus(olek, tühiFn, KõrvaleVajutus)
@@ -24,7 +26,7 @@ class DetailsemVaade:
         self.nupp.nurgaRaadius = 0
 
         self.ÜlemineVaheTekstiga = 10
-        self.scrollOffset = olek.scrollOffset
+        self.scrollOffset = 0
         self.reaKõrgus = 40
 
         self.font = pygame.font.Font(os.path.join("Fondid", 'CORBEL.TTF'), 36)
@@ -44,8 +46,9 @@ class DetailsemVaade:
         self.nupp.TegeleNupuga()
         self.KäsitleSündmusi()
         
-        
         päevaObjekt = self.päevaObjekt
+        if not võrdleObjektiParameetreid(self.eelminePäevaObjekt, päevaObjekt):
+            self.scrollOffset = 0
 
         rect = (self.asukoht, self.suurus)
         pygame.draw.rect(self.pind, (255, 123, 21), rect)
@@ -65,18 +68,19 @@ class DetailsemVaade:
             if tekstiRect.bottom > self.asukoht[1] + self.ÜlemineVaheTekstiga:
                 self.pind.blit(tekstiPind, tekstiRect)
 
+        self.eelminePäevaObjekt = self.päevaObjekt
+
     def SkrolliÜles(self):
-        self.olek.scrollOffset = max(0, self.scrollOffset - 1)
+        self.scrollOffset = max(0, self.scrollOffset - 1)
 
     def SkrolliAlla(self):
         maxOffset = max(0, len(self.päevaObjekt.VõtaSündmused()) - (int(self.suurus[1] // self.reaKõrgus)))
-
         if self.scrollOffset < maxOffset:
-            self.olek.scrollOffset = min(maxOffset, self.scrollOffset + 1)
+            self.scrollOffset = min(maxOffset, self.scrollOffset + 1)
 
     def KäsitleSündmusi(self):
 
-        pygameEvents = self.olek.pygameEvents        
+        pygameEvents = self.olek.pygameEvents    
         for event in pygameEvents:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 4:
