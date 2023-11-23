@@ -20,7 +20,7 @@ class DetailsemVaade:
             self.scrollOffset = 0
 
         self.olek = olek
-        self.nupp = NupuAlus(olek, tühiFn, KõrvaleVajutus)
+        self.nupp = NupuAlus(olek, 4, tühiFn, KõrvaleVajutus)
 
         
         self.nupp.nurgaRaadius = 0

@@ -13,7 +13,7 @@ class Tekstikast:
         self.maxLaius = 500
         
         def funk(): pass
-        self.nupp = NupuAlus(olek, funk)
+        self.nupp = NupuAlus(olek, 10, funk)
         self.nupp.nurgaRaadius = 0
         
         self.helendav = (248,237,239, 255)

@@ -22,7 +22,7 @@ class SündmuseLisamiseAken:
         def f2(): 
             print("Sündmuste lisamise lõpp.")
             self.olek.SündmuseLisamine = False
-        self.nupp = NupuAlus(self.olek, None , f2)
+        self.nupp = NupuAlus(self.olek, 5, None , f2)
         
 
     def Joonista(self):

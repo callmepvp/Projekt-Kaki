@@ -9,7 +9,7 @@ from Programmiolek import ProgrammiOlek
 
 # Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
-    def __init__(self, olek:"ProgrammiOlek", funktsioon = None, funktsioon2 = None, args = None):
+    def __init__(self, olek:"ProgrammiOlek",prioriteet=0, funktsioon = None, funktsioon2 = None, args = None):
         self.programmiOlek = olek        
         self.pind = None
         
@@ -43,6 +43,7 @@ class NupuAlus:
         self.eelmineHiireOlek = 0
         
         self.kasVäljaLülitatud = False
+        self.prioriteet = prioriteet
 
     def MääraHelendavVärv( self, värv):
         self.hiirKohalVärv = värv
@@ -62,6 +63,7 @@ class NupuAlus:
             self.kasutatavVärv = self.vajutatudVärv
 
     def KasHiirKohal(self, asuk=None):
+
         asukx = self.asukoht[0]
         asuky = self.asukoht[1]
         suurx = self.suurus[0]
@@ -80,9 +82,14 @@ class NupuAlus:
             KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
             KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
             KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad)):
+            self.programmiOlek.aktiivsedNupud.add(self)
             return True
+        try: 
+            self.programmiOlek.aktiivsedNupud.remove(self)
+        except:
+            pass
         return False
-
+        
 
     def TegeleNupuga(self):  
         
@@ -96,7 +103,7 @@ class NupuAlus:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if event.button != 4 and event.button != 5:
                             if self.kasVäljaLülitatud != True:
-                                self.funktsioon2() #Kutsub välja anonüümse funktsiooni
+                                pass
                         self.välineOlek = 2
         
         else:
@@ -107,15 +114,18 @@ class NupuAlus:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        if event.button != 4 and event.button != 5:
-                            self.programmiOlek.pygameEvents.remove(event)
-                            if self.kasVäljaLülitatud != True:
-                                self.funktsioon() #Kutsub välja anonüümse funktsiooni
                         self.olek = 2
         
         self.RakendaOlek()
     
     # Seda funktsiooni ei kasutata päris programmis kunagi. See on ainult debuggimiseks j kontrollimaks, kas nupualuse asukoht j suurus klapivad ülemobjekti omaga.
+    def KutsuFunktsioon(self):
+        
+        if self.kasVäljaLülitatud == True:
+            pass
+        else:
+            self.funktsioon()
+    
     def Joonista(self, pind):
         self.TegeleNupuga()
         
@@ -154,7 +164,7 @@ class LisaSündmuseNupp:
             self.nupp.kasVäljaLülitatud = True
         #def f1():pass #print("Lisamisnupu peal")
         #def f2():pass #print("Lisamisnupust väljas")
-        self.nupp = NupuAlus(olek, f1)
+        self.nupp = NupuAlus(olek, 1, f1)
 
 
         # Pluss

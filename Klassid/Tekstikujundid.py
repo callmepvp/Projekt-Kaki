@@ -142,7 +142,7 @@ class PäevaRuut:
             
             self.olek.scrollOffset = 0
 
-        self.nupp = NupuAlus(olek, päevaRuuduDetailsemVaade)
+        self.nupp = NupuAlus(olek, 0,päevaRuuduDetailsemVaade)
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)

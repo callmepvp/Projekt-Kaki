@@ -88,7 +88,6 @@ class Programm:
 
         c = Tekstikast(self.olek, ekraan)
         
-        d = NupuAlus(self.olek,)
         
         vaade = DetailsemVaade(ekraan, self.olek)
 
@@ -97,9 +96,6 @@ class Programm:
             ekraan.fill((255, 255, 255, 255))
             
 
-            d.MääraAsukoht((10,10))
-            d.MääraSuurus((20,20))
-            d.Joonista(ekraan)
             """rk1Asuk = (0.1, 0.1)
             rk1.MääraAsukoht(rk1Asuk[0], rk1Asuk[1])
             rk1.MääraSuurus(0.8,0.8)
@@ -174,7 +170,20 @@ class Programm:
             c.Joonista()
                
             pygame.display.flip()
-    
+            
+            kõrgeimPrio = 0
+            parimNupp = 0
+            print(self.olek.aktiivsedNupud)
+            for i in self.olek.aktiivsedNupud:
+                if i.prioriteet >= kõrgeimPrio:
+                    kõrgeimPrio = i.prioriteet
+                    parimNupp = i
+                    
+            if parimNupp != 0:
+                for i in self.olek.pygameEvents:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        print(parimNupp.funktsioon)
+                        parimNupp.KutsuFunktsioon()
 
         # See rida teeb nii, et asjad joonistuks ka akna suuruse muutumise ajal 
         oldWndProc = win32gui.SetWindowLong(win32gui.GetForegroundWindow(), win32con.GWL_WNDPROC, lambda *args: wndProc(oldWndProc, JoonistaAsjad, *args))
