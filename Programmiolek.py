@@ -120,4 +120,11 @@ class ProgrammiOlek:
         # See o sündmuse lisamise valikuakna tausta värv
         self.sündmuseLisamiseTaustaVärv = (200,200,200,255)
         
+        self.nuppudePrioriteedid = {
+            "taust": 0,
+            "päevaruut": 1,
+            "sündmuse lisamise nupp": 2,
+            "detailsem vaade" : 3,
+            "sündmuse lisamise aken" : 4}
+
         self.aktiivsedNupud = set()

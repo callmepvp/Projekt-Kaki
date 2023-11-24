@@ -22,7 +22,8 @@ class SündmuseLisamiseAken:
         def f2(): 
             print("Sündmuste lisamise lõpp.")
             self.olek.SündmuseLisamine = False
-        self.nupp = NupuAlus(self.olek, 5, None , f2)
+        prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
+        self.nupp = NupuAlus(self.olek, prio, None , f2)
         
 
     def Joonista(self):

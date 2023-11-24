@@ -97,6 +97,8 @@ class NupuAlus:
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         self.olek = 2
+        else:
+            self.olek = 0
                         
         self.RakendaOlek()
     
@@ -147,7 +149,8 @@ class LisaSündmuseNupp:
             self.olek.SündmuseLisamine = True
         #def f1():pass #print("Lisamisnupu peal")
         #def f2():pass #print("Lisamisnupust väljas")
-        self.nupp = NupuAlus(olek, 1, f1)
+        prio = self.olek.nuppudePrioriteedid["sündmuse lisamise nupp"]
+        self.nupp = NupuAlus(olek, prio, f1)
 
 
         # Pluss

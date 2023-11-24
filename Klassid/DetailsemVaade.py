@@ -20,7 +20,8 @@ class DetailsemVaade:
             self.scrollOffset = 0
 
         self.olek = olek
-        self.nupp = NupuAlus(olek, 4, tühiFn, KõrvaleVajutus)
+        prio = self.olek.nuppudePrioriteedid["detailsem vaade"]
+        self.nupp = NupuAlus(olek, prio)
 
         
         self.nupp.nurgaRaadius = 0

@@ -142,7 +142,8 @@ class PäevaRuut:
             
             self.olek.scrollOffset = 0
 
-        self.nupp = NupuAlus(olek, 1,päevaRuuduDetailsemVaade)
+        prio = self.olek.nuppudePrioriteedid["päevaruut"]
+        self.nupp = NupuAlus(olek, prio, päevaRuuduDetailsemVaade)
         
     def MääraAsukoht(self, x, y):
         self.asuk = (x,y)

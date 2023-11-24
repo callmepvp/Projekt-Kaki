@@ -85,7 +85,8 @@ class Programm:
         def f1():
             self.olek.TäpsemaVaatePäev = None
             self.olek.SündmuseLisamine = False
-        ekraaniNupualus = NupuAlus(self.olek, 0, f1)
+        prio = self.olek.nuppudePrioriteedid["taust"]
+        ekraaniNupualus = NupuAlus(self.olek, prio, f1)
 
         a = LisaSündmuseNupp(self.olek, ekraan)
         
