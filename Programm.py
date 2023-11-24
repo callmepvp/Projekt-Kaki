@@ -82,6 +82,11 @@ class Programm:
 
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
+        def f1():
+            self.olek.TäpsemaVaatePäev = None
+            self.olek.SündmuseLisamine = False
+        ekraaniNupualus = NupuAlus(self.olek, 0, f1)
+
         a = LisaSündmuseNupp(self.olek, ekraan)
         
         b = SündmuseLisamiseAken(self.olek, ekraan)
@@ -95,7 +100,7 @@ class Programm:
         def JoonistaAsjad():
             ekraan.fill((255, 255, 255, 255))
             
-
+            
             """rk1Asuk = (0.1, 0.1)
             rk1.MääraAsukoht(rk1Asuk[0], rk1Asuk[1])
             rk1.MääraSuurus(0.8,0.8)
@@ -123,6 +128,10 @@ class Programm:
             ruut.Joonista()"""
 
             aknaSuur = ekraan.get_size()
+            
+            ekraaniNupualus.MääraAsukoht((0,0))
+            ekraaniNupualus.MääraSuurus(aknaSuur)
+            ekraaniNupualus.TegeleNupuga()
             
 
             ekrLai = aknaSuur[0]

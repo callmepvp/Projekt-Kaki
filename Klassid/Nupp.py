@@ -9,7 +9,7 @@ from Programmiolek import ProgrammiOlek
 
 # Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
-    def __init__(self, olek:"ProgrammiOlek",prioriteet=0, funktsioon = None, funktsioon2 = None, args = None):
+    def __init__(self, olek:"ProgrammiOlek",prioriteet=0, funktsioon = None, args = None):
         self.programmiOlek = olek        
         self.pind = None
         
@@ -18,9 +18,6 @@ class NupuAlus:
         
         if funktsioon != None: self.funktsioon = funktsioon
         else: self.funktsioon = tühiFn
-        
-        if funktsioon2 != None: self.funktsioon2 = funktsioon2
-        else: self.funktsioon2 = tühiFn
             
 
         self.args = args
@@ -92,22 +89,7 @@ class NupuAlus:
         
 
     def TegeleNupuga(self):  
-        
-        if self.KasHiirKohal() == False:
-            self.olek = 0
-            if self.välineOlek == 2 and pygame.mouse.get_pressed()[0] == True:
-                pass
-            else:
-                self.välineOlek = 1
-                for event in self.programmiOlek.pygameEvents:
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        if event.button != 4 and event.button != 5:
-                            if self.kasVäljaLülitatud != True:
-                                pass
-                        self.välineOlek = 2
-        
-        else:
-            self.välineOlek = 0
+        if self.KasHiirKohal() == True:
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
             else:
@@ -115,9 +97,10 @@ class NupuAlus:
                 for event in self.programmiOlek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         self.olek = 2
-        
+                        
         self.RakendaOlek()
     
+
     # Seda funktsiooni ei kasutata päris programmis kunagi. See on ainult debuggimiseks j kontrollimaks, kas nupualuse asukoht j suurus klapivad ülemobjekti omaga.
     def KutsuFunktsioon(self):
         
@@ -126,6 +109,7 @@ class NupuAlus:
         else:
             self.funktsioon()
     
+
     def Joonista(self, pind):
         self.TegeleNupuga()
         
@@ -161,7 +145,6 @@ class LisaSündmuseNupp:
             print("Nupp välja lülitatud")
             print("Sündmuste lisamine: True")
             self.olek.SündmuseLisamine = True
-            self.nupp.kasVäljaLülitatud = True
         #def f1():pass #print("Lisamisnupu peal")
         #def f2():pass #print("Lisamisnupust väljas")
         self.nupp = NupuAlus(olek, 1, f1)
