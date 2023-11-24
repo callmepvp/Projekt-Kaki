@@ -50,7 +50,10 @@ defaultDataBody = {
 
         "suureNupuTekstiSuurus" : 14,
         
-        "suureNupuNurgaRaadius" : 20
+        "suureNupuNurgaRaadius" : 20,
+
+        "sündmuseLisamiseNurgaRaadius" : 30,
+        "sündmuseLisamiseTaustaVärv" : (200,200,200,255)
     },
 
     "fondiTüübid" : {
