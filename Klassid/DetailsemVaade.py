@@ -4,6 +4,8 @@ import os
 from Programmiolek import ProgrammiOlek
 from Klassid.Nupp import NupuAlus
 from Funktsioonid.UtilityFunktsioonid import võrdleObjektiParameetreid
+from Klassid.Tekst import MitmeReaTekst, TekstRidadeks
+from Klassid.Sündmus import Sündmus
 
 class DetailsemVaade:
     def __init__(self, pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
@@ -55,19 +57,36 @@ class DetailsemVaade:
         pygame.draw.rect(self.pind, (255, 123, 21), rect)
 
         sündmused = päevaObjekt.VõtaSündmused()
+        print(f"Sündmusi on {len(sündmused)}")
 
         startIndeks = self.scrollOffset
         lõpuIndeks = min(len(sündmused), startIndeks + (int(self.suurus[1]) // self.reaKõrgus))
-
+        järgmiseAsukoht = 0
         for i in range(startIndeks, lõpuIndeks):
             sündmus = sündmused[i]
-            tekst = f"• {sündmus.nimi}"
-            tekstiPind = self.font.render(tekst, True, (0, 0, 0))
+
+            #tekst = f"{sündmus.nimi}"
+            #tekst = MitmeReaTekst(self.olek, self.pind, sündmus.nimi, self.font)
+            #tekst.Joonista()
+
+            detailsemSündmus = DetailsemaVaateSündmus(self.pind, self.olek, sündmus)
+
+            uusAsukohtX = self.asukoht[0]
+            uusAsukohtY = self.asukoht[1] + järgmiseAsukoht
+            
+            detailsemSündmus.MääraAsukoht((uusAsukohtX, uusAsukohtY))
+            detailsemSündmus.MääraSuurus(self.suurus)
+            detailsemSündmus.Joonista()
+            järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
+            järgmiseAsukoht += 40 #vahe
+
+            """
+            tekstiPind = self.font.render(f"{sündmus.nimi}", True, (0, 0, 0))
 
             tekstiRect = tekstiPind.get_rect(topleft=(self.asukoht[0] + 10, self.asukoht[1] + self.ÜlemineVaheTekstiga + (i - startIndeks) * self.reaKõrgus - self.scrollOffset * self.reaKõrgus))
 
             if tekstiRect.bottom > self.asukoht[1] + self.ÜlemineVaheTekstiga:
-                self.pind.blit(tekstiPind, tekstiRect)
+                self.pind.blit(tekstiPind, tekstiRect)"""
 
         self.eelminePäevaObjekt = self.päevaObjekt
 
@@ -93,6 +112,46 @@ class DetailsemVaade:
                     self.SkrolliÜles()
                 elif event.key == pygame.K_DOWN:
                     self.SkrolliAlla()
+
+
+
+class DetailsemaVaateSündmus:
+    def __init__(self, pind: "pygame.Surface", olek: "ProgrammiOlek", sündmus: "Sündmus") -> None:
+        self.asukoht = (0, 0)
+        self.suurus = (100, 100)
+        self.sündmus = sündmus
+        self.olek = olek
+        self.pind = pind
+        self.font = self.olek.sündmuseReaKirjaFont
+
+    def MääraSuurus(self, suurus):
+        self.suurus = suurus
+
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
+
+    def Joonista(self):
+        uusRida = MitmeReaTekst(self.olek, self.pind, self.sündmus.nimi, self.font)
+        uusRida.MääraRidadeArv(0) #lõpmatu
+        uusRida.MääraReavahe(20)
+        uusRida.MääraLaius(self.suurus[0])
+        uusRida.MääraAsukoht(self.asukoht)
+
+        uusRida.Joonista()
+
+    def võtaVajalikRuum(self):
+        uusRida = MitmeReaTekst(self.olek, self.pind, self.sündmus.nimi, self.font)
+        uusRida.MääraRidadeArv(3) #lõpmatu
+        uusRida.MääraReavahe(20)
+        uusRida.MääraLaius(self.suurus[0])
+        uusRida.MääraRead(TekstRidadeks(self.sündmus.nimi, self.font, self.suurus[0]))
+
+        ruum = uusRida.KuiPaljuRuumiOnVaja()
+        return ruum
+
+
+    
+    
 
         
 

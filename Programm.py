@@ -183,7 +183,7 @@ class Programm:
             
             kõrgeimPrio = 0
             parimNupp = 0
-            print(self.olek.aktiivsedNupud)
+            #print(self.olek.aktiivsedNupud)
             for i in self.olek.aktiivsedNupud:
                 if i.prioriteet >= kõrgeimPrio:
                     kõrgeimPrio = i.prioriteet
