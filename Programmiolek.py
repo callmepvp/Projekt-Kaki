@@ -140,3 +140,5 @@ class ProgrammiOlek:
         self.tekstikastiAlumineServTekstist = 12
         self.tekstikastiKüljedTekstist = 5
         self.tekstikastiReavahe = 20
+        self.tekstikastiSelgitusKastist = 10
+        self.tekstikastiSelgituseReavahe = 10

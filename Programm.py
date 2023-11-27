@@ -1,7 +1,7 @@
 ﻿import pygame
 import win32gui
 import win32con
-from Klassid.Tekstikast import Tekstikast
+from Klassid.Tekstikast import SelgitavTekstikast
 from Klassid.Tekstikujundid import PäevaRuudustik
 from Programmiolek import ProgrammiOlek
 from Klassid.Kuupäev import Kuupäev
@@ -92,7 +92,8 @@ class Programm:
         
         b = SündmuseLisamiseAken(self.olek, ekraan)
 
-        c = Tekstikast(self.olek, ekraan)
+        c = SelgitavTekstikast(self.olek, ekraan)
+        c.MääraSõnum("Uue sündmuse tekst:")
         
         vaade = DetailsemVaade(ekraan, self.olek)
 
@@ -173,8 +174,9 @@ class Programm:
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
             
-            c.MääraAsukoht((100,30))
-            c.MääraSuurus((200,100))
+            c.MääraAsukoht((100,100))
+            c.MääraSuurus((100,100))
+            c.MääraKeskeleJoondus(False)
             c.Joonista()
 
                

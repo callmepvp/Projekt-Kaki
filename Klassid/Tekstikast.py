@@ -36,7 +36,7 @@ class Tekstikast:
     def MääraKeskeleJoondus(self,väärtus:"bool"):
         self.keskeleJoondus = väärtus
         if väärtus == True: self.tekst.MääraKeskeleJoondus(True)
-        else: self.tekst.MääraKeskeleJoondus()
+        else: self.tekst.MääraKeskeleJoondus(False)
 
     def TegeleTekstivõtuga(self):
         for event in self.olek.pygameEvents:
@@ -62,6 +62,9 @@ class Tekstikast:
         return (suurx, suury)
     
     def Joonista(self):
+        
+        self.TegeleTekstivõtuga()      
+        
         # Raami ja nupu suurused ja asukoht
         suurx, suury = self.VõtaSuurus()
         asukx, asuky = self.asukoht
@@ -72,9 +75,12 @@ class Tekstikast:
         self.nupp.MääraAsukoht((asukx, asuky))
         self.nupp.MääraSuurus((suurx, suury))
         self.nupp.TegeleNupuga()
-        self.TegeleTekstivõtuga()      
+        olek = self.nupp.VõtaOlek()
 
         # Raami suurus ja paigutus
+        if olek == 0: self.raam.MääraVärv(self.olek.tekstikastiTavalineVärv)
+        if olek == 1: self.raam.MääraVärv(self.olek.tekstikastiHelendavVärv)
+        if olek == 2: self.raam.MääraVärv(self.olek.tekstikastiVajutatudVärv)
         self.raam.MääraAsukoht(asukx, asuky)
         self.raam.MääraSuurus(suurx, suury)
         self.raam.Joonista()
@@ -83,7 +89,7 @@ class Tekstikast:
         asuky = self.asukoht[1] + self.olek.tekstikastiÜlemineServTekstist
         asukx = self.asukoht[0] + self.olek.tekstikastiKüljedTekstist
         if self.keskeleJoondus == True: 
-            asukx = self.asukoht[0] - self.tekst.VõtaLaius()/2
+            asukx = self.asukoht[0]
         self.tekst.MääraAsukoht((asukx, asuky))
         self.tekst.Joonista()
         
@@ -99,52 +105,55 @@ class Tekstikast:
 
 class SelgitavTekstikast:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
-        self.asukoht = (0,0)
+        # Tüüpilised omadused:
+        self.olek = olek
+        self.pind = pind
         self.suurus = (100,100)
-        self.keskeleJoondus = False
+        self.asukoht = (0,0)
         
-        # tekstikast
-        font = olek.sündmuseReaKirjaFont
-        self.tekstikast = Tekstikast(olek, pind)
-
+        # Eriomadused:
+        self.keskeleJoondus = False
+        self.sõnum = "Kasuta MääraSõnum meetodit"
+        
         # Tekst
         font = olek.päevaruuduPealkAastaPygFont
-        self.tekst = MitmeReaTekst(olek,pind,"Kasuta MääraTekst funktsiooni.",font)
-        self.tekst.MääraReavahe(10)
-        
-    def MääraKeskeleJoondus(self, väärtus:"bool"):
-        self.keskeleJoondus = väärtus
+        self.tekst = MitmeReaTekst(olek, pind, self.sõnum, font)
+        reavahe = olek.tekstikastiSelgituseReavahe
+        self.tekst.MääraReavahe(reavahe)
+
+        # Tekstikast
+        self.kast = Tekstikast(olek, pind)
     
+    def MääraSõnum(self, tekst):
+        self.sõnum = tekst
+
+    def MääraKeskeleJoondus(self, väärtus):
+        self.keskeleJoondus = väärtus
+        self.tekst.MääraKeskeleJoondus(väärtus)
+        self.kast.MääraKeskeleJoondus(väärtus)
+
+    def Joonista(self):
+        # Teksti asukoht
+        self.tekst.MääraLaius(self.suurus[0])
+        print(self.suurus[0])
+        suurx = self.tekst.VõtaLaius()
+        asuky = self.asukoht[1]
+        asukx = self.asukoht[0]
+        if self.keskeleJoondus == True:
+            asukx = self.asukoht[0]
+        self.tekst.MääraAsukoht((asukx, asuky))
+        self.tekst.Joonista()
+        
+        # Kasti asukoht
+        asukx = self.asukoht[0]
+        asuky = self.asukoht[1] + self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist
+        suurx = self.suurus[1]
+        self.kast.MääraAsukoht((asukx, asuky))
+        self.kast.MääraSuurus((suurx, 100))
+        self.kast.Joonista()
+        
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
         
     def MääraSuurus(self, suurus):
         self.suurus = suurus
-        
-    def Joonista(self):
-        if self.keskeleJoondus == False:
-            asuky = self.asukoht[1]
-            self.tekst.MääraLaius(self.suurus[0])
-            self.tekst.MääraAsukoht(self.asukoht)
-            self.tekst.Joonista()
-        
-            asuky = asuky + self.tekst.KuiPaljuRuumiOnVaja() + 10
-            self.tekstikast.MääraAsukoht((self.asukoht[0], asuky))
-            self.tekstikast.MääraMaxLaius(self.suurus[0])
-            self.tekstikast.Joonista()
-            
-        else:
-            self.tekst.MääraKeskeleJoondus(True)
-                        
-            self.tekst.MääraLaius(self.suurus[0])
-            self.tekst.MääraAsukoht(self.asukoht)
-            self.tekst.Joonista()
-            
-            asukx = self.asukoht[0] - self.tekstikast.VõtaRaamiSuurus()[0]/2
-            asuky = self.asukoht[1]
-            self.tekstikast.MääraAsukoht((asukx, asuky))
-            self.tekstikast.MääraMaxLaius(self.suurus[0])
-            self.tekstikast.Joonista()
-        
-    def MääraTekst(self, tekst):
-        self.tekst.MääraTekst(tekst)

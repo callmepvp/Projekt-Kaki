@@ -29,11 +29,11 @@ class SündmuseLisamiseAken:
         
         # Nime küsimise tekstikast
         self.nimeKast = SelgitavTekstikast(olek, pind)
-        self.nimeKast.MääraTekst("Uue sündmuse kirjeldus:")
+        self.nimeKast.MääraSõnum("Uue sündmuse kirjeldus:")
         
         # Päeva küsimise tekstikast
         self.päevaKast = SelgitavTekstikast(olek, pind)
-        self.päevaKast.MääraTekst("Päev:")
+        self.päevaKast.MääraSõnum("Päev:")
         
 
     def Joonista(self):
