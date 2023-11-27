@@ -1,8 +1,13 @@
 ﻿from Klassid.Kujundid import Ristkülik
 from Programmiolek import ProgrammiOlek
 import pygame
-from Klassid.Sündmus import Sündmus
 from Klassid.Nupp import NupuAlus
+from Klassid.Tekstikast import SelgitavTekstikast
+
+
+
+        
+
 
 class SündmuseLisamiseAken:
     def __init__(self, olek:"ProgrammiOlek", pind:pygame.surface.Surface):
@@ -18,27 +23,43 @@ class SündmuseLisamiseAken:
         self.taust.MääraNurgaRaadius(raad)
         self.taust.MääraVärv(värv)
         
-        # Tausta aluse nupu koostamine. Nuppu läheb vaja, et tajuda, kui on taustalt eemale klikitud.
-        def f2(): 
-            print("Sündmuste lisamise lõpp.")
-            self.olek.SündmuseLisamine = False
+        # Tausta nupp
         prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
-        self.nupp = NupuAlus(self.olek, prio, None , f2)
+        self.nupp = NupuAlus(self.olek, prio)
+        
+        # Nime küsimise tekstikast
+        self.nimeKast = SelgitavTekstikast(olek, pind)
+        self.nimeKast.MääraTekst("Uue sündmuse kirjeldus:")
+        
+        # Päeva küsimise tekstikast
+        self.päevaKast = SelgitavTekstikast(olek, pind)
+        self.päevaKast.MääraTekst("Päev:")
         
 
     def Joonista(self):
-        # Tausta ja nupu suurus ja asukoht
+        # Taust
         asuk = self.asukoht
         suur = self.suurus
         
         self.nupp.TegeleNupuga()
-        # Joonistab tausta
+        
         self.taust.MääraAsukoht(asuk[0], asuk[1])
         self.taust.MääraSuurus(suur[0], suur[1])
         self.taust.Joonista()
         
-        self.nupp.Joonista(self.pind)
-        print(self.nupp.välineOlek)
+        # Tekstikast
+        servast = suur[0]*0.1
+        asukx = self.asukoht[0] + servast
+        asuky = self.asukoht[1] + 17
+        suurx = self.suurus[0] - 2 * servast
+        suury = self.suurus[1]
+        
+        self.nimeKast.MääraAsukoht((asukx, asuky))
+        self.nimeKast.MääraSuurus((suurx, suury))
+        self.nimeKast.Joonista()
+        
+        # Päeva kast
+        self.päevaKast.MääraAsukoht(())
      
 
     def MääraAsukoht(self, asukoht):
@@ -48,4 +69,7 @@ class SündmuseLisamiseAken:
     def MääraSuurus(self, suurus):
         self.suurus = suurus
         self.nupp.MääraSuurus(suurus)
-        
+
+
+
+    

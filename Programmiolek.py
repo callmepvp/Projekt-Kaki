@@ -125,6 +125,18 @@ class ProgrammiOlek:
             "päevaruut": 1,
             "sündmuse lisamise nupp": 2,
             "detailsem vaade" : 3,
-            "sündmuse lisamise aken" : 4}
+            "sündmuse lisamise aken" : 4,
+            "tekstikast" : 5}
 
         self.aktiivsedNupud = set()
+        
+        # Tekstikasti omadused
+        self.tekstikastiHelendavVärv = (140,140,140,255)
+        self.tekstikastiTavalineVärv = (100,100,100,255)
+        self.tekstikastiVajutatudVärv = (80,80,80,255)
+        self.tekstikastiRaamiLaius = 2
+        # Need väärtused on teksti kasti ülemise ja alumise joone kaugused teksti keskkohast. Kui kaugused oleksid võrdsed, ss tunduks tekst nagu see oleks liiga kõrgel. Alumien kaugus peab olema veidi väiksem kui ülemine.
+        self.tekstikastiÜlemineServTekstist = 15
+        self.tekstikastiAlumineServTekstist = 12
+        self.tekstikastiKüljedTekstist = 5
+        self.tekstikastiReavahe = 20

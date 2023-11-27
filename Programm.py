@@ -94,7 +94,6 @@ class Programm:
 
         c = Tekstikast(self.olek, ekraan)
         
-        
         vaade = DetailsemVaade(ekraan, self.olek)
 
 
@@ -169,15 +168,15 @@ class Programm:
                 suurx = aknaSuur[0] * 0.8
                 suury = 300
                 asukx = (aknaSuur[0]-suurx)/2
-                asuky = asukx/2
+                asuky = 20
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
-                
-
-            c.MääraAsukoht((100,250))
-            c.MääraMaxLaius(400)
+            
+            c.MääraAsukoht((100,30))
+            c.MääraSuurus((200,100))
             c.Joonista()
+
                
             pygame.display.flip()
             
