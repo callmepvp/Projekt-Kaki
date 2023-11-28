@@ -20,7 +20,12 @@ class Tekstikast:
 
         # Nupp tajumaks, kas hakata kirjutama
         prio = olek.nuppudePrioriteedid["tekstikast"]
-        def f1(): self.kasKirjutamine = True
+        
+        self.lõpetaKõigiKirjutamine = None
+        def f1(): 
+            self.lõpetaKõigiKirjutamine()
+            self.kasKirjutamine = True
+                
         self.nupp = NupuAlus(olek, prio, f1)
 
         # Tekstikasti raam
@@ -122,7 +127,7 @@ class SelgitavTekstikast:
 
         # Tekstikast
         self.kast = Tekstikast(olek, pind)
-    
+
     def MääraSõnum(self, tekst):
         self.sõnum = tekst
         self.tekst.MääraTekst(tekst)
@@ -140,7 +145,6 @@ class SelgitavTekstikast:
     def Joonista(self):
         # Teksti asukoht
         self.tekst.MääraLaius(self.suurus[0])
-        print(self.suurus[0])
         suurx = self.tekst.VõtaLaius()
         asuky = self.asukoht[1]
         asukx = self.asukoht[0]
@@ -162,3 +166,6 @@ class SelgitavTekstikast:
         
     def MääraSuurus(self, suurus):
         self.suurus = suurus
+        
+    def MääraKirjutamine(self,väärtus:"bool"):
+        self.kast.kasKirjutamine = väärtus

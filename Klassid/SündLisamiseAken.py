@@ -3,6 +3,7 @@ from Programmiolek import ProgrammiOlek
 import pygame
 from Klassid.Nupp import NupuAlus
 from Klassid.Tekstikast import SelgitavTekstikast
+from typing import List
 
 
 
@@ -23,9 +24,6 @@ class SündmuseLisamiseAken:
         self.taust.MääraNurgaRaadius(raad)
         self.taust.MääraVärv(värv)
         
-        # Tausta nupp
-        prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
-        self.nupp = NupuAlus(self.olek, prio)
         
         # Nime küsimise tekstikast
         self.nimeKast = SelgitavTekstikast(olek, pind)
@@ -43,6 +41,18 @@ class SündmuseLisamiseAken:
         self.aastaKast = SelgitavTekstikast(olek, pind)
         self.aastaKast.MääraSõnum("Aasta:")
         self.aastaKast.MääraKeskeleJoondus(True)
+
+        # Tausta nupp
+        nupud:List[SelgitavTekstikast] = [self.nimeKast, self.päevaKast, self.kuuKast, self.aastaKast]
+        def f1():
+            for i in nupud:
+                i.MääraKirjutamine(False)
+        for i in nupud:
+            i.kast.lõpetaKõigiKirjutamine = f1
+            
+        prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
+        self.nupp = NupuAlus(self.olek, prio, f1)
+        
 
     def Joonista(self):
         self.nupp.TegeleNupuga()

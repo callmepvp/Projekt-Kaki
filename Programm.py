@@ -18,8 +18,7 @@ class Programm:
     def __init__(self, olek:ProgrammiOlek):
         self.olek = olek
         #print(olek.päevaruuduVärv)
-
-
+        
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
     def JaaaaLäks(self):
 
@@ -33,6 +32,7 @@ class Programm:
         pygame.init()
         ekraan = pygame.display.set_mode((640, 420), pygame.RESIZABLE)
         pygame.display.set_caption('Indie kalender')
+
 
         pygameIkoon = pygame.image.load('Pildid/iconDesign.png')
         pygame.display.set_icon(pygameIkoon)
@@ -97,34 +97,9 @@ class Programm:
 
 
         def JoonistaAsjad():
+                      
             ekraan.fill((255, 255, 255, 255))
             
-            
-            """rk1Asuk = (0.1, 0.1)
-            rk1.MääraAsukoht(rk1Asuk[0], rk1Asuk[1])
-            rk1.MääraSuurus(0.8,0.8)
-            rk1.Joonista()
-
-            tek.MääraAsukoht(rk1.VõtaAsukoht())
-            tek.Joonista()
-
-            laius = rk1.VõtaSuurus()[0]
-            sürAsuk = rk1.VõtaAsukoht()
-            sür.MääraAsukoht((sürAsuk[0], sürAsuk[1] + 30))
-            sür.MääraLaius(laius)
-            sür.Joonista()
-
-            tek2.MääraAsukoht((sürAsuk[0], sürAsuk[1] + 80))
-            sobTek = EraldaSobivaPikkusegaTekst(algtekst, laius, font)
-            tek2.MääraTekst(sobTek[0])
-            tek2.Joonista()
-
-            ekrLaius = ekraan.get_width()
-            ekrKõrgus = ekraan.get_height()
-
-            ruut.MääraAsukoht(ekrLaius*0.1, ekrKõrgus*0.1)
-            ruut.MääraSuurus(ekrLaius*0.8, ekrKõrgus*0.8)
-            ruut.Joonista()"""
 
             aknaSuur = ekraan.get_size()
             
@@ -164,7 +139,8 @@ class Programm:
                 vaade.Joonista()
                 
             if self.olek.SündmuseLisamine != False:
-                suurx = aknaSuur[0] * 0.8
+                suurx = (aknaSuur[0] * 0.8)
+                print(aknaSuur[0])
                 suury = 300
                 asukx = (aknaSuur[0]-suurx)/2
                 asuky = 20
@@ -187,6 +163,7 @@ class Programm:
             if parimNupp != 0:
                 for i in self.olek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        
                         print(parimNupp.funktsioon)
                         parimNupp.KutsuFunktsioon()
 

@@ -6,13 +6,21 @@ from Programmiolek import ProgrammiOlek
 
 # Funktsioon võtab sisse teksti, pikkuse pikslites ja pygame fonti objekti.
 # Funktsioon tagastab esialgse teksti kahe tekstilise tuplena, millest esimene osa on nii pikk, et mahuks täpselt antud pikkusesse ja teine osa on kõik ülejäänud tekst.
+
+# Kui antud laius on väiksem, kui üksik täht, ss ei crashi, vaid ikkagi tagastab teksti üksikute tähtede listina, kuigi mõni neist ei pruugi mahtuda antud laiusesse. Ei garanteeri õiget käitumist. lic lükkab crashimise edasi. 
 def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Font):
     kasvatatav = ""
     for i in algtekst:
         kasvatatav += i
         laius = fontObject.size(kasvatatav)[0]
         if laius > sobivPikkus:
-            return (kasvatatav[:-1], algtekst[len(kasvatatav)-1:])
+            esiPool = kasvatatav[:-1]
+            tagaPool = algtekst[len(kasvatatav)-1:]
+            if esiPool == "":
+                esiPool = kasvatatav
+                tagaPool = algtekst[len(kasvatatav):]
+            
+            return (esiPool, tagaPool)
     return (kasvatatav,"")
 
 

@@ -78,7 +78,9 @@ class Kuupäev:
         if self.Aasta > kuupäev.aasta:
             return False
 
-        # Kui sai aastakontrollist mööda, tähendab, et aastad on võrdsed. Hakkab kontrollima kuid.
+        # Kui sai aastakontrollist
+        # 
+        #  mööda, tähendab, et aastad on võrdsed. Hakkab kontrollima kuid.
         if self.Kuu < kuupäev.kuu:
             return True
         if self.kuu > kuupäev.kuu:

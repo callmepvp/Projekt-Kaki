@@ -142,3 +142,5 @@ class ProgrammiOlek:
         self.tekstikastiReavahe = 20
         self.tekstikastiSelgitusKastist = 10
         self.tekstikastiSelgituseReavahe = 10
+        
+        
