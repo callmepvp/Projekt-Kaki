@@ -60,7 +60,7 @@ class DetailsemVaade:
         print(f"Sündmusi on {len(sündmused)}")
 
         startIndeks = self.scrollOffset
-        lõpuIndeks = min(len(sündmused), startIndeks + (int(self.suurus[1]) // self.reaKõrgus))
+        lõpuIndeks = min(len(sündmused), -1 + startIndeks + (int(self.suurus[1]) // self.reaKõrgus))
         järgmiseAsukoht = 0
         for i in range(startIndeks, lõpuIndeks):
             sündmus = sündmused[i]
@@ -71,11 +71,15 @@ class DetailsemVaade:
 
             detailsemSündmus = DetailsemaVaateSündmus(self.pind, self.olek, sündmus)
 
-            uusAsukohtX = self.asukoht[0]
-            uusAsukohtY = self.asukoht[1] + järgmiseAsukoht
+            ülemiseSündmuseKaugusÜlaServast = 20
+            SündmuseKaugusVasakServast = 20
+            uusAsukohtX = self.asukoht[0] + SündmuseKaugusVasakServast
+            uusAsukohtY = self.asukoht[1] + ülemiseSündmuseKaugusÜlaServast + järgmiseAsukoht
             
             detailsemSündmus.MääraAsukoht((uusAsukohtX, uusAsukohtY))
-            detailsemSündmus.MääraSuurus(self.suurus)
+
+            kastiSuurus = (self.suurus[0] - 20, self.suurus[1])
+            detailsemSündmus.MääraSuurus(kastiSuurus)
             detailsemSündmus.Joonista()
             järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
             järgmiseAsukoht += 40 #vahe
@@ -94,7 +98,7 @@ class DetailsemVaade:
         self.scrollOffset = max(0, self.scrollOffset - 1)
 
     def SkrolliAlla(self):
-        maxOffset = max(0, len(self.päevaObjekt.VõtaSündmused()) - (int(self.suurus[1] // self.reaKõrgus)))
+        maxOffset = max(0, len(self.päevaObjekt.VõtaSündmused()) + 1 - (int(self.suurus[1] // self.reaKõrgus)))
         if self.scrollOffset < maxOffset:
             self.scrollOffset = min(maxOffset, self.scrollOffset + 1)
 
@@ -124,6 +128,12 @@ class DetailsemaVaateSündmus:
         self.pind = pind
         self.font = self.olek.sündmuseReaKirjaFont
 
+        if self.sündmus.lõppaeg is not None:
+            self.tekst = f"• {self.sündmus.algusaeg.tund}:{self.sündmus.algusaeg.minut} -{self.sündmus.lõppaeg.tund}:{self.sündmus.lõppaeg.minut} {self.sündmus.nimi}"
+        else:
+            self.tekst = f"• {self.sündmus.algusaeg.tund}:{self.sündmus.algusaeg.minut} {self.sündmus.nimi}"
+
+
     def MääraSuurus(self, suurus):
         self.suurus = suurus
 
@@ -131,7 +141,7 @@ class DetailsemaVaateSündmus:
         self.asukoht = asukoht
 
     def Joonista(self):
-        uusRida = MitmeReaTekst(self.olek, self.pind, self.sündmus.nimi, self.font)
+        uusRida = MitmeReaTekst(self.olek, self.pind, self.tekst, self.font)
         uusRida.MääraRidadeArv(0) #lõpmatu
         uusRida.MääraReavahe(20)
         uusRida.MääraLaius(self.suurus[0])
@@ -144,10 +154,12 @@ class DetailsemaVaateSündmus:
         uusRida.MääraRidadeArv(3) #lõpmatu
         uusRida.MääraReavahe(20)
         uusRida.MääraLaius(self.suurus[0])
-        uusRida.MääraRead(TekstRidadeks(self.sündmus.nimi, self.font, self.suurus[0]))
+
+        uusRida.MääraRead(TekstRidadeks(self.tekst, self.font, self.suurus[0]))
 
         ruum = uusRida.KuiPaljuRuumiOnVaja()
         return ruum
+        
 
 
     
