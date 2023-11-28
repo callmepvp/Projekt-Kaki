@@ -92,8 +92,6 @@ class Programm:
         
         b = SündmuseLisamiseAken(self.olek, ekraan)
 
-        c = SelgitavTekstikast(self.olek, ekraan)
-        c.MääraSõnum("Uue sündmuse tekst:")
         
         vaade = DetailsemVaade(ekraan, self.olek)
 
@@ -174,10 +172,6 @@ class Programm:
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
             
-            c.MääraAsukoht((100,100))
-            c.MääraSuurus((100,100))
-            c.MääraKeskeleJoondus(False)
-            c.Joonista()
 
                
             pygame.display.flip()

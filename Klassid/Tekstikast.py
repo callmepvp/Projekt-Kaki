@@ -113,11 +113,10 @@ class SelgitavTekstikast:
         
         # Eriomadused:
         self.keskeleJoondus = False
-        self.sõnum = "Kasuta MääraSõnum meetodit"
         
         # Tekst
         font = olek.päevaruuduPealkAastaPygFont
-        self.tekst = MitmeReaTekst(olek, pind, self.sõnum, font)
+        self.tekst = MitmeReaTekst(olek, pind, "trolololo", font)
         reavahe = olek.tekstikastiSelgituseReavahe
         self.tekst.MääraReavahe(reavahe)
 
@@ -126,11 +125,17 @@ class SelgitavTekstikast:
     
     def MääraSõnum(self, tekst):
         self.sõnum = tekst
+        self.tekst.MääraTekst(tekst)
 
     def MääraKeskeleJoondus(self, väärtus):
         self.keskeleJoondus = väärtus
         self.tekst.MääraKeskeleJoondus(väärtus)
         self.kast.MääraKeskeleJoondus(väärtus)
+
+    def VõtaSuurus(self):
+        suurx = self.suurus[0]
+        suury = self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1]
+        return (suurx,suury)
 
     def Joonista(self):
         # Teksti asukoht
@@ -147,7 +152,7 @@ class SelgitavTekstikast:
         # Kasti asukoht
         asukx = self.asukoht[0]
         asuky = self.asukoht[1] + self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist
-        suurx = self.suurus[1]
+        suurx = self.suurus[0]
         self.kast.MääraAsukoht((asukx, asuky))
         self.kast.MääraSuurus((suurx, 100))
         self.kast.Joonista()

@@ -34,33 +34,53 @@ class SündmuseLisamiseAken:
         # Päeva küsimise tekstikast
         self.päevaKast = SelgitavTekstikast(olek, pind)
         self.päevaKast.MääraSõnum("Päev:")
-        
+        self.päevaKast.MääraKeskeleJoondus(True)
+        # Kuu küsimise tekstikast
+        self.kuuKast = SelgitavTekstikast(olek, pind)
+        self.kuuKast.MääraSõnum("Kuu:")
+        self.kuuKast.MääraKeskeleJoondus(True)
+        # Aasta küsimise tekstikast
+        self.aastaKast = SelgitavTekstikast(olek, pind)
+        self.aastaKast.MääraSõnum("Aasta:")
+        self.aastaKast.MääraKeskeleJoondus(True)
 
     def Joonista(self):
+        self.nupp.TegeleNupuga()
+        
         # Taust
         asuk = self.asukoht
         suur = self.suurus
-        
-        self.nupp.TegeleNupuga()
-        
         self.taust.MääraAsukoht(asuk[0], asuk[1])
         self.taust.MääraSuurus(suur[0], suur[1])
         self.taust.Joonista()
         
         # Tekstikast
-        servast = suur[0]*0.1
-        asukx = self.asukoht[0] + servast
-        asuky = self.asukoht[1] + 17
-        suurx = self.suurus[0] - 2 * servast
-        suury = self.suurus[1]
-        
+        servadest = self.suurus[0]*0.1
+        suurx = self.suurus[0]-2*servadest
+        asukx = self.asukoht[0] + self.suurus[0]*0.1
+        asuky = self.asukoht[1] + 20
         self.nimeKast.MääraAsukoht((asukx, asuky))
-        self.nimeKast.MääraSuurus((suurx, suury))
+        self.nimeKast.MääraSuurus((suurx, 69))
         self.nimeKast.Joonista()
         
         # Päeva kast
-        self.päevaKast.MääraAsukoht(())
-     
+        asuky = asuky + self.nimeKast.VõtaSuurus()[1] + 20
+        asukx1 = self.asukoht[0] + self.suurus[0]/2 - self.suurus[0]*0.3
+        asukx2 = self.asukoht[0] + self.suurus[0]/2
+        asukx3 = self.asukoht[0] + self.suurus[0]/2 + self.suurus[0]*0.3
+        laiused = self.suurus[0] * 0.2
+        self.päevaKast.MääraAsukoht((asukx1,asuky))
+        self.päevaKast.MääraSuurus((laiused, None))
+        self.päevaKast.Joonista()
+        
+        self.kuuKast.MääraAsukoht((asukx2,asuky))
+        self.kuuKast.MääraSuurus((laiused, None))
+        self.kuuKast.Joonista()
+        
+        self.aastaKast.MääraAsukoht((asukx3,asuky))
+        self.aastaKast.MääraSuurus((laiused, None))
+        self.aastaKast.Joonista()
+
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
