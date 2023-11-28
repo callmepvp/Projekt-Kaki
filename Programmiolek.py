@@ -126,7 +126,8 @@ class ProgrammiOlek:
             "sündmuse lisamise nupp": 2,
             "detailsem vaade" : 3,
             "sündmuse lisamise aken" : 4,
-            "tekstikast" : 5}
+            "tekstikast" : 5,
+            "sündmuse loomise nupp" : 6}
 
         self.aktiivsedNupud = set()
         

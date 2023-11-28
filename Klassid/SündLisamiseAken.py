@@ -1,10 +1,12 @@
 ﻿from Klassid.Kujundid import Ristkülik
+from Klassid.Kuupäev import Kuupäev
 from Programmiolek import ProgrammiOlek
 import pygame
 from Klassid.Nupp import NupuAlus
 from Klassid.Tekstikast import SelgitavTekstikast
 from typing import List
-
+from Klassid.Sündmus import Sündmus
+from Funktsioonid.UtilityFunktsioonid import GenereeriID
 
 
         
@@ -53,9 +55,22 @@ class SündmuseLisamiseAken:
         prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
         self.nupp = NupuAlus(self.olek, prio, f1)
         
+        # Loo sündmuse nupp:
+        prio = olek.nuppudePrioriteedid["sündmuse loomise nupp"]
+        def f1():
+            nimi = self.nimeKast.VõtaTekst()
+            päev = int(self.päevaKast.VõtaTekst())
+            kuu = int(self.kuuKast.VõtaTekst())
+            aasta = int(self.aastaKast.VõtaTekst())
+            kuup = Kuupäev(päev, kuu, aasta)
+            uusSündmus = Sündmus(nimi,kuup,GenereeriID(self.olek))
+            self.olek.sündmusteNimekiri.append(uusSündmus)
+        self.looSündmusNupp = NupuAlus(olek, prio, f1)
+        
 
     def Joonista(self):
         self.nupp.TegeleNupuga()
+        
         
         # Taust
         asuk = self.asukoht
@@ -90,7 +105,16 @@ class SündmuseLisamiseAken:
         self.aastaKast.MääraAsukoht((asukx3,asuky))
         self.aastaKast.MääraSuurus((laiused, None))
         self.aastaKast.Joonista()
+        
+        suurx = self.suurus[0] * 0.3
+        suury = self.suurus[1] * 0.1
+        asukx = self.asukoht[0] + self.suurus[0]/2 - suurx /2
+        asuky = self.asukoht[1] + self.suurus[1]- suury*1.2
+        self.looSündmusNupp.MääraAsukoht((asukx, asuky))
+        self.looSündmusNupp.MääraSuurus((suurx, suury))
+        self.looSündmusNupp.Joonista(self.pind)
 
+        print(len(self.olek.sündmusteNimekiri))
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht

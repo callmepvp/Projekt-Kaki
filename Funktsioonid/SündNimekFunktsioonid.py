@@ -7,7 +7,7 @@ from Klassid.Päev import Päev
 def VõtaKindlalKuupäeval(nimekiri:"List[Sündmus]", kuupäev:"Kuupäev"):
 	sobivad = []
 	for i in nimekiri:
-		if i.KasOnPäeval(Kuupäev) == True:
+		if i.KasOnPäeval(kuupäev) == True:
 			sobivad.append(i)
 	return sobivad
 

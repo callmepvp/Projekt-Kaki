@@ -180,6 +180,7 @@ class PäevaRuut:
 
     def Joonista(self):
         self.nupp.TegeleNupuga()
+        self.nupp.Joonista(self.pind)
         olek = self.nupp.VõtaOlek() 
         
         origVärv = self.olek.päevaruuduVärv        
@@ -220,8 +221,10 @@ class PäevaRuut:
             
             vahe = self.olek.sündmuseRidadeVahe
             asuky = asuky + uusRida.KuiPaljuRuumiOnVaja() + vahe
-      
-
+    
+    def VaataSündmusedÜle(self):
+        sündmused = VõtaKindlalKuupäeval(self.olek.sündmusteNimekiri, self.kuupäev)
+        self.sündmused = sündmused
 
 
 
@@ -243,6 +246,17 @@ class PäevaRuudustik:
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
+
+    def VärskendaRuute(self):
+        päevad = VõtaKõikAlgusPäevad(self.olek.sündmusteNimekiri)
+        for i in self.päevaRuudud:
+            i.VaataSündmusedÜle()
+        
+        #for i in päevad:
+            
+        
+            
+            
 
     def Joonista(self):
         # Tausta kõrgus leitakse selle põhjal mitu rida ruute tuleb ja see arvutatakse hiljem.

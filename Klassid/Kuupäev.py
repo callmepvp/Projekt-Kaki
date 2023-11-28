@@ -73,9 +73,9 @@ class Kuupäev:
     # Tagastab True, kui käesolev kuupäev on rangelt enne parameetriks antud kuupäeva ja false siis, kui on võrdne antud kuupäevaga v hiljem.
     def KasOnEnne(self, kuupäev: "Kuupäev"):
         # Kontrollib aastat.
-        if self.Aasta < kuupäev.aasta:
+        if self.aasta < kuupäev.aasta:
             return True
-        if self.Aasta > kuupäev.aasta:
+        if self.aasta > kuupäev.aasta:
             return False
 
         # Kui sai aastakontrollist

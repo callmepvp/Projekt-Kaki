@@ -169,3 +169,6 @@ class SelgitavTekstikast:
         
     def MääraKirjutamine(self,väärtus:"bool"):
         self.kast.kasKirjutamine = väärtus
+        
+    def VõtaTekst(self):
+        return self.kast.valmisTekst

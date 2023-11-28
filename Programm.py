@@ -10,6 +10,7 @@ from Klassid.Nupp import LisaSündmuseNupp, NupuAlus
 from Funktsioonid.UtilityFunktsioonid import GenereeriID
 from Klassid.DetailsemVaade import DetailsemVaade
 from Klassid.SündLisamiseAken import SündmuseLisamiseAken
+import math
 
   
 
@@ -113,6 +114,7 @@ class Programm:
             ruudAsuky = 30
             ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
             ruudustik.MääraLaius(ekrLai*0.8)
+            ruudustik.VärskendaRuute()
             ruudustik.Joonista()
             
 
@@ -139,8 +141,9 @@ class Programm:
                 vaade.Joonista()
                 
             if self.olek.SündmuseLisamine != False:
-                suurx = (aknaSuur[0] * 0.8)
-                print(aknaSuur[0])
+                maxLaius = 700
+                tegur = 600
+                suurx = 2*maxLaius/math.pi * math.atan(aknaSuur[0]/tegur)
                 suury = 300
                 asukx = (aknaSuur[0]-suurx)/2
                 asuky = 20
