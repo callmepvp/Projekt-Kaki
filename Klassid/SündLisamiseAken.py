@@ -65,6 +65,7 @@ class SündmuseLisamiseAken:
             kuup = Kuupäev(päev, kuu, aasta)
             uusSündmus = Sündmus(nimi,kuup,GenereeriID(self.olek))
             self.olek.sündmusteNimekiri.append(uusSündmus)
+            
         self.looSündmusNupp = NupuAlus(olek, prio, f1)
         
 
@@ -114,7 +115,6 @@ class SündmuseLisamiseAken:
         self.looSündmusNupp.MääraSuurus((suurx, suury))
         self.looSündmusNupp.Joonista(self.pind)
 
-        print(len(self.olek.sündmusteNimekiri))
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht

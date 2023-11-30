@@ -1,6 +1,9 @@
 ﻿import pygame
 from Programmiolek import ProgrammiOlek
 from PIL import Image
+from Klassid.Kuupäev import Kuupäev
+from typing import List
+from Klassid.Päev import Päev
 
 def KasAsukRingiSees(asukoht, ringiAsukoht, ringiRaadius):
     vahex = asukoht[0] - ringiAsukoht[0]
@@ -80,3 +83,17 @@ def võrdleObjektiParameetreid(obj1, obj2):
             if getattr(obj1, attribute_name) != getattr(obj2, attribute_name):
                 return False
     return True
+
+
+def KasPäevaOnKuupäevaga(päevad:"List[Päev]", kuupäev:"Kuupäev"):
+    for i in päevad:
+        if i.kuupäev.KasOnSama(kuupäev) == True:
+            return True
+    return False
+
+
+def KasKuupäevNimekirjas(nimekiri:"List[Kuupäev]", kuupäev:"Kuupäev"):
+    for i in nimekiri:
+        if i.KasOnSama(kuupäev):
+            return True
+    return False

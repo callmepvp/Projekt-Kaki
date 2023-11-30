@@ -2,7 +2,7 @@
 from Klassid.Kujundid import Ristkülik
 from Klassid.Tekst import MitmeReaTekst, Tekst
 from Klassid.Sündmus import Sündmus
-from math import floor
+from math import e, floor
 from typing import List
 from Programmiolek import ProgrammiOlek
 from Klassid.Kuupäev import Kuupäev
@@ -240,7 +240,15 @@ class PäevaRuudustik:
             #print(olek.päevaruuduVärv)
             uusRuut = PäevaRuut(olek, pind, i)
             self.päevaRuudud.append(uusRuut)
-
+    
+    def VõtaRuudustikuKuupäevad(self):
+        kuupäevad = []
+        for i in self.päevaRuudud:
+            kuup = i.kuupäev
+            if kuup not in kuupäevad:
+                kuupäevad.append(kuup)
+        return kuupäevad
+    
     def MääraLaius(self, laius):
         self.laius = laius
 
@@ -248,9 +256,20 @@ class PäevaRuudustik:
         self.asukoht = asukoht
 
     def VärskendaRuute(self):
-        päevad = VõtaKõikAlgusPäevad(self.olek.sündmusteNimekiri)
         for i in self.päevaRuudud:
             i.VaataSündmusedÜle()
+        
+        ruutudeKuupäevad = [i.kuupäev for i in self.päevaRuudud]
+        sündmusteKuupäevad = [i.kuupäev for i in VõtaKõikAlgusPäevad(self.olek.sündmusteNimekiri)]
+        for i in sündmusteKuupäevad:
+            if KasKuupäevNimekirjas(ruutudeKuupäevad, i) == False:
+                kp = i
+                sündmused = VõtaKindlalKuupäeval(self.olek.sündmusteNimekiri, kp)
+                päev = Päev(kp,sündmused)
+                uusRuut = PäevaRuut(self.olek, self.pind,päev)
+                print("Tajus, et on uut ruutu vaja")
+                self.päevaRuudud.append(uusRuut)
+        
         
         #for i in päevad:
             

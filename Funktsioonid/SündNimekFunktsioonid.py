@@ -43,3 +43,5 @@ def VõtaKõikAlgusPäevad(nimekiri: "List[Sündmus]"):
 			päevad[index].sündmusteNimekiri.append(sündmus)
 
 	return päevad
+
+
