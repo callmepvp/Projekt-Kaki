@@ -61,7 +61,7 @@ def GenereeriID(Olek: "ProgrammiOlek"):
                 vähimPuudu += 1
             elif num > vähimPuudu:
                 break
-
+        
         return vähimPuudu
     else:
         return 1

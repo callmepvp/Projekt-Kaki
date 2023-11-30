@@ -143,5 +143,7 @@ class ProgrammiOlek:
         self.tekstikastiReavahe = 20
         self.tekstikastiSelgitusKastist = 10
         self.tekstikastiSelgituseReavahe = 10
+
+        self.detailsemaVaateTaustaVärv = (176, 176, 176, 255)
         
         

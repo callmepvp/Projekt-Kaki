@@ -42,7 +42,7 @@ class Programm:
         
         #print(self.olek.päevaruuduVärv)
 
-        kp1 = Kuupäev(8, 11, 2023)
+        """kp1 = Kuupäev(8, 11, 2023)
         s1 = Sündmus("Emadepäeva kontsert", kp1, GenereeriID(self.olek))
         s1.MääraLõppKell(15, 34)
         self.olek.sündmusteNimekiri.append(s1)
@@ -79,7 +79,7 @@ class Programm:
 
         s9 = Sündmus("Pakk kaob pakiautomaadist ära5", kp2, GenereeriID(self.olek))
         s9.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s9)
+        self.olek.sündmusteNimekiri.append(s9)"""
 
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 

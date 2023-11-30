@@ -74,7 +74,7 @@ indent = 4 #json indent formatting
 indexDirectory = os.path.dirname(__file__) #Python scripti relatiivne path
 dataFileDirectory = os.path.join(indexDirectory, 'Data/data.json')
 
-def VõtaInfoJaAnnaVäärtused(Olek: object) -> None:
+def VõtaInfoJaAnnaVäärtused(Olek: "ProgrammiOlek") -> None:
     #Programm on varem käivitunud
     with open(dataFileDirectory, encoding="utf-8") as fail:
         programmiInfo = json.load(fail)
@@ -101,6 +101,14 @@ def VõtaInfoJaAnnaVäärtused(Olek: object) -> None:
             setattr(Olek, item, pygame.font.Font(sündmuseFondiVäärtus, suuruseVäärtus))
         else:
             setattr(Olek, item, pygame.font.Font(kuupäevaFondiVäärtus, suuruseVäärtus))
+
+    #Sündmuste lisamine failist
+    for key, value in programmiInfo["sündmused"].items():
+        kuupäev = Kuupäev(value['alguskuupäev']['päev'], value['alguskuupäev']['kuu'], value['alguskuupäev']['aasta'])
+        sündmus = Sündmus(value['nimi'], kuupäev, value['id'])
+        sündmus.MääraLõppKell(value['lõppaeg']['tund'], value['lõppaeg']['minut'])
+
+        Olek.sündmusteNimekiri.append(sündmus)
 
 def VõtaOlek():
     Olek = ProgrammiOlek()

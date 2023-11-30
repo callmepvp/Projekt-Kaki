@@ -6,6 +6,7 @@ from Klassid.Nupp import NupuAlus
 from Funktsioonid.UtilityFunktsioonid import võrdleObjektiParameetreid
 from Klassid.Tekst import MitmeReaTekst, TekstRidadeks
 from Klassid.Sündmus import Sündmus
+from Klassid.Kujundid import Ristkülik
 
 class DetailsemVaade:
     def __init__(self, pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
@@ -25,7 +26,7 @@ class DetailsemVaade:
         prio = self.olek.nuppudePrioriteedid["detailsem vaade"]
         self.nupp = NupuAlus(olek, prio)
 
-        
+        self.detailsemaVaateTaustaVärv = self.olek.detailsemaVaateTaustaVärv
         self.nupp.nurgaRaadius = 0
 
         self.ÜlemineVaheTekstiga = 10
@@ -33,6 +34,10 @@ class DetailsemVaade:
         self.reaKõrgus = 40
 
         self.font = pygame.font.Font(os.path.join("Fondid", 'CORBEL.TTF'), 36)
+
+        self.taust = Ristkülik(self.pind)
+        self.taust.MääraNurgaRaadius(20)
+        self.taust.MääraVärv(self.olek.detailsemaVaateTaustaVärv)
 
     def MääraPäev(self, päev:"Päev"):
         self.päevaObjekt = päev
@@ -52,12 +57,15 @@ class DetailsemVaade:
         päevaObjekt = self.päevaObjekt
         if not võrdleObjektiParameetreid(self.eelminePäevaObjekt, päevaObjekt):
             self.scrollOffset = 0
-
+        """
         rect = (self.asukoht, self.suurus)
-        pygame.draw.rect(self.pind, (255, 123, 21), rect)
+        pygame.draw.rect(self.pind, self.detailsemaVaateTaustaVärv, rect)"""
+
+        self.taust.MääraAsukoht(self.asukoht[0], self.asukoht[1])
+        self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
+        self.taust.Joonista()
 
         sündmused = päevaObjekt.VõtaSündmused()
-        print(f"Sündmusi on {len(sündmused)}")
 
         startIndeks = self.scrollOffset
         lõpuIndeks = min(len(sündmused), -1 + startIndeks + (int(self.suurus[1]) // self.reaKõrgus))
