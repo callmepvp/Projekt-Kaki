@@ -21,9 +21,13 @@ class SündmuseRida:
         self.pind = pind
         self.asukoht = (0,0)
         self.laius = 100
+        self.värv = olek.ruuduTekstiVärv
+        pealkTekst = self.sündmus.VõtaNimi()
+        pealkFont = self.olek.sündmuseReaKirjaFont
+        self.tekst = MitmeReaTekst(self.olek, self.pind, pealkTekst, pealkFont)
 
     def Joonista(self):
-        värv = self.olek.ruuduTekstiVärv
+        värv = self.värv
 
         # Täpp
         täpiAsukx, asuky = self.asukoht[0], self.asukoht[1]
@@ -34,19 +38,18 @@ class SündmuseRida:
         täpivahe = self.olek.sündmuseReaTäpiVahe
         pealkAsukx = täpiAsukx + täpivahe
         pealkRuum = self.laius - täpivahe
-        pealkTekst = self.sündmus.VõtaNimi()
-        pealkFont = self.olek.sündmuseReaKirjaFont
+        
 
         # See, kui mitu rida võib sündmuserida olla.
         ridu = self.olek.sündmuseReaRidu
         reavahe = self.olek.sündmuseReaReavahe
         
-        tekst = MitmeReaTekst(self.olek, self.pind, pealkTekst, pealkFont)
-        tekst.MääraLaius(pealkRuum)
-        tekst.MääraAsukoht((pealkAsukx, self.asukoht[1]))
-        tekst.MääraReavahe(reavahe)
-        tekst.MääraRidadeArv(ridu)
-        tekst.Joonista()    
+        
+        self.tekst.MääraLaius(pealkRuum)
+        self.tekst.MääraAsukoht((pealkAsukx, self.asukoht[1]))
+        self.tekst.MääraReavahe(reavahe)
+        self.tekst.MääraRidadeArv(ridu)
+        self.tekst.Joonista()    
  
 
 
@@ -60,19 +63,16 @@ class SündmuseRida:
         
         täpivahe = self.olek.sündmuseReaTäpiVahe
         pealkRuum = self.laius - täpivahe
-        pealkTekst = self.sündmus.VõtaNimi()
-        pealkFont = self.olek.sündmuseReaKirjaFont
 
         # See, kui mitu rida võib sündmuserida olla.
         ridu = self.olek.sündmuseReaRidu
         reavahe = self.olek.sündmuseReaReavahe
         
-        tekst = MitmeReaTekst(self.olek, self.pind, pealkTekst, pealkFont)
-        tekst.MääraLaius(pealkRuum)
-        tekst.MääraReavahe(reavahe)
-        tekst.MääraRidadeArv(ridu)
+        self.tekst.MääraLaius(pealkRuum)
+        self.tekst.MääraReavahe(reavahe)
+        self.tekst.MääraRidadeArv(ridu)
         
-        tulemus = tekst.KuiPaljuRuumiOnVaja()
+        tulemus = self.tekst.KuiPaljuRuumiOnVaja()
         return tulemus
         
         
@@ -212,11 +212,18 @@ class PäevaRuut:
         asuky = pealkAsuky + kuupäevast
         täpivahe = self.olek.sündmuseReaTäpiVahe
         for i in self.sündmused:
+            asukoht = (self.asuk[0] + täpivahe, asuky)
             uusRida = SündmuseRida(self.olek, self.pind, i)
             uusRida.MääraAsukoht((self.asuk[0] + täpivahe, asuky))
             laius = self.suurus[0] - täpivahe
             uusRida.MääraLaius(laius)
-            uusRida.Joonista()
+            
+            vajaminevRuum = uusRida.KuiPaljuRuumiOnVaja()
+            allesjäänudRuum = self.asuk[1] + self.suurus[1] - asukoht[1]
+            
+            if allesjäänudRuum >= vajaminevRuum+3:
+                uusRida.Joonista()
+
             
             
             vahe = self.olek.sündmuseRidadeVahe

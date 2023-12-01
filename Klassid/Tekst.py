@@ -77,6 +77,8 @@ class Tekst:
 
 class MitmeReaTekst:
     def __init__(self, olek:ProgrammiOlek, pind, tekst, pygfont:pygame.font.Font):
+        self.debugnumber = 0        
+
         self.olek = olek
         self.pind = pind
         self.laius = 100
@@ -167,6 +169,7 @@ class MitmeReaTekst:
 
 
     def KuiPaljuRuumiOnVaja(self):
+        
         ridu = 0
         if self.read != []:
             ridu = len(self.read)

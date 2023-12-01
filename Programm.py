@@ -1,8 +1,10 @@
 ﻿import pygame
 import win32gui
 import win32con
+from Klassid.Kujundid import Ristkülik
+from Klassid.Tekst import MitmeReaTekst
 from Klassid.Tekstikast import SelgitavTekstikast
-from Klassid.Tekstikujundid import PäevaRuudustik
+from Klassid.Tekstikujundid import PäevaRuudustik, SündmuseRida
 from Programmiolek import ProgrammiOlek
 from Klassid.Kuupäev import Kuupäev
 from Klassid.Sündmus import Sündmus
@@ -11,7 +13,6 @@ from Funktsioonid.UtilityFunktsioonid import GenereeriID
 from Klassid.DetailsemVaade import DetailsemVaade
 from Klassid.SündLisamiseAken import SündmuseLisamiseAken
 import math
-
   
 
 #See on klass, mis luuakse main functionis. Kuna sellel klassil on ainult üks funktsioon, siis tehniliselt see klass võiks ka samahästi mitte klass olla, vaid lihtsalt see funktsioon olla
@@ -95,6 +96,9 @@ class Programm:
 
         
         vaade = DetailsemVaade(ekraan, self.olek)
+        
+
+        
 
 
         def JoonistaAsjad():
@@ -150,11 +154,11 @@ class Programm:
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
-            
 
-               
             pygame.display.flip()
             
+
+
             kõrgeimPrio = 0
             parimNupp = 0
             #print(self.olek.aktiivsedNupud)
