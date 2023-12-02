@@ -85,8 +85,15 @@ class Programm:
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
         def f1():
-            self.olek.TäpsemaVaatePäev = None
-            self.olek.SündmuseLisamine = False
+            if self.olek.tegevuseNäitamine == True: print("Vajutati kõigist vajutatavatest asjadest mööda.")
+            if self.olek.TäpsemaVaatePäev != None:
+                self.olek.TäpsemaVaatePäev = None
+                if self.olek.tegevuseNäitamine == True: print("Täpsema vaate aken pandi kinni.")
+            if self.olek.SündmuseLisamine != False:
+                self.olek.SündmuseLisamine = False
+                if self.olek.tegevuseNäitamine == True: print("Sündmuse lisamise aken pandi kinni.")
+
+
         prio = self.olek.nuppudePrioriteedid["taust"]
         ekraaniNupualus = NupuAlus(self.olek, prio, f1)
 
@@ -170,8 +177,6 @@ class Programm:
             if parimNupp != 0:
                 for i in self.olek.pygameEvents:
                     if event.type == pygame.MOUSEBUTTONDOWN:
-                        
-                        print(parimNupp.funktsioon)
                         parimNupp.KutsuFunktsioon()
 
         # See rida teeb nii, et asjad joonistuks ka akna suuruse muutumise ajal 

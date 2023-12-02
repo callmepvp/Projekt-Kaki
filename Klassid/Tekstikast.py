@@ -25,6 +25,7 @@ class Tekstikast:
         def f1(): 
             self.lõpetaKõigiKirjutamine()
             self.kasKirjutamine = True
+            if self.olek.tegevuseNäitamine == True: print("Ühte tekstikasti kirjutamine algas.")
                 
         self.nupp = NupuAlus(olek, prio, f1)
 
@@ -48,13 +49,14 @@ class Tekstikast:
             if event.type == pygame.KEYDOWN:
                 if self.kasKirjutamine == True:
                     if event.key == pygame.K_RETURN:
-                        lõppTekst = self.tekst.tekst
+                        self.valmisTekst = self.tekst.tekst
                         self.tekst.MääraTekst("")
-                        self.valmisTekst = lõppTekst
                     elif event.key == pygame.K_BACKSPACE:
                         self.tekst.tekst = self.tekst.tekst[:-1]
+                        self.valmisTekst = self.tekst.tekst
                     else:
                         self.tekst.tekst += event.unicode
+                        self.valmisTekst = self.tekst.tekst
     
     def VõtaSuurus(self):
         ülemineVahe = self.olek.tekstikastiÜlemineServTekstist
@@ -120,7 +122,7 @@ class SelgitavTekstikast:
         self.keskeleJoondus = False
         
         # Tekst
-        font = olek.päevaruuduPealkAastaPygFont
+        font = olek.sündmuseLisamiseInfoKirjaFont
         self.tekst = MitmeReaTekst(olek, pind, "trolololo", font)
         reavahe = olek.tekstikastiSelgituseReavahe
         self.tekst.MääraReavahe(reavahe)

@@ -9,7 +9,7 @@ from Klassid.Sündmus import Sündmus
 from Funktsioonid.UtilityFunktsioonid import GenereeriID
 
 
-        
+
 
 
 class SündmuseLisamiseAken:
@@ -26,6 +26,9 @@ class SündmuseLisamiseAken:
         self.taust.MääraNurgaRaadius(raad)
         self.taust.MääraVärv(värv)
         
+        värv2 = self.olek.sündmuseLisamiseHeledamaTaustaVärv
+        self.taust2 = Ristkülik(self.pind)
+        self.taust2.MääraVärv(värv2)
         
         # Nime küsimise tekstikast
         self.nimeKast = SelgitavTekstikast(olek, pind)
@@ -47,6 +50,7 @@ class SündmuseLisamiseAken:
         # Tausta nupp
         nupud:List[SelgitavTekstikast] = [self.nimeKast, self.päevaKast, self.kuuKast, self.aastaKast]
         def f1():
+            if self.olek.tegevuseNäitamine == True: print("Kastidesse kirjutamine lõppes.")
             for i in nupud:
                 i.MääraKirjutamine(False)
         for i in nupud:
@@ -79,6 +83,17 @@ class SündmuseLisamiseAken:
         self.taust.MääraAsukoht(asuk[0], asuk[1])
         self.taust.MääraSuurus(suur[0], suur[1])
         self.taust.Joonista()
+        
+        vahe = self.olek.sündmuseLisamiseHeledamaTaustaVahe
+        raad = self.taust.nurgaRaadius
+        raad2 = raad-vahe
+        self.taust2.MääraNurgaRaadius(raad2)
+        asuk = (self.asukoht[0] + vahe, self.asukoht[1] + vahe)
+        suur = (self.suurus[0] - 2* vahe, self.suurus[1] - 2*vahe)
+        self.taust2.MääraAsukoht(asuk[0], asuk[1])
+        self.taust2.MääraSuurus(suur[0], suur[1])
+        self.taust2.Joonista()
+
         
         # Tekstikast
         servadest = self.suurus[0]*0.1

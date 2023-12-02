@@ -118,7 +118,7 @@ class ProgrammiOlek:
         self.sündmuseLisamiseNurgaRaadius = 30
         
         # See o sündmuse lisamise valikuakna tausta värv
-        self.sündmuseLisamiseTaustaVärv = (200,200,200,255)
+        self.sündmuseLisamiseTaustaVärv = self.päevaruutudeTaustaVärv #(200,200,200,255)
         
         self.nuppudePrioriteedid = {
             "taust": 0,
@@ -145,5 +145,11 @@ class ProgrammiOlek:
         self.tekstikastiSelgituseReavahe = 10
 
         self.detailsemaVaateTaustaVärv = (176, 176, 176, 255)
+
+        self.sündmuseLisamiseInfoKirjaSuurus = 16
+        self.sündmuseLisamiseInfoKirjaFont = pygame.font.Font(self.sündmuseFondiPath, self.sündmuseLisamiseInfoKirjaSuurus)
+
+        self.sündmuseLisamiseHeledamaTaustaVärv = (235,235,235,255)
+        self.sündmuseLisamiseHeledamaTaustaVahe = 10
         
-        
+        self.tegevuseNäitamine = True

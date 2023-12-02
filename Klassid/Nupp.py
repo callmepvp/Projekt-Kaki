@@ -144,11 +144,22 @@ class LisaSündmuseNupp:
         self.sekundaarneVärv = olek.LisaSündmusNupuPlussiAluneVärv
         
         def f1(): 
-            print("Nupp välja lülitatud")
-            print("Sündmuste lisamine: True")
-            self.olek.SündmuseLisamine = True
-        #def f1():pass #print("Lisamisnupu peal")
-        #def f2():pass #print("Lisamisnupust väljas")
+            miksEiTöötaPõhjused = []
+            if self.olek.TäpsemaVaatePäev != None:
+                miksEiTöötaPõhjused.append("Detailsma vaate aken on prg lahti.")
+            if self.olek.SündmuseLisamine == True:
+                miksEiTöötaPõhjused.append("Sündmuse lisamine juba käib.")
+            if len(miksEiTöötaPõhjused) == 0:
+                if self.olek.tegevuseNäitamine == True: print("Sündmuse lisamine: False -> True.")
+                self.olek.SündmuseLisamine = True
+            else:
+                if len(miksEiTöötaPõhjused) == 1 and self.olek.tegevuseNäitamine == True:
+                    print("Aken ei avane, sest " + miksEiTöötaPõhjused[0].lower())
+                else:
+                    print("Sündmute lisamine ei alga järgmistel põhjustel: ")
+                    for i in range(len(miksEiTöötaPõhjused)):
+                        print("   " + str(i+1) + ". " + miksEiTöötaPõhjused[i])
+
         prio = self.olek.nuppudePrioriteedid["sündmuse lisamise nupp"]
         self.nupp = NupuAlus(olek, prio, f1)
 
