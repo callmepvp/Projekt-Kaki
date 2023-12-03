@@ -1,4 +1,5 @@
-﻿import pygame
+﻿from ctypes.wintypes import HHOOK
+import pygame
 from Klassid.Kujundid import Ristkülik
 from Klassid.Tekst import MitmeReaTekst, Tekst
 from Klassid.Sündmus import Sündmus
@@ -235,6 +236,42 @@ class PäevaRuut:
 
 
 
+class FakePäevaRuut:
+    def __init__(self, olek:ProgrammiOlek, pind):
+        self.olek = olek
+        self.pind = pind
+        self.suurus = (200,200)
+        self.asukoht = (0,0)
+        
+        # Taust
+        self.taust = Ristkülik(pind)
+        värv = olek.päevaruuduVärv
+        self.taust.MääraVärv(värv)
+        
+        # Nupp
+        def f1():
+            print("Avati blurrblurr aken.")
+        prio = olek.nuppudePrioriteedid["päevaruut"]
+        self.nupp = NupuAlus(olek, prio, f1)
+        
+    def Joonista(self):
+        self.nupp.MääraSuurus(self.suurus)
+        self.nupp.MääraAsukoht(self.asukoht)
+        self.nupp.TegeleNupuga()
+        
+        self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
+        self.taust.MääraAsukoht(self.asukoht[0], self.asukoht[1])
+        self.taust.Joonista()
+        
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
+        
+    def MääraSuurus(self, suurus):
+        self.suurus = suurus   
+
+
+
+
 class PäevaRuudustik:
     def __init__(self, olek:ProgrammiOlek, pind):
         self.olek = olek
@@ -275,13 +312,7 @@ class PäevaRuudustik:
                 päev = Päev(kp,sündmused)
                 uusRuut = PäevaRuut(self.olek, self.pind,päev)
                 print("Tajus, et on uut ruutu vaja")
-                self.päevaRuudud.append(uusRuut)
-        
-        
-        #for i in päevad:
-            
-        
-            
+                self.päevaRuudud.append(uusRuut)            
             
 
     def Joonista(self):
@@ -322,6 +353,7 @@ class PäevaRuudustik:
         for i in self.päevaRuudud:
             i.MääraSuurus(ruudulaius, None)
 
+        fakeRuudud = []
         ridadeKõrgused = []
         reaKõrgus = 0
         counter = 0
@@ -356,7 +388,19 @@ class PäevaRuudustik:
         
         taustaKõrgus = 2*äärevahe + sum(ridadeKõrgused)+ (ridadeArv)*ruuduvahe
 
+        fakeRuuteVaja = (ridadeArv+1) * mituReas - len(self.päevaRuudud)
+        for i in range(fakeRuuteVaja):
+            a = FakePäevaRuut(self.olek, self.pind)
+            asukx = asukx + ruudulaius + ruuduvahe
+
+            a.MääraAsukoht((asukx, asuky))
+            a.MääraSuurus((ruudulaius, reaKõrgus))
+            fakeRuudud.append(a)
+        print(fakeRuuteVaja)
+
         # PAIGUTAMINE LÕPPES
+
+
 
         # ALGAB JOONISTAMINE
 
@@ -376,6 +420,9 @@ class PäevaRuudustik:
                 break
             else:
                 pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
+                
+        for i in fakeRuudud:
+            i.Joonista()
             
 
 
