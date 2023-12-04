@@ -41,47 +41,7 @@ class Programm:
 
         clock = pygame.time.Clock()
         
-        #print(self.olek.päevaruuduVärv)
-
-        """kp1 = Kuupäev(8, 11, 2023)
-        s1 = Sündmus("Emadepäeva kontsert", kp1, GenereeriID(self.olek))
-        s1.MääraLõppKell(15, 34)
-        self.olek.sündmusteNimekiri.append(s1)
         
-        s2 = Sündmus("MMP Moodle'i testi tähtaeg", kp1, GenereeriID(self.olek))
-        s2.MääraLõppKell(21,0)
-        self.olek.sündmusteNimekiri.append(s2)
-
-        kp2 = Kuupäev(12, 11, 2023)
-        s3 = Sündmus("Rong läheb Rakverre", kp2, GenereeriID(self.olek))
-        s3.MääraLõppKell(13, 0)
-        self.olek.sündmusteNimekiri.append(s3)
-        
-        s4 = Sündmus("Pakk kaob pakiautomaadist ära", kp2, GenereeriID(self.olek))
-        s4.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s4)
-
-        #Testimissündmused
-        s5 = Sündmus("aaaaaaaaaa", kp2, GenereeriID(self.olek))
-        s5.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s5)
-
-        s6 = Sündmus("jjjllljljljljljljljljj", kp2, GenereeriID(self.olek))
-        s6.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s6)
-
-        s7 = Sündmus("Pakk kaob pakiautomaadist ära3", kp2, GenereeriID(self.olek))
-        s7.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s7)
-
-        s8 = Sündmus("Pakk kaob pakiautomaadist ära4", kp2, GenereeriID(self.olek))
-        s8.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s8)
-
-        s9 = Sündmus("Pakk kaob pakiautomaadist ära5", kp2, GenereeriID(self.olek))
-        s9.MääraLõppKell(23,0)
-        self.olek.sündmusteNimekiri.append(s9)"""
-
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
         def f1():
@@ -104,12 +64,14 @@ class Programm:
         
         vaade = DetailsemVaade(ekraan, self.olek)
         
-
         
 
 
         def JoonistaAsjad():
-                      
+            for i in self.olek.pygameEvents:
+                if i.type == pygame.MOUSEWHEEL:
+                    self.olek.kerimisKogus += i.y*10
+
             ekraan.fill((255, 255, 255, 255))
             
 
@@ -120,13 +82,22 @@ class Programm:
             ekraaniNupualus.TegeleNupuga()
             
 
+            print(self.olek.kerimisKogus)
+            if self.olek.kerimisKogus > 0:
+                self.olek.kerimisKogus = 0
+                
+            ruudSuury = ruudustik.VõtaSuurus()[1]
+            if self.olek.kerimisKogus < -ruudSuury:
+                self.olek.kerimisKogus = -ruudSuury
+                
             ekrLai = aknaSuur[0]
             ruudAsukx = ekrLai * 0.1
-            ruudAsuky = 30
+            ruudAsuky = 30 + self.olek.kerimisKogus
             ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
             ruudustik.MääraLaius(ekrLai*0.8)
             ruudustik.VärskendaRuute()
             ruudustik.Joonista()
+            
             
 
             nupuAsukx = aknaSuur[0] * 0.3

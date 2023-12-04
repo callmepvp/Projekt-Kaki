@@ -153,3 +153,5 @@ class ProgrammiOlek:
         self.sündmuseLisamiseHeledamaTaustaVahe = 10
         
         self.tegevuseNäitamine = True
+        
+        self.kerimisKogus = 0

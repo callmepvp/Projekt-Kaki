@@ -313,7 +313,85 @@ class PäevaRuudustik:
                 uusRuut = PäevaRuut(self.olek, self.pind,päev)
                 print("Tajus, et on uut ruutu vaja")
                 self.päevaRuudud.append(uusRuut)            
+    
+
+
+    def VõtaSuurus(self):
+        # Tausta kõrgus leitakse selle põhjal mitu rida ruute tuleb ja see arvutatakse hiljem.
+        taustaAsukx = self.asukoht[0]
+        taustaAsuky = self.asukoht[1]
+        taustaLaius = self.laius
+
+        # Mitu ruutu mahub ühte ritta.
+        äärevahe = self.olek.päevaruutudeTaustaJaRuutudeVahe
+        ruuduvahe = self.olek.päevaruutudeVahe
+        minLaius = self.olek.päevaruuduMinLaius
+        # Leiab, mitu ruutu mahub ühte ritta. Põhineb sellel, et vaatab kui palju ruutudevahe suurusid saab vahemikku panna nii, et ülejäänud vahemikku ühe võrra suurema kogusega jagades ei annaks tulemust alla min laiuse.
+        mituReas = 0
+        mituVahet = 0
+        ruum = taustaLaius-2*äärevahe
+        while True:
+            if (ruum - mituVahet * ruuduvahe) / (mituVahet+1) < minLaius:
+                mituReas = mituVahet
+                break
+            else:
+                mituVahet += 1
+        
+        # Võib olla olukord, kus aken läheb nii kitsaks, et isegi, kui reas on ainult 1 ruut, on sellel ikkagi nii vähe ruumi, et reas peaks olema null ruutu. See kood parandab olukorra ja lic lepib sellega, et ruudu laius on väiksem, kui minlaius.
+        if mituReas == 0: mituReas = 1
+        
+        # Arvutab, kui palju ruumi jääb vahede kõrvalt ruutudele. Mis peab ühe reasoleva ruudu laius olema. 
+        vahesidKokku = 2*äärevahe + (mituReas-1)*ruuduvahe
+        ruudulaius = (taustaLaius - vahesidKokku)/mituReas
+
+        # RUUTUDE PAIGUTAMINE ALGAB:
+
+        ridadeArv = 0
+        vasakServ = taustaAsukx
+        ülemServ = taustaAsuky
+
+        # KÕigile ruutudele määratakse ühtne laius.
+        for i in self.päevaRuudud:
+            i.MääraSuurus(ruudulaius, None)
+
+        ridadeKõrgused = []
+        reaKõrgus = 0
+        counter = 0
+        for i in self.päevaRuudud:
             
+            # Kui ollakse paigutamisega rea alguses, käiakse läbi sellele reale tulevad ruudud ja küsitakse kui palju neil ruumi oleks vaja.
+            antavRuum = 0
+            if counter % (mituReas) == 0:
+                ruumivajadused = []
+                for j in self.päevaRuudud[counter:counter+mituReas]:
+                    ruumivajadused.append(j.KuiPaljuRuumiOnVaja())
+                    
+                #Antavaks ruumiks määratakse vajaduste keskmine, aga vb tulevikus võib mingi intelligentsema otsustaja teha
+                antavRuum = sum(ruumivajadused)/len(ruumivajadused)
+                reaKõrgus = antavRuum
+                ridadeKõrgused.append(reaKõrgus)
+            
+            
+                
+            mitmesTulp = counter % mituReas
+            mitmesRida = floor(counter/mituReas)
+            # Kui kõik ruudud on läbi käidud, ss on ridadeArv võrdne sellega, kui palju ridasid on ruudustikus. Seda väärtust kasutab taust, et oma kõrgus leida.
+            ridadeArv = mitmesRida
+
+
+            asukx = vasakServ + äärevahe + mitmesTulp*(ruudulaius + ruuduvahe)
+            asuky = ülemServ + äärevahe + sum(ridadeKõrgused[:-1]) + max(len(ridadeKõrgused)-1, 0) * ruuduvahe
+
+            i.MääraAsukoht(asukx, asuky)
+            i.MääraSuurus(ruudulaius, reaKõrgus)
+            counter += 1
+        
+        taustaKõrgus = 2*äärevahe + sum(ridadeKõrgused)+ (ridadeArv)*ruuduvahe
+
+        return (taustaLaius, taustaKõrgus)
+
+
+
 
     def Joonista(self):
         # Tausta kõrgus leitakse selle põhjal mitu rida ruute tuleb ja see arvutatakse hiljem.
@@ -396,7 +474,6 @@ class PäevaRuudustik:
             a.MääraAsukoht((asukx, asuky))
             a.MääraSuurus((ruudulaius, reaKõrgus))
             fakeRuudud.append(a)
-        print(fakeRuuteVaja)
 
         # PAIGUTAMINE LÕPPES
 
@@ -423,6 +500,8 @@ class PäevaRuudustik:
                 
         for i in fakeRuudud:
             i.Joonista()
+            
+
             
 
 
