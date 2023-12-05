@@ -10,7 +10,7 @@ from Klassid.Kuupäev import Kuupäev
 from Klassid.Sündmus import Sündmus
 from Klassid.Nupp import LisaSündmuseNupp, NupuAlus
 from Funktsioonid.UtilityFunktsioonid import GenereeriID
-from Klassid.DetailsemVaade import DetailsemVaade
+from Klassid.DetailsemVaade import DetailsemVaade, DetailsemaVaateInfoväli, DetailsemaVaateSündmus
 from Klassid.SündLisamiseAken import SündmuseLisamiseAken
 import math
   

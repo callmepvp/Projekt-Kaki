@@ -155,3 +155,5 @@ class ProgrammiOlek:
         self.tegevuseNäitamine = True
         
         self.kerimisKogus = 0
+
+        self.InfoVäljadeReaVahe = 30

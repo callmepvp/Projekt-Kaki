@@ -68,6 +68,9 @@ class Kuupäev:
 
     def VõtaAastaTekstina(self):
         return str(self.aasta)
+    
+    def VõtaTekstina(self):
+        return str(self.päev) + "." + str(self.kuu) + "." + str(self.aasta)
 
 
     # Tagastab True, kui käesolev kuupäev on rangelt enne parameetriks antud kuupäeva ja false siis, kui on võrdne antud kuupäevaga v hiljem.

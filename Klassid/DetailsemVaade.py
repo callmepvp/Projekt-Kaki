@@ -86,7 +86,7 @@ class DetailsemVaade:
             
             detailsemSündmus.MääraAsukoht((uusAsukohtX, uusAsukohtY))
 
-            kastiSuurus = (self.suurus[0] - 20, self.suurus[1])
+            kastiSuurus = (self.suurus[0] - 40, self.suurus[1])
             detailsemSündmus.MääraSuurus(kastiSuurus)
             detailsemSündmus.Joonista()
             järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
@@ -141,6 +141,12 @@ class DetailsemaVaateSündmus:
         else:
             self.tekst = f"• {self.sündmus.algusaeg.tund}:{self.sündmus.algusaeg.minut} {self.sündmus.nimi}"
 
+        self.pealkiri = MitmeReaTekst(self.olek, self.pind, self.tekst, self.font)
+
+        self.algkuupäev = DetailsemaVaateInfoväli(self.pind, self.olek, "Algkuupäev", sündmus.alguskuupäev.VõtaTekstina())
+        self.lõppkuupäev = DetailsemaVaateInfoväli(self.pind, self.olek, "Lõppkuupäev", sündmus.lõppkuupäev.VõtaTekstina())
+        self.algkell = DetailsemaVaateInfoväli(self.pind, self.olek, "Algkell", sündmus.algusaeg.VõtaStringina())
+        self.lõppkell = DetailsemaVaateInfoväli(self.pind, self.olek, "Lõppkell", sündmus.lõppaeg.VõtaStringina())
 
     def MääraSuurus(self, suurus):
         self.suurus = suurus
@@ -157,21 +163,81 @@ class DetailsemaVaateSündmus:
 
         uusRida.Joonista()
 
+        kaheVäljaVahe = 30
+        ääreVahe = 40
+        väljaLaius = (self.suurus[0] - 2*ääreVahe - kaheVäljaVahe)/2
+
+        asukX1 = self.asukoht[0] + ääreVahe + (väljaLaius/2) #raini kommentaar
+        asukY1 = self.asukoht[1] + kaheVäljaVahe
+        self.algkuupäev.MääraAsukoht((asukX1, asukY1))
+        self.algkuupäev.MääraSuurus((väljaLaius, 0))
+
+        asukX2 = asukX1 + väljaLaius + kaheVäljaVahe
+        asukY2 = asukY1
+        self.algkell.MääraAsukoht((asukX2, asukY2))
+        self.algkell.MääraSuurus((väljaLaius, 0))
+
+        kaheVäljaYVahe = 50
+        #print(self.algkuupäev.VõtaSuurus()[1])
+        self.lõppkuupäev.MääraAsukoht((asukX1, self.asukoht[1] + 30 + self.algkuupäev.VõtaSuurus()[1] + kaheVäljaYVahe))
+        self.lõppkuupäev.MääraSuurus((väljaLaius, 0))
+
+        self.algkuupäev.Joonista()
+        self.algkell.Joonista()
+        self.lõppkuupäev.Joonista()
+
+
     def võtaVajalikRuum(self):
         uusRida = MitmeReaTekst(self.olek, self.pind, self.sündmus.nimi, self.font)
-        uusRida.MääraRidadeArv(3) #lõpmatu
+        uusRida.MääraRidadeArv(3)
         uusRida.MääraReavahe(20)
         uusRida.MääraLaius(self.suurus[0])
 
-        uusRida.MääraRead(TekstRidadeks(self.tekst, self.font, self.suurus[0]))
+        uusRida.tekst = self.tekst
 
         ruum = uusRida.KuiPaljuRuumiOnVaja()
         return ruum
-        
 
+class DetailsemaVaateInfoväli:
+    def __init__(self, pind: "pygame.Surface", olek: "ProgrammiOlek", väljaPealkiri, väärtus) -> None:
+        self.asukoht = (0, 0)
+        self.suurus = (100, 100)
 
+        self.olek = olek
+        self.pind = pind
+        self.font = self.olek.sündmuseReaKirjaFont
+
+        self.väljaPealkiri = väljaPealkiri
+        self.väärtuseTekst = väärtus
+
+        self.nimi = MitmeReaTekst(self.olek, self.pind, väljaPealkiri, self.font)
+        self.väärtus = MitmeReaTekst(self.olek, self.pind, väärtus, self.font)
+
+        self.nimi.MääraKeskeleJoondus(True)
+        self.väärtus.MääraKeskeleJoondus(True)
+        self.nimi.MääraReavahe(15)
+        self.väärtus.MääraReavahe(15)
+
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
     
-    
+    def MääraSuurus(self, suurus):
+        self.suurus = suurus
 
-        
+    def Joonista(self):
+        self.nimi.MääraAsukoht(self.asukoht)
+        self.nimi.MääraLaius(self.suurus[0])
+        self.nimi.Joonista()
+
+        ruum = self.nimi.KuiPaljuRuumiOnVaja()
+        self.väärtus.MääraAsukoht((self.nimi.asukoht[0], self.asukoht[1] + ruum + self.olek.InfoVäljadeReaVahe))
+        self.väärtus.MääraLaius(self.suurus[0])
+        self.väärtus.Joonista()
+
+    def VõtaSuurus(self):
+        r1 = self.nimi.KuiPaljuRuumiOnVaja()
+        r2 = self.väärtus.KuiPaljuRuumiOnVaja()
+        koguRuum = (self.suurus[0], self.olek.InfoVäljadeReaVahe + r1 + r2)
+        return koguRuum
+
 
