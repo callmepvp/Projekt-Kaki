@@ -15,12 +15,6 @@ class DetailsemVaade:
         self.asukoht = (0, 0)
         self.suurus = (400, 200)
         self.pind = pind
-        
-        def tühiFn(): pass
-
-        def KõrvaleVajutus():
-            self.olek.TäpsemaVaatePäev = None
-            self.scrollOffset = 0
 
         self.olek = olek
         prio = self.olek.nuppudePrioriteedid["detailsem vaade"]
@@ -87,6 +81,13 @@ class DetailsemVaade:
             detailsemSündmus.MääraAsukoht((uusAsukohtX, uusAsukohtY))
 
             kastiSuurus = (self.suurus[0] - 40, self.suurus[1])
+            
+            """
+            a = Ristkülik(self.pind)
+            a.MääraVärv((255, 0,0,255))
+            a.MääraSuurus(self.suurus[0] - 40, self.suurus[1])
+            a.Joonista()"""
+            
             detailsemSündmus.MääraSuurus(kastiSuurus)
             detailsemSündmus.Joonista()
             järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
@@ -135,14 +136,14 @@ class DetailsemaVaateSündmus:
         self.olek = olek
         self.pind = pind
         self.font = self.olek.sündmuseReaKirjaFont
-
-        if self.sündmus.lõppaeg is not None:
-            self.tekst = f"• {self.sündmus.algusaeg.tund}:{self.sündmus.algusaeg.minut} -{self.sündmus.lõppaeg.tund}:{self.sündmus.lõppaeg.minut} {self.sündmus.nimi}"
-        else:
-            self.tekst = f"• {self.sündmus.algusaeg.tund}:{self.sündmus.algusaeg.minut} {self.sündmus.nimi}"
-
+        self.tekst = self.sündmus.nimi
+        
+        # Pealkiri
         self.pealkiri = MitmeReaTekst(self.olek, self.pind, self.tekst, self.font)
+        self.pealkiri.MääraReavahe(20)
+        
 
+        # Tekstiväljad
         self.algkuupäev = DetailsemaVaateInfoväli(self.pind, self.olek, "Algkuupäev", sündmus.alguskuupäev.VõtaTekstina())
         self.lõppkuupäev = DetailsemaVaateInfoväli(self.pind, self.olek, "Lõppkuupäev", sündmus.lõppkuupäev.VõtaTekstina())
         self.algkell = DetailsemaVaateInfoväli(self.pind, self.olek, "Algkell", sündmus.algusaeg.VõtaStringina())
@@ -155,14 +156,31 @@ class DetailsemaVaateSündmus:
         self.asukoht = asukoht
 
     def Joonista(self):
-        uusRida = MitmeReaTekst(self.olek, self.pind, self.tekst, self.font)
-        uusRida.MääraRidadeArv(0) #lõpmatu
-        uusRida.MääraReavahe(20)
-        uusRida.MääraLaius(self.suurus[0])
-        uusRida.MääraAsukoht(self.asukoht)
+        VäliPealkirjast = 40
+        kaheVäljaVahe = 30
+        väljadÄärest = 40
+        väljadeLaius = (self.suurus[0] - 2*väljadÄärest - kaheVäljaVahe)/2
+        
+        # Pealkiri
+        self.pealkiri.MääraLaius(self.suurus[0])
+        self.pealkiri.MääraAsukoht(self.asukoht)
+        self.pealkiri.Joonista()
+        
+        # Üks väli
+        asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2)
+        asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast
+        self.algkuupäev.MääraAsukoht((asukx, asuky))
+        self.algkuupäev.MääraSuurus((self.suurus[0]/2, 0))
+        self.algkuupäev.Joonista()
+        
+        # Teine väli
+        asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2)
+        asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]
+        self.algkuupäev.MääraAsukoht((asukx, asuky))
+        self.algkuupäev.MääraSuurus((self.suurus[0]/2, 0))
+        self.algkuupäev.Joonista()
 
-        uusRida.Joonista()
-
+        """
         kaheVäljaVahe = 30
         ääreVahe = 40
         väljaLaius = (self.suurus[0] - 2*ääreVahe - kaheVäljaVahe)/2
@@ -179,12 +197,13 @@ class DetailsemaVaateSündmus:
 
         kaheVäljaYVahe = 50
         #print(self.algkuupäev.VõtaSuurus()[1])
-        self.lõppkuupäev.MääraAsukoht((asukX1, self.asukoht[1] + 30 + self.algkuupäev.VõtaSuurus()[1] + kaheVäljaYVahe))
-        self.lõppkuupäev.MääraSuurus((väljaLaius, 0))
+        väljasuury = self.algkuupäev.VõtaSuurus()[1]
+        self.lõppkuupäev.MääraAsukoht((asukX1, self.asukoht[1] + 30 + väljasuury + kaheVäljaYVahe))
+        self.lõppkuupäev.MääraSuurus((väljaLaius, 321321))
 
         self.algkuupäev.Joonista()
         self.algkell.Joonista()
-        self.lõppkuupäev.Joonista()
+        self.lõppkuupäev.Joonista()"""
 
 
     def võtaVajalikRuum(self):

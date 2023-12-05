@@ -130,12 +130,6 @@ class SündmuseLisamiseAken:
         self.päevaKast.MääraSuurus((laiused, None))
         self.päevaKast.Joonista()
         
-        if self.päevaKast.VõtaVeaTeade() == False:
-            print("Asi ei sobi kuupäevaks.")
-        else:
-            print("saab teha numbriks")
-        
-        
             
         self.kuuKast.MääraAsukoht((asukx2,asuky))
         self.kuuKast.MääraSuurus((laiused, None))

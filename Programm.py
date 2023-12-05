@@ -135,6 +135,17 @@ class Programm:
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
+                
+            sss = DetailsemaVaateInfoväli(ekraan, self.olek, "kuupäevdhsjkdhsajkdhsjkah", "ajdsjakljdskla")
+            sss.MääraSuurus((ekrLai*0.2, 10))
+            sss.MääraAsukoht((30,30))
+            print(sss.VõtaSuurus())
+            sss.Joonista()
+            
+            ss2 = Ristkülik(ekraan)
+            ss2.MääraSuurus(10, sss.VõtaSuurus()[1])
+            ss2.MääraAsukoht(100, 30)
+            ss2.Joonista()
 
             pygame.display.flip()
             
