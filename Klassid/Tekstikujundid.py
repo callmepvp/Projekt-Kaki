@@ -132,6 +132,11 @@ class PäevaRuut:
         self.sündmused = päev.sündmusteNimekiri
         
         def päevaRuuduDetailsemVaade():
+            if self.olek.SündmuseLisamine == True:
+                if self.olek.tegevuseNäitamine == True: print("Täpsemat vaadet ei avata, sest käsil on sündmuse lisamine.")
+                return
+            if self.olek.tegevuseNäitamine is True:
+                print("Täpsema vaate päev: None -> Päev")
             päev = Päev(self.kuupäev, self.sündmused)
             
             if self.olek.TäpsemaVaatePäev is None:
@@ -249,25 +254,29 @@ class FakePäevaRuut:
         self.taust.MääraVärv(värv)
         
         # Nupp
+        """
         def f1():
             print("Avati blurrblurr aken.")
         prio = olek.nuppudePrioriteedid["päevaruut"]
-        self.nupp = NupuAlus(olek, prio, f1)
+        self.nupp = NupuAlus(olek, prio)"""
+        
         
     def Joonista(self):
-        self.nupp.MääraSuurus(self.suurus)
-        self.nupp.MääraAsukoht(self.asukoht)
-        self.nupp.TegeleNupuga()
+        #self.nupp.TegeleNupuga()
         
         self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
         self.taust.MääraAsukoht(self.asukoht[0], self.asukoht[1])
         self.taust.Joonista()
+        #self.nupp.Joonista(self.pind)
         
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
+        #self.nupp.MääraAsukoht(asukoht)
+        
         
     def MääraSuurus(self, suurus):
         self.suurus = suurus   
+        #self.nupp.MääraSuurus(suurus)
 
 
 
@@ -467,6 +476,7 @@ class PäevaRuudustik:
         taustaKõrgus = 2*äärevahe + sum(ridadeKõrgused)+ (ridadeArv)*ruuduvahe
 
         fakeRuuteVaja = (ridadeArv+1) * mituReas - len(self.päevaRuudud)
+        fakeRuudud = []
         for i in range(fakeRuuteVaja):
             a = FakePäevaRuut(self.olek, self.pind)
             asukx = asukx + ruudulaius + ruuduvahe
@@ -474,6 +484,7 @@ class PäevaRuudustik:
             a.MääraAsukoht((asukx, asuky))
             a.MääraSuurus((ruudulaius, reaKõrgus))
             fakeRuudud.append(a)
+        #print(len(fakeRuudud))
 
         # PAIGUTAMINE LÕPPES
 

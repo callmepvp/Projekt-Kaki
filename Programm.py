@@ -70,7 +70,10 @@ class Programm:
         def JoonistaAsjad():
             for i in self.olek.pygameEvents:
                 if i.type == pygame.MOUSEWHEEL:
-                    self.olek.kerimisKogus += i.y*10
+                    if self.olek.SündmuseLisamine == True or self.olek.TäpsemaVaatePäev != None:
+                        pass
+                    else:
+                        self.olek.kerimisKogus += i.y*10
 
             ekraan.fill((255, 255, 255, 255))
             
@@ -82,7 +85,6 @@ class Programm:
             ekraaniNupualus.TegeleNupuga()
             
 
-            print(self.olek.kerimisKogus)
             if self.olek.kerimisKogus > 0:
                 self.olek.kerimisKogus = 0
                 
@@ -144,6 +146,7 @@ class Programm:
                 if i.prioriteet >= kõrgeimPrio:
                     kõrgeimPrio = i.prioriteet
                     parimNupp = i
+                    
                     
             if parimNupp != 0:
                 for i in self.olek.pygameEvents:

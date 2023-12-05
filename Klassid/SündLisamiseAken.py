@@ -38,6 +38,14 @@ class SündmuseLisamiseAken:
         self.päevaKast = SelgitavTekstikast(olek, pind)
         self.päevaKast.MääraSõnum("Päev:")
         self.päevaKast.MääraKeskeleJoondus(True)
+        def veaf(tekst):
+            try:
+                int(tekst)
+                return True
+            except:
+                return False
+        self.päevaKast.MääraVeaKontrolliFunktsioon(veaf)
+        
         # Kuu küsimise tekstikast
         self.kuuKast = SelgitavTekstikast(olek, pind)
         self.kuuKast.MääraSõnum("Kuu:")
@@ -113,7 +121,13 @@ class SündmuseLisamiseAken:
         self.päevaKast.MääraAsukoht((asukx1,asuky))
         self.päevaKast.MääraSuurus((laiused, None))
         self.päevaKast.Joonista()
+        if self.päevaKast.VõtaVeaTeade() == False:
+            print("Asi ei sobi kuupäevaks.")
+        else:
+            print("saab teah numbriks")
         
+        
+            
         self.kuuKast.MääraAsukoht((asukx2,asuky))
         self.kuuKast.MääraSuurus((laiused, None))
         self.kuuKast.Joonista()

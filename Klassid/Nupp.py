@@ -95,7 +95,7 @@ class NupuAlus:
             else:
                 self.olek = 1
                 for event in self.programmiOlek.pygameEvents:
-                    if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.olek = 2
         else:
             self.olek = 0
