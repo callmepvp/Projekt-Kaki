@@ -91,14 +91,15 @@ class Programm:
             ruudSuury = ruudustik.VõtaSuurus()[1]
             if self.olek.kerimisKogus < -ruudSuury:
                 self.olek.kerimisKogus = -ruudSuury
-                
-            ekrLai = aknaSuur[0]
-            ruudAsukx = ekrLai * 0.1
-            ruudAsuky = 30 + self.olek.kerimisKogus
-            ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
-            ruudustik.MääraLaius(ekrLai*0.8)
-            ruudustik.VärskendaRuute()
-            ruudustik.Joonista()
+            
+            if len(self.olek.sündmusteNimekiri) is not 0:
+                ekrLai = aknaSuur[0]
+                ruudAsukx = ekrLai * 0.1
+                ruudAsuky = 30 + self.olek.kerimisKogus
+                ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))
+                ruudustik.MääraLaius(ekrLai*0.8)
+                ruudustik.VärskendaRuute()
+                ruudustik.Joonista()
             
             
 
