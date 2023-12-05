@@ -1,5 +1,6 @@
 ﻿from Klassid.Kujundid import Ristkülik
 from Klassid.Kuupäev import Kuupäev
+from Klassid.Tekst import MitmeReaTekst
 from Programmiolek import ProgrammiOlek
 import pygame
 from Klassid.Nupp import NupuAlus
@@ -50,10 +51,17 @@ class SündmuseLisamiseAken:
         self.kuuKast = SelgitavTekstikast(olek, pind)
         self.kuuKast.MääraSõnum("Kuu:")
         self.kuuKast.MääraKeskeleJoondus(True)
+        
         # Aasta küsimise tekstikast
         self.aastaKast = SelgitavTekstikast(olek, pind)
         self.aastaKast.MääraSõnum("Aasta:")
         self.aastaKast.MääraKeskeleJoondus(True)
+
+        # Veateade
+        font = self.olek.sündmuseLisamiseInfoKirjaFont
+        self.veateade = MitmeReaTekst(olek, pind, "", font)
+        self.veateade.MääraVärv((255, 25, 34, 255))
+        self.veateade.MääraReavahe(10)
 
         # Tausta nupp
         nupud:List[SelgitavTekstikast] = [self.nimeKast, self.päevaKast, self.kuuKast, self.aastaKast]
@@ -121,10 +129,11 @@ class SündmuseLisamiseAken:
         self.päevaKast.MääraAsukoht((asukx1,asuky))
         self.päevaKast.MääraSuurus((laiused, None))
         self.päevaKast.Joonista()
+        
         if self.päevaKast.VõtaVeaTeade() == False:
             print("Asi ei sobi kuupäevaks.")
         else:
-            print("saab teah numbriks")
+            print("saab teha numbriks")
         
         
             
@@ -135,6 +144,16 @@ class SündmuseLisamiseAken:
         self.aastaKast.MääraAsukoht((asukx3,asuky))
         self.aastaKast.MääraSuurus((laiused, None))
         self.aastaKast.Joonista()
+        
+        asukx = self.nimeKast.asukoht[0]
+        asuky = self.päevaKast.asukoht[1] + max(self.päevaKast.VõtaSuurus()[1], self.kuuKast.VõtaSuurus()[1], self.aastaKast.VõtaSuurus()[1]) + 10
+
+        self.veateade.MääraLaius(self.suurus[0])
+        self.veateade.MääraAsukoht((asukx, asuky))
+        self.veateade.MääraTekst("")
+        if self.päevaKast.VõtaVeaTeade() == False:
+            self.veateade.tekst += "Päevakasti kirja ei saa numbriks teha."
+        self.veateade.Joonista()
         
         suurx = self.suurus[0] * 0.3
         suury = self.suurus[1] * 0.1
