@@ -176,9 +176,9 @@ class DetailsemaVaateSündmus:
         # Teine väli
         asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2)
         asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]
-        self.algkuupäev.MääraAsukoht((asukx, asuky))
-        self.algkuupäev.MääraSuurus((self.suurus[0]/2, 0))
-        self.algkuupäev.Joonista()
+        self.lõppkuupäev.MääraAsukoht((asukx, asuky))
+        self.lõppkuupäev.MääraSuurus((self.suurus[0]/2, 0))
+        self.lõppkuupäev.Joonista()
 
         """
         kaheVäljaVahe = 30
