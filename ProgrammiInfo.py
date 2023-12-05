@@ -53,7 +53,23 @@ defaultDataBody = {
         "suureNupuNurgaRaadius" : 20,
 
         "sündmuseLisamiseNurgaRaadius" : 30,
-        "sündmuseLisamiseTaustaVärv" : (200,200,200,255)
+
+        "tekstikastiHelendavVärv": (140,140,140,255),
+        "tekstikastiTavalineVärv" : (100,100,100,255),
+        "tekstikastiVajutatudVärv" : (80,80,80,255),
+        "tekstikastiRaamiLaius" : 2,
+        "tekstikastiÜlemineServTekstist" : 15,
+        "tekstikastiAlumineServTekstist" : 12,
+        "tekstikastiKüljedTekstist" : 5,
+        "tekstikastiReavahe" : 20,
+        "tekstikastiSelgitusKastist" : 10,
+        "tekstikastiSelgituseReavahe" : 10,
+
+        "detailsemaVaateTaustaVärv" : (176, 176, 176, 255),
+        "sündmuseLisamiseInfoKirjaSuurus" : 16,
+        "sündmuseLisamiseHeledamaTaustaVärv" : (235,235,235,255),
+        "sündmuseLisamiseHeledamaTaustaVahe" : 10
+
     },
 
     "fondiTüübid" : {
