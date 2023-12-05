@@ -151,6 +151,7 @@ class SündmuseLisamiseAken:
         self.veateade.MääraLaius(self.suurus[0])
         self.veateade.MääraAsukoht((asukx, asuky))
         self.veateade.MääraTekst("")
+        self.veateade.MääraLaius(self.nimeKast.VõtaSuurus()[0])
         if self.päevaKast.VõtaVeaTeade() == False:
             self.veateade.tekst += "Päevakasti kirja ei saa numbriks teha."
         self.veateade.Joonista()
