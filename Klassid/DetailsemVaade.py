@@ -173,7 +173,7 @@ class DetailsemaVaateSündmus:
         self.algkuupäev.MääraSuurus((self.suurus[0]/2, 0))
         self.algkuupäev.Joonista()
         
-        # Teine väli
+        # Teine väli        
         asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2)
         asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]
         self.lõppkuupäev.MääraAsukoht((asukx, asuky))
@@ -198,7 +198,12 @@ class DetailsemaVaateSündmus:
         kaheVäljaYVahe = 50
         #print(self.algkuupäev.VõtaSuurus()[1])
         väljasuury = self.algkuupäev.VõtaSuurus()[1]
-        self.lõppkuupäev.MääraAsukoht((asukX1, self.asukoht[1] + 30 + väljasuury + kaheVäljaYVahe))
+        asukX3 = asukX1
+
+        asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]        
+
+        asukY3 = self.asukoht[1] + 30 + väljasuury + kaheVäljaYVahe
+        self.lõppkuupäev.MääraAsukoht((asukX3, asukY3))
         self.lõppkuupäev.MääraSuurus((väljaLaius, 321321))
 
         self.algkuupäev.Joonista()
