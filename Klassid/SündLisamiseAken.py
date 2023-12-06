@@ -39,29 +39,32 @@ class SündmuseLisamiseAken:
         self.päevaKast = SelgitavTekstikast(olek, pind)
         self.päevaKast.MääraSõnum("Päev:")
         self.päevaKast.MääraKeskeleJoondus(True)
-        def veaf(tekst):
+        def intKontroll(tekst):
             try:
                 int(tekst)
                 return True
             except:
                 return False
-        self.päevaKast.MääraVeaKontrolliFunktsioon(veaf)
+        self.päevaKast.MääraVeaKontrolliFunktsioon(intKontroll)
         
         # Kuu küsimise tekstikast
         self.kuuKast = SelgitavTekstikast(olek, pind)
         self.kuuKast.MääraSõnum("Kuu:")
         self.kuuKast.MääraKeskeleJoondus(True)
+        self.kuuKast.MääraVeaKontrolliFunktsioon(intKontroll)
         
         # Aasta küsimise tekstikast
         self.aastaKast = SelgitavTekstikast(olek, pind)
         self.aastaKast.MääraSõnum("Aasta:")
         self.aastaKast.MääraKeskeleJoondus(True)
+        self.aastaKast.MääraVeaKontrolliFunktsioon(intKontroll)
 
         # Veateade
         font = self.olek.sündmuseLisamiseInfoKirjaFont
         self.veateade = MitmeReaTekst(olek, pind, "", font)
         self.veateade.MääraVärv((255, 25, 34, 255))
-        self.veateade.MääraReavahe(10)
+        self.veateade.MääraReavahe(15)
+        self.veateade.MääraRidadeArv(0)
 
         # Tausta nupp
         nupud:List[SelgitavTekstikast] = [self.nimeKast, self.päevaKast, self.kuuKast, self.aastaKast]
@@ -91,6 +94,7 @@ class SündmuseLisamiseAken:
 
     def Joonista(self):
         self.nupp.TegeleNupuga()
+        self.looSündmusNupp.MääraVäljaLülitatus(False)
         
         
         # Taust
@@ -146,8 +150,31 @@ class SündmuseLisamiseAken:
         self.veateade.MääraAsukoht((asukx, asuky))
         self.veateade.MääraTekst("")
         self.veateade.MääraLaius(self.nimeKast.VõtaSuurus()[0])
-        if self.päevaKast.VõtaVeaTeade() == False:
-            self.veateade.tekst += "Päevakasti kirja ei saa numbriks teha."
+        
+        if self.nimeKast.VõtaTekst() == "" or self.päevaKast.VõtaTekst() == "" or self.kuuKast.VõtaTekst() == "" or self.aastaKast.VõtaTekst() == "":
+            self.looSündmusNupp.MääraVäljaLülitatus(True)
+        
+        
+            
+        if self.päevaKast.VõtaVeaTeade() == False and self.päevaKast.VõtaTekst() != "":
+            self.veateade.tekst += "Päevakasti kirja ei saa numbriks teha.\n"
+            self.looSündmusNupp.MääraVäljaLülitatus(True)
+        if self.kuuKast.VõtaVeaTeade() == False and self.kuuKast.VõtaTekst() != "":
+            self.veateade.tekst += "Kuukasti kirja ei saa numbriks teha.\n"
+            self.looSündmusNupp.MääraVäljaLülitatus(True)
+        if self.aastaKast.VõtaVeaTeade() == False and self.aastaKast.VõtaTekst() != "":
+            self.veateade.tekst += "Aastakasti kirja ei saa numbriks teha.\n"
+            self.looSündmusNupp.MääraVäljaLülitatus(True)
+            
+        if self.päevaKast.VõtaTekst() != "" and self.kuuKast.VõtaTekst() != "" and self.aastaKast.VõtaTekst() != "" and self.veateade.tekst == "":
+            a = Kuupäev(int(self.päevaKast.VõtaTekst()), int(self.kuuKast.VõtaTekst()), int(self.aastaKast.VõtaTekst()))
+            if not a.KasVõimalik():
+                self.looSündmusNupp.kasVäljaLülitatud = True
+            else:
+                self.veateade.tekst += "Saab teha kuupäevaks."
+                
+
+        
         self.veateade.Joonista()
         
         suurx = self.suurus[0] * 0.3

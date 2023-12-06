@@ -11,7 +11,12 @@ from Programmiolek import ProgrammiOlek
 def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Font):
     kasvatatav = ""
     for i in algtekst:
+        if i == "\n":
+            esiPool = kasvatatav
+            tagaPool = algtekst[len(esiPool)+1:]
+            return [esiPool, tagaPool]
         kasvatatav += i
+        
         laius = fontObject.size(kasvatatav)[0]
         if laius > sobivPikkus:
             esiPool = kasvatatav[:-1]
@@ -20,8 +25,8 @@ def EraldaSobivaPikkusegaTekst(algtekst, sobivPikkus, fontObject:pygame.font.Fon
                 esiPool = kasvatatav
                 tagaPool = algtekst[len(kasvatatav):]
             
-            return (esiPool, tagaPool)
-    return (kasvatatav,"")
+            return [esiPool, tagaPool]
+    return [kasvatatav,""]
 
 
 def TekstRidadeks(tekst, pygFont, laius):
@@ -30,6 +35,10 @@ def TekstRidadeks(tekst, pygFont, laius):
     read.append(paar[0])
     while paar[1] != "":
         paar = EraldaSobivaPikkusegaTekst(paar[1], laius, pygFont)
+        if "\n" in paar[0]:
+            uueReaIndeks = paar[0].index("\n")
+            paar[1] = paar[0][uueReaIndeks+1:]+paar[1]
+            paar[0] = paar[0][:uueReaIndeks]
         read.append(paar[0])
     return read
         

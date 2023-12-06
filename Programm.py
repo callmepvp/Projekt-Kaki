@@ -136,16 +136,9 @@ class Programm:
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
                 
-            sss = DetailsemaVaateInfoväli(ekraan, self.olek, "kuupäevdhsjkdhsajkdhsjkah", "ajdsjakljdskla")
-            sss.MääraSuurus((ekrLai*0.2, 10))
-            sss.MääraAsukoht((30,30))
-            print(sss.VõtaSuurus())
-            sss.Joonista()
-            
-            ss2 = Ristkülik(ekraan)
-            ss2.MääraSuurus(10, sss.VõtaSuurus()[1])
-            ss2.MääraAsukoht(100, 30)
-            ss2.Joonista()
+            u = MitmeReaTekst(self.olek, ekraan, "Esimene ridaLoo\ndetavastiTeine rida", self.olek.sündmuseReaKirjaFont)
+            u.MääraAsukoht((10,10))
+            u.Joonista()
 
             pygame.display.flip()
             

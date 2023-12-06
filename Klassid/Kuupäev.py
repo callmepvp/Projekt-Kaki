@@ -32,7 +32,7 @@ class Kuupäev:
             return False
         if self.kuu == 2 and self.KasLiigaasta() and self.päev > 29:
             return False
-        if self.päev > kuudePikkused[self.kuu]:
+        if self.päev > kuudePikkused[self.kuu-1]:
             return False
         return True
         

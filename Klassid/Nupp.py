@@ -42,6 +42,9 @@ class NupuAlus:
         self.kasVäljaLülitatud = False
         self.prioriteet = prioriteet
 
+    def MääraVäljaLülitatus(self, väärtus:bool):
+        self.kasVäljaLülitatud = väärtus
+
     def MääraHelendavVärv( self, värv):
         self.hiirKohalVärv = värv
        
