@@ -94,22 +94,31 @@ class SündmuseLisamiseAken:
         prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
         self.nupp = NupuAlus(self.olek, prio, f1)
         
-        # Loo sündmuse nupp:
+        # Loo sündmuse nupp: 
         prio = olek.nuppudePrioriteedid["sündmuse loomise nupp"]
+        # See on funktsioon, mis antakse sündmuse loomise nupule. Pmst loeb igast kastist teksti, mis sinna on kirjutatud, teeb intiks siis teeb sündmuse ja lsiab selle nimekirja
         def f1():
+            # Koostab sünmuse teades nime ja kuupäeva - kahe asjaga, mis on kindlsti olemas, sesst ilma nendeta ei töötaks sündmsue loomise nupp.
             nimi = self.nimeKast.VõtaTekst()
             päev = int(self.päevaKast.VõtaTekst())
             kuu = int(self.kuuKast.VõtaTekst())
             aasta = int(self.aastaKast.VõtaTekst())
-            tund = int(self.algTunniKast.VõtaTekst())
-            minut = int(self.algMinutiKast.VõtaTekst())
-
             kuup = Kuupäev(päev, kuu, aasta)
             uusSündmus = Sündmus(nimi,kuup,GenereeriID(self.olek))
-            algaeg = Kellaaeg(tund,minut)
-            uusSündmus.algusaeg = algaeg
-            self.olek.sündmusteNimekiri.append(uusSündmus)
             
+            # Kui sündmus on loodud, kontrollib veel tunni ja minuti kasti, võimalusel teeb kellaaja objekti ja lisab selle sündmusele, aga kui ei saa, ss ei tee midagi.
+            t = self.algTunniKast.VõtaTekst()
+            m = self.algMinutiKast.VõtaTekst()
+            try: 
+                t = int(t)
+                m = int(m)
+                kell = Kellaaeg(t, m)
+                uusSündmus.algusaeg = kell
+            except:
+                pass
+            
+            # Lõpus lisab loodud sünmduse olekus sündmuste nimekirja.
+            self.olek.sündmusteNimekiri.append(uusSündmus)
         self.looSündmusNupp = NupuAlus(olek, prio, f1)
         
 
@@ -194,6 +203,7 @@ class SündmuseLisamiseAken:
         self.veateade.MääraAsukoht((asukx, asuky))
         self.veateade.MääraTekst("")
         self.veateade.MääraLaius(self.nimeKast.VõtaSuurus()[0])
+        
         
         if self.nimeKast.VõtaTekst() == "" or self.päevaKast.VõtaTekst() == "" or self.kuuKast.VõtaTekst() == "" or self.aastaKast.VõtaTekst() == "":
             self.looSündmusNupp.MääraVäljaLülitatus(True)
