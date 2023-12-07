@@ -1,5 +1,5 @@
 ﻿from Klassid.Kujundid import Ristkülik
-from Klassid.Kuupäev import Kuupäev
+from Klassid.Kuupäev import Kellaaeg, Kuupäev
 from Klassid.Tekst import MitmeReaTekst
 from Programmiolek import ProgrammiOlek
 import pygame
@@ -35,16 +35,19 @@ class SündmuseLisamiseAken:
         self.nimeKast = SelgitavTekstikast(olek, pind)
         self.nimeKast.MääraSõnum("Uue sündmuse kirjeldus:")
         
-        # Päeva küsimise tekstikast
-        self.päevaKast = SelgitavTekstikast(olek, pind)
-        self.päevaKast.MääraSõnum("Päev:")
-        self.päevaKast.MääraKeskeleJoondus(True)
+
         def intKontroll(tekst):
             try:
                 int(tekst)
                 return True
             except:
                 return False
+            
+
+        # Päeva küsimise tekstikast
+        self.päevaKast = SelgitavTekstikast(olek, pind)
+        self.päevaKast.MääraSõnum("Päev:")
+        self.päevaKast.MääraKeskeleJoondus(True)
         self.päevaKast.MääraVeaKontrolliFunktsioon(intKontroll)
         
         # Kuu küsimise tekstikast
@@ -59,15 +62,28 @@ class SündmuseLisamiseAken:
         self.aastaKast.MääraKeskeleJoondus(True)
         self.aastaKast.MääraVeaKontrolliFunktsioon(intKontroll)
 
+        # Algusaja tunni kast
+        self.algTunniKast = SelgitavTekstikast(olek, pind)
+        self.algTunniKast.MääraSõnum("Tund:")
+        self.algTunniKast.MääraKeskeleJoondus(True)
+        self.algTunniKast.MääraVeaKontrolliFunktsioon(intKontroll)
+        
+        # Algusaja minuti
+        self.algMinutiKast = SelgitavTekstikast(olek, pind)
+        self.algMinutiKast.MääraSõnum("Minut:")
+        self.algMinutiKast.MääraKeskeleJoondus(True)
+        self.algMinutiKast.MääraVeaKontrolliFunktsioon(intKontroll)
+
         # Veateade
         font = self.olek.sündmuseLisamiseInfoKirjaFont
         self.veateade = MitmeReaTekst(olek, pind, "", font)
         self.veateade.MääraVärv((255, 25, 34, 255))
         self.veateade.MääraReavahe(15)
         self.veateade.MääraRidadeArv(0)
+        
 
         # Tausta nupp
-        nupud:List[SelgitavTekstikast] = [self.nimeKast, self.päevaKast, self.kuuKast, self.aastaKast]
+        nupud:List[SelgitavTekstikast] = [self.nimeKast, self.päevaKast, self.kuuKast, self.aastaKast, self.algTunniKast, self.algMinutiKast]
         def f1():
             if self.olek.tegevuseNäitamine == True: print("Kastidesse kirjutamine lõppes.")
             for i in nupud:
@@ -78,17 +94,31 @@ class SündmuseLisamiseAken:
         prio = self.olek.nuppudePrioriteedid["sündmuse lisamise aken"]
         self.nupp = NupuAlus(self.olek, prio, f1)
         
-        # Loo sündmuse nupp:
+        # Loo sündmuse nupp: 
         prio = olek.nuppudePrioriteedid["sündmuse loomise nupp"]
+        # See on funktsioon, mis antakse sündmuse loomise nupule. Pmst loeb igast kastist teksti, mis sinna on kirjutatud, teeb intiks siis teeb sündmuse ja lsiab selle nimekirja
         def f1():
+            # Koostab sünmuse teades nime ja kuupäeva - kahe asjaga, mis on kindlsti olemas, sesst ilma nendeta ei töötaks sündmsue loomise nupp.
             nimi = self.nimeKast.VõtaTekst()
             päev = int(self.päevaKast.VõtaTekst())
             kuu = int(self.kuuKast.VõtaTekst())
             aasta = int(self.aastaKast.VõtaTekst())
             kuup = Kuupäev(päev, kuu, aasta)
             uusSündmus = Sündmus(nimi,kuup,GenereeriID(self.olek))
-            self.olek.sündmusteNimekiri.append(uusSündmus)
             
+            # Kui sündmus on loodud, kontrollib veel tunni ja minuti kasti, võimalusel teeb kellaaja objekti ja lisab selle sündmusele, aga kui ei saa, ss ei tee midagi.
+            t = self.algTunniKast.VõtaTekst()
+            m = self.algMinutiKast.VõtaTekst()
+            try: 
+                t = int(t)
+                m = int(m)
+                kell = Kellaaeg(t, m)
+                uusSündmus.algusaeg = kell
+            except:
+                pass
+            
+            # Lõpus lisab loodud sünmduse olekus sündmuste nimekirja.
+            self.olek.sündmusteNimekiri.append(uusSündmus)
         self.looSündmusNupp = NupuAlus(olek, prio, f1)
         
 
@@ -143,6 +173,29 @@ class SündmuseLisamiseAken:
         self.aastaKast.MääraSuurus((laiused, None))
         self.aastaKast.Joonista()
         
+
+        # KELLAAJA KASTIDE PAIGUTAMINE
+        # Üldised kellaaja kastide paigutamiseks vajalikud asukohad
+        kuupäevaKastideAlServ = self.päevaKast.asukoht[1] + max(self.päevaKast.VõtaSuurus()[1], self.kuuKast.VõtaSuurus()[1], self.aastaKast.VõtaSuurus()[1])
+        kuupäevastKellani = 30
+        asuky = kuupäevaKastideAlServ + kuupäevastKellani
+        
+        # Tunnikast:
+        asukx = (self.asukoht[0] + self.suurus[0] / 2) + self.suurus[0]*0.11
+        self.algTunniKast.MääraAsukoht((asukx,asuky))
+        self.algTunniKast.MääraSuurus((laiused, None))
+        self.algTunniKast.Joonista()
+        
+        # Päevakast:
+        asukx = (self.asukoht[0] + self.suurus[0] / 2) - self.suurus[0]*0.11
+        self.algMinutiKast.MääraAsukoht((asukx, asuky))
+        self.algMinutiKast.MääraSuurus((laiused, None))
+        self.algMinutiKast.Joonista()
+        
+        
+
+        # Veateate paigutamine ja jonistamine
+        
         asukx = self.nimeKast.asukoht[0]
         asuky = self.päevaKast.asukoht[1] + max(self.päevaKast.VõtaSuurus()[1], self.kuuKast.VõtaSuurus()[1], self.aastaKast.VõtaSuurus()[1]) + 10
 
@@ -150,6 +203,7 @@ class SündmuseLisamiseAken:
         self.veateade.MääraAsukoht((asukx, asuky))
         self.veateade.MääraTekst("")
         self.veateade.MääraLaius(self.nimeKast.VõtaSuurus()[0])
+        
         
         if self.nimeKast.VõtaTekst() == "" or self.päevaKast.VõtaTekst() == "" or self.kuuKast.VõtaTekst() == "" or self.aastaKast.VõtaTekst() == "":
             self.looSündmusNupp.MääraVäljaLülitatus(True)
