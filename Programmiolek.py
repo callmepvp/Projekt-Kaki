@@ -156,4 +156,8 @@ class ProgrammiOlek:
         
         self.kerimisKogus = 0
 
+        self.DetailsemaVaateVäliPealkirjast = 40
+        self.DetailsemaVaateHeledamVärv = (230, 230, 230, 255)
+        self.DetailsemaVaateVälistaustaLaius = 15
         self.InfoVäljadeReaVahe = 30
+        self.kaheSündmusKastiVahe = 40

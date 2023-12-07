@@ -92,7 +92,7 @@ class Programm:
             if self.olek.kerimisKogus < -ruudSuury:
                 self.olek.kerimisKogus = -ruudSuury
             
-            if len(self.olek.sündmusteNimekiri) is not 0:
+            if len(self.olek.sündmusteNimekiri) != 0:
                 ekrLai = aknaSuur[0]
                 ruudAsukx = ekrLai * 0.1
                 ruudAsuky = 30 + self.olek.kerimisKogus
@@ -112,6 +112,7 @@ class Programm:
             a.Joonista()
             
             if self.olek.TäpsemaVaatePäev != None:
+                taustaÄäreLaius = self.olek.DetailsemaVaateVälistaustaLaius
                 vaade.MääraPäev(self.olek.TäpsemaVaatePäev)
                 ekraaniW = aknaSuur[0]
                 ekraaniH = aknaSuur[1]
@@ -123,6 +124,8 @@ class Programm:
                 vaadeAsukohtY = (ekraaniH - hProtsent * ekraaniH) / 2
                 vaade.MääraSuurus((vaadeSuurusX, vaadeSuurusY))
                 vaade.MääraAsukoht((vaadeAsukohtX, vaadeAsukohtY))
+                vaade.MääraNupuSuurus((vaadeSuurusX + 2*taustaÄäreLaius, vaadeSuurusY + 2*taustaÄäreLaius))
+                vaade.MääraNupuAsukoht((vaadeAsukohtX - taustaÄäreLaius, vaadeAsukohtY - taustaÄäreLaius))
                 vaade.Joonista()
                 
             if self.olek.SündmuseLisamine != False:

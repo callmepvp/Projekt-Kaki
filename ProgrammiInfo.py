@@ -68,7 +68,12 @@ defaultDataBody = {
         "detailsemaVaateTaustaVärv" : (176, 176, 176, 255),
         "sündmuseLisamiseInfoKirjaSuurus" : 16,
         "sündmuseLisamiseHeledamaTaustaVärv" : (235,235,235,255),
-        "sündmuseLisamiseHeledamaTaustaVahe" : 10
+        "sündmuseLisamiseHeledamaTaustaVahe" : 10,
+
+        "DetailsemaVaateVäliPealkirjast" : 40,
+        "DetailsemaVaateHeledamVärv" : (230, 230, 230, 255),
+        "DetailsemaVaateVälistaustaLaius" : 15,
+        "InfoVäljadeReaVahe" : 30
 
     },
 

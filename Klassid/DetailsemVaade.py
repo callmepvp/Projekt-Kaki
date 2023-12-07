@@ -29,6 +29,11 @@ class DetailsemVaade:
 
         self.font = pygame.font.Font(os.path.join("Fondid", 'CORBEL.TTF'), 36)
 
+        # Tausta ristküliku koostamine
+        self.tagumineTaust = Ristkülik(self.pind)
+        self.tagumineTaust.MääraNurgaRaadius(self.olek.sündmuseLisamiseNurgaRaadius)
+        self.tagumineTaust.MääraVärv(self.olek.DetailsemaVaateHeledamVärv)
+
         self.taust = Ristkülik(self.pind)
         self.taust.MääraNurgaRaadius(20)
         self.taust.MääraVärv(self.olek.detailsemaVaateTaustaVärv)
@@ -38,7 +43,12 @@ class DetailsemVaade:
 
     def MääraSuurus(self, suurus):
         self.suurus = suurus
+        
+    def MääraNupuSuurus(self, suurus):
         self.nupp.MääraSuurus(suurus)
+
+    def MääraNupuAsukoht(self, asukoht):
+        self.nupp.MääraAsukoht(asukoht)
 
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
@@ -47,29 +57,52 @@ class DetailsemVaade:
     def Joonista(self):
         self.nupp.TegeleNupuga()
         self.KäsitleSündmusi()
-        
-        päevaObjekt = self.päevaObjekt
-        if not võrdleObjektiParameetreid(self.eelminePäevaObjekt, päevaObjekt):
+    
+        if not võrdleObjektiParameetreid(self.eelminePäevaObjekt, self.päevaObjekt):
             self.scrollOffset = 0
         """
         rect = (self.asukoht, self.suurus)
         pygame.draw.rect(self.pind, self.detailsemaVaateTaustaVärv, rect)"""
 
+        taustaÄäreLaius = self.olek.DetailsemaVaateVälistaustaLaius
+        tagumiseTaustaX = self.asukoht[0] - taustaÄäreLaius
+        tagumiseTaustaY = self.asukoht[1] - taustaÄäreLaius
+        tagumiseSuurusX = self.suurus[0] + 2*taustaÄäreLaius
+        tagumiseSuurusY = self.suurus[1] + 2*taustaÄäreLaius
+        self.tagumineTaust.MääraAsukoht(tagumiseTaustaX, tagumiseTaustaY)
+        self.tagumineTaust.MääraSuurus(tagumiseSuurusX, tagumiseSuurusY)
+        self.tagumineTaust.Joonista()
+
         self.taust.MääraAsukoht(self.asukoht[0], self.asukoht[1])
         self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
         self.taust.Joonista()
 
-        sündmused = päevaObjekt.VõtaSündmused()
 
+        sündmused = self.päevaObjekt.VõtaSündmused()
+        järgmiseAsukoht = 0
+        for i in sündmused:
+            detailsemSündmus = DetailsemaVaateSündmus(self.pind, self.olek, i)
+
+            ülemiseSündmuseKaugusÜlaServast = 20
+            SündmuseKaugusVasakServast = 20
+            uusAsukohtX = self.asukoht[0] + SündmuseKaugusVasakServast
+            uusAsukohtY = self.asukoht[1] + ülemiseSündmuseKaugusÜlaServast + järgmiseAsukoht
+            
+            detailsemSündmus.MääraAsukoht((uusAsukohtX, uusAsukohtY))
+
+            kastiSuurus = (self.suurus[0] - 40, self.suurus[1])
+            
+            detailsemSündmus.MääraSuurus(kastiSuurus)
+            detailsemSündmus.Joonista()
+            järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
+            järgmiseAsukoht += self.olek.kaheSündmusKastiVahe
+
+        """
         startIndeks = self.scrollOffset
         lõpuIndeks = min(len(sündmused), -1 + startIndeks + (int(self.suurus[1]) // self.reaKõrgus))
         järgmiseAsukoht = 0
         for i in range(startIndeks, lõpuIndeks):
             sündmus = sündmused[i]
-
-            #tekst = f"{sündmus.nimi}"
-            #tekst = MitmeReaTekst(self.olek, self.pind, sündmus.nimi, self.font)
-            #tekst.Joonista()
 
             detailsemSündmus = DetailsemaVaateSündmus(self.pind, self.olek, sündmus)
 
@@ -82,24 +115,11 @@ class DetailsemVaade:
 
             kastiSuurus = (self.suurus[0] - 40, self.suurus[1])
             
-            """
-            a = Ristkülik(self.pind)
-            a.MääraVärv((255, 0,0,255))
-            a.MääraSuurus(self.suurus[0] - 40, self.suurus[1])
-            a.Joonista()"""
-            
             detailsemSündmus.MääraSuurus(kastiSuurus)
             detailsemSündmus.Joonista()
             järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
-            järgmiseAsukoht += 40 #vahe
-
+            järgmiseAsukoht += self.olek.kaheSündmusKastiVahe
             """
-            tekstiPind = self.font.render(f"{sündmus.nimi}", True, (0, 0, 0))
-
-            tekstiRect = tekstiPind.get_rect(topleft=(self.asukoht[0] + 10, self.asukoht[1] + self.ÜlemineVaheTekstiga + (i - startIndeks) * self.reaKõrgus - self.scrollOffset * self.reaKõrgus))
-
-            if tekstiRect.bottom > self.asukoht[1] + self.ÜlemineVaheTekstiga:
-                self.pind.blit(tekstiPind, tekstiRect)"""
 
         self.eelminePäevaObjekt = self.päevaObjekt
 
@@ -135,7 +155,7 @@ class DetailsemaVaateSündmus:
         self.sündmus = sündmus
         self.olek = olek
         self.pind = pind
-        self.font = self.olek.sündmuseReaKirjaFont
+        self.font = self.olek.päevaruuduPealkKpPygFont
         self.tekst = self.sündmus.nimi
         
         # Pealkiri
@@ -156,9 +176,9 @@ class DetailsemaVaateSündmus:
         self.asukoht = asukoht
 
     def Joonista(self):
-        VäliPealkirjast = 40
-        kaheVäljaVahe = 30
-        väljadÄärest = 40
+        VäliPealkirjast = self.olek.DetailsemaVaateVäliPealkirjast
+        kaheVäljaVahe = 0.1*self.suurus[1]
+        väljadÄärest = 0.1*self.suurus[0]
         väljadeLaius = (self.suurus[0] - 2*väljadÄärest - kaheVäljaVahe)/2
         
         # Pealkiri
@@ -166,61 +186,38 @@ class DetailsemaVaateSündmus:
         self.pealkiri.MääraAsukoht(self.asukoht)
         self.pealkiri.Joonista()
         
-        # Üks väli
+        # algkuupäev
         asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2)
         asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast
         self.algkuupäev.MääraAsukoht((asukx, asuky))
-        self.algkuupäev.MääraSuurus((self.suurus[0]/2, 0))
+        self.algkuupäev.MääraSuurus((väljadeLaius, 0))
         self.algkuupäev.Joonista()
         
-        # Teine väli        
+        # lõppkuupäev      
         asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2)
         asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]
         self.lõppkuupäev.MääraAsukoht((asukx, asuky))
-        self.lõppkuupäev.MääraSuurus((self.suurus[0]/2, 0))
+        self.lõppkuupäev.MääraSuurus((väljadeLaius, 0))
         self.lõppkuupäev.Joonista()
 
-        """
-        kaheVäljaVahe = 30
-        ääreVahe = 40
-        väljaLaius = (self.suurus[0] - 2*ääreVahe - kaheVäljaVahe)/2
-
-        asukX1 = self.asukoht[0] + ääreVahe + (väljaLaius/2) #raini kommentaar
-        asukY1 = self.asukoht[1] + kaheVäljaVahe
-        self.algkuupäev.MääraAsukoht((asukX1, asukY1))
-        self.algkuupäev.MääraSuurus((väljaLaius, 0))
-
-        asukX2 = asukX1 + väljaLaius + kaheVäljaVahe
-        asukY2 = asukY1
-        self.algkell.MääraAsukoht((asukX2, asukY2))
-        self.algkell.MääraSuurus((väljaLaius, 0))
-
-        kaheVäljaYVahe = 50
-        #print(self.algkuupäev.VõtaSuurus()[1])
-        väljasuury = self.algkuupäev.VõtaSuurus()[1]
-        asukX3 = asukX1
-
-        asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]        
-
-        asukY3 = self.asukoht[1] + 30 + väljasuury + kaheVäljaYVahe
-        self.lõppkuupäev.MääraAsukoht((asukX3, asukY3))
-        self.lõppkuupäev.MääraSuurus((väljaLaius, 321321))
-
-        self.algkuupäev.Joonista()
+        # algkell      
+        asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2) + väljadeLaius + kaheVäljaVahe
+        asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast
+        self.algkell.MääraAsukoht((asukx, asuky))
+        self.algkell.MääraSuurus((väljadeLaius, 0))
         self.algkell.Joonista()
-        self.lõppkuupäev.Joonista()"""
 
+        # lõppkell    
+        asukx = self.asukoht[0] + väljadÄärest + (väljadeLaius/2) + väljadeLaius + kaheVäljaVahe
+        asuky = self.asukoht[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + VäliPealkirjast + kaheVäljaVahe + self.algkuupäev.VõtaSuurus()[1]
+        self.lõppkell.MääraAsukoht((asukx, asuky))
+        self.lõppkell.MääraSuurus((väljadeLaius, 0))
+        self.lõppkell.Joonista()
 
     def võtaVajalikRuum(self):
-        uusRida = MitmeReaTekst(self.olek, self.pind, self.sündmus.nimi, self.font)
-        uusRida.MääraRidadeArv(3)
-        uusRida.MääraReavahe(20)
-        uusRida.MääraLaius(self.suurus[0])
-
-        uusRida.tekst = self.tekst
-
-        ruum = uusRida.KuiPaljuRuumiOnVaja()
-        return ruum
+        väliPealkirjast = self.olek.DetailsemaVaateVäliPealkirjast
+        suurimVajaminevRuum = max(self.algkuupäev.VõtaSuurus()[1] + self.lõppkuupäev.VõtaSuurus()[1], self.algkell.VõtaSuurus()[1] + self.lõppkell.VõtaSuurus()[1])
+        return väliPealkirjast + 0.1*self.suurus[1] + self.pealkiri.KuiPaljuRuumiOnVaja() + suurimVajaminevRuum
 
 class DetailsemaVaateInfoväli:
     def __init__(self, pind: "pygame.Surface", olek: "ProgrammiOlek", väljaPealkiri, väärtus) -> None:
