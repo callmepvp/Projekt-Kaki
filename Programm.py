@@ -13,6 +13,7 @@ from Funktsioonid.UtilityFunktsioonid import GenereeriID
 from Klassid.DetailsemVaade import DetailsemVaade, DetailsemaVaateInfoväli, DetailsemaVaateSündmus
 from Klassid.SündLisamiseAken import SündmuseLisamiseAken
 import math
+from Klassid.KuupäevaKüsija import KuupäevaKüsija
   
 
 #See on klass, mis luuakse main functionis. Kuna sellel klassil on ainult üks funktsioon, siis tehniliselt see klass võiks ka samahästi mitte klass olla, vaid lihtsalt see funktsioon olla
@@ -64,7 +65,7 @@ class Programm:
         
         vaade = DetailsemVaade(ekraan, self.olek)
         
-        
+        f = KuupäevaKüsija(self.olek, ekraan)
 
 
         def JoonistaAsjad():
@@ -139,9 +140,13 @@ class Programm:
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
                 
-            u = MitmeReaTekst(self.olek, ekraan, "Esimene ridaLoo\ndetavastiTeine rida", self.olek.sündmuseReaKirjaFont)
-            u.MääraAsukoht((10,10))
-            u.Joonista()
+            f.MääraAsukoht((20,20))
+            f.MääraSuurus((ekrLai*0.4, 100))
+            f.PaneValmis()
+            f.Joonista()
+            
+
+
             pygame.display.flip()
 
             

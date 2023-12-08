@@ -21,7 +21,8 @@ class Tekstikast:
         # Nupp tajumaks, kas hakata kirjutama
         prio = olek.nuppudePrioriteedid["tekstikast"]
         
-        self.lõpetaKõigiKirjutamine = None
+        def tühiF(): pass
+        self.lõpetaKõigiKirjutamine = tühiF
         def f1(): 
             self.lõpetaKõigiKirjutamine()
             self.kasKirjutamine = True
@@ -129,15 +130,8 @@ class SelgitavTekstikast:
         reavahe = olek.tekstikastiSelgituseReavahe
         self.tekst.MääraReavahe(reavahe)
         
-        # Lisainfo tekst
-        # Kasutab sama fonti, mis pealkiri.
-        self.lisainfo = MitmeReaTekst(self.olek, self.pind, "", font)
-        self.lisainfo.MääraReavahe(reavahe)
-
         # Tekstikast
         self.kast = Tekstikast(olek, pind)
-        
-        self.oodatavAndmetüüp = str
     
 
     def MääraVeaKontrolliFunktsioon(self, f1):
@@ -145,29 +139,19 @@ class SelgitavTekstikast:
 
     def VõtaVeaTeade(self):
         return self.veakontrolliFunktsioon(self.kast.valmisTekst)
-    
-    
-    def MääraOodatavAndmetüüp(self, tüüp):
-        self.oodatavAndmetüüp = tüüp
 
     def MääraSõnum(self, tekst):
-        self.sõnum = tekst
         self.tekst.MääraTekst(tekst)
 
     def MääraKeskeleJoondus(self, väärtus):
         self.keskeleJoondus = väärtus
         self.tekst.MääraKeskeleJoondus(väärtus)
         self.kast.MääraKeskeleJoondus(väärtus)
-        self.lisainfo.MääraKeskeleJoondus(väärtus)
 
     def VõtaSuurus(self):
         suurx = self.suurus[0]
         suury = self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1]
         return (suurx,suury)
-
-    
-    def MääraLisainfoTekst(self, tekst):
-        self.lisainfo.MääraTekst(tekst)
 
     def Joonista(self):
         # Teksti asukoht
@@ -187,13 +171,6 @@ class SelgitavTekstikast:
         self.kast.MääraAsukoht((asukx, asuky))
         self.kast.MääraSuurus((suurx, 200))
         self.kast.Joonista()
-        
-        # Lisainfo
-        asukx = self.asukoht[0]
-        asuky = self.asukoht[1] + self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1] + 7
-        self.lisainfo.MääraAsukoht((asukx, asuky))
-        #self.lisainfo.MääraLaius(self.suurus[0])
-        self.lisainfo.Joonista()
         
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht

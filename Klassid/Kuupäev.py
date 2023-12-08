@@ -119,3 +119,4 @@ class Kellaaeg:
             minutitekst = "0" + minutitekst
         return(str(self.tund) + "." + minutitekst)
 
+
