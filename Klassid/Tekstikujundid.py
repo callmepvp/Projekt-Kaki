@@ -132,17 +132,20 @@ class PäevaRuut:
         self.sündmused = päev.sündmusteNimekiri
         
         def päevaRuuduDetailsemVaade():
+            # Debuginfo
             if self.olek.SündmuseLisamine == True:
                 if self.olek.tegevuseNäitamine == True: print("Täpsemat vaadet ei avata, sest käsil on sündmuse lisamine.")
                 return
             if self.olek.tegevuseNäitamine is True:
                 print("Täpsema vaate päev: None -> Päev")
+                
+            # Funktsiooni sisu
             päev = Päev(self.kuupäev, self.sündmused)
             
             if self.olek.TäpsemaVaatePäev is None:
                 self.olek.TäpsemaVaatePäev = päev
-            elif self.olek.TäpsemaVaatePäev is not None and võrdleObjektiParameetreid(päev, self.olek.TäpsemaVaatePäev):
-                self.olek.TäpsemaVaatePäev = None
+            #elif self.olek.TäpsemaVaatePäev is not None and võrdleObjektiParameetreid(päev, self.olek.TäpsemaVaatePäev):
+                #self.olek.TäpsemaVaatePäev = None
             else:
                 self.olek.TäpsemaVaatePäev = päev
             
@@ -186,21 +189,17 @@ class PäevaRuut:
 
     def Joonista(self):
         self.nupp.TegeleNupuga()
-        self.nupp.Joonista(self.pind)
         olek = self.nupp.VõtaOlek() 
         
+        # Värvi valimine vastavalt sellele, mis nupp ütleb, et peaks olema
         origVärv = self.olek.päevaruuduVärv        
-
         if olek == 0:
             self.värv = origVärv
-
         elif olek == 1:
             self.värv = MuudaHeledust(30, origVärv)
-
         elif olek == 2:
             self.värv = MuudaHeledust(-50, origVärv)
         
-
         # Päevaruudu taust
         self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])
         self.taust.MääraSuurus(self.suurus[0], self.suurus[1])

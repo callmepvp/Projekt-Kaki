@@ -105,6 +105,7 @@ class SündmuseLisamiseAken:
             aasta = int(self.aastaKast.VõtaTekst())
             kuup = Kuupäev(päev, kuu, aasta)
             uusSündmus = Sündmus(nimi,kuup,GenereeriID(self.olek))
+            uusSündmus.ajaTüüp = 0
             
             # Kui sündmus on loodud, kontrollib veel tunni ja minuti kasti, võimalusel teeb kellaaja objekti ja lisab selle sündmusele, aga kui ei saa, ss ei tee midagi.
             t = self.algTunniKast.VõtaTekst()
@@ -114,6 +115,7 @@ class SündmuseLisamiseAken:
                 m = int(m)
                 kell = Kellaaeg(t, m)
                 uusSündmus.algusaeg = kell
+                uusSündmus.ajaTüüp = 1
             except:
                 pass
             

@@ -142,10 +142,9 @@ class Programm:
             u = MitmeReaTekst(self.olek, ekraan, "Esimene ridaLoo\ndetavastiTeine rida", self.olek.sündmuseReaKirjaFont)
             u.MääraAsukoht((10,10))
             u.Joonista()
-
             pygame.display.flip()
-            
 
+            
 
             kõrgeimPrio = 0
             parimNupp = 0
@@ -158,8 +157,10 @@ class Programm:
                     
             if parimNupp != 0:
                 for i in self.olek.pygameEvents:
-                    if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         parimNupp.KutsuFunktsioon()
+                        
+
 
         # See rida teeb nii, et asjad joonistuks ka akna suuruse muutumise ajal 
         oldWndProc = win32gui.SetWindowLong(win32gui.GetForegroundWindow(), win32con.GWL_WNDPROC, lambda *args: wndProc(oldWndProc, JoonistaAsjad, *args))
@@ -175,6 +176,7 @@ class Programm:
             
 
             JoonistaAsjad()
+            
 
             clock.tick(60)  # limits FPS to 60
         pygame.quit()

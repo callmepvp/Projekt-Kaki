@@ -60,10 +60,7 @@ class DetailsemVaade:
     
         if not võrdleObjektiParameetreid(self.eelminePäevaObjekt, self.päevaObjekt):
             self.scrollOffset = 0
-        """
-        rect = (self.asukoht, self.suurus)
-        pygame.draw.rect(self.pind, self.detailsemaVaateTaustaVärv, rect)"""
-
+        
         taustaÄäreLaius = self.olek.DetailsemaVaateVälistaustaLaius
         tagumiseTaustaX = self.asukoht[0] - taustaÄäreLaius
         tagumiseTaustaY = self.asukoht[1] - taustaÄäreLaius
@@ -132,7 +129,6 @@ class DetailsemVaade:
             self.scrollOffset = min(maxOffset, self.scrollOffset + 1)
 
     def KäsitleSündmusi(self):
-
         pygameEvents = self.olek.pygameEvents    
         for event in pygameEvents:
             if event.type == pygame.MOUSEBUTTONDOWN:

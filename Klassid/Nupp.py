@@ -5,7 +5,7 @@ from Klassid.Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
 
 
-# Iga nupp oleva objekti sees, näiteks päevaruudu sees, on nähtamatu nupualuse objekt, mis tegeleb hiireklõpsude tajumisega, ja vastava outputi tegemisega. Ülemobjket hoolitseb kogu aeg selle eest, et selle nupualuse objekti suurus ja asukoht vastaksid objekti enda omaga. Ja kui see on kogu aeg nii, ss saab nupualuse objekti erinevate meetodite outputi järgi valida ülemobjekt oma värvi.
+# Iga nupp oleva objekti sees, näiteks päevaruudu sees, on nähtamatu nupualuse objekt, mis tegeleb hiireklõpsude tajumisega ja info andmisega selle kohta, kas ta on allavajutatud, hiir on selle kohal või tavaline. Selle põhjal ülemobjekt otsustab, mis värvi ta end joonistab.
 
 # Selle klassi mõte on olla mingi teise klassi sees alamobjekt. Kui selle ülemklassi suurus v asukoht määratakse, peab sellesama funktsiooniga määratama ka selle nupuAluse objketi asukoht ja suurus ja need vastavaks määrama.
 class NupuAlus:
@@ -54,6 +54,7 @@ class NupuAlus:
     def MääraTavalineVärv(self, värv):
         self.tavalineVärv = värv
 
+    # Lihtsalt määrab nupule värvi vastavalt olekule. See ei oma mingit väärtust, sest nupualust ei joonistata kunagi. Välja arvatud juhul, kui spetsiaalselt joonistatakse just nupualus, et selle asukohta ja reageerimist kontrollida. 
     def RakendaOlek(self):
         if self.olek == 0:
             self.kasutatavVärv = self.tavalineVärv
@@ -62,8 +63,8 @@ class NupuAlus:
         elif self.olek == 2:
             self.kasutatavVärv = self.vajutatudVärv
 
+    # Otustab, kas hiir on nupu peal või mitte. Töötab ka siis, kui nupul on ümarad nurgad. Kui tajub, et hiir on nupu peal, ss lisab ennast programmiolekus olevasse aktiivsete nuppude nimekirja kõigile nägemiseks. NB. Kui nupp joonistatakse ümarate nurkadega ristkülikuna, ss tuleb hoolitseda, et nupualusel on täpselt sama raadiusega nurgaümardus. 
     def KasHiirKohal(self, asuk=None):
-
         asukx = self.asukoht[0]
         asuky = self.asukoht[1]
         suurx = self.suurus[0]
@@ -91,7 +92,9 @@ class NupuAlus:
         return False
         
 
+    # Valib nupule oleku ehk otsustab, kas nupp peaks olema tavaline – 0. Sellises olekus, et hiir on selle kohal – 1 või allavajutatud olekus – 2. Oleku väärtuse põhjal määrab rakendaOlek funktsioon nupule värvi. Kõik objektid, mis omavad endas nupualust, kasutavad seda funktsiooni, et teada saada, mis värvi nad peaks end joonistama.
     def TegeleNupuga(self):  
+        
         if self.KasHiirKohal() == True:
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
@@ -106,21 +109,21 @@ class NupuAlus:
         self.RakendaOlek()
     
 
-    # Seda funktsiooni ei kasutata päris programmis kunagi. See on ainult debuggimiseks j kontrollimaks, kas nupualuse asukoht j suurus klapivad ülemobjekti omaga.
+    # Nupule antud funktsiooni ei kutsuta mitte nupus endas nupu enda vajutuse tajumise peale, vaid programm.py failis, kus kõigist nuppudest mille peal hiir asub valitakse vajutuse hetkel välja suurima prioriteediga nupp ja seal kutsutakse võitjanupu funktsioon välja. Kasutades seda funktsiooni.
     def KutsuFunktsioon(self):
-        
         if self.kasVäljaLülitatud == True:
             pass
         else:
             self.funktsioon()
     
 
+    # Seda funktsiooni ei kasutata päris programmis kunagi. See on ainult debuggimiseks j kontrollimaks, kas nupualuse asukoht j suurus klapivad ülemobjekti omaga.
     def Joonista(self, pind):
         self.TegeleNupuga()
         
-        self.pind = pind
-        pygame.draw.rect(self.pind, self.kasutatavVärv, (self.asukoht, self.suurus), border_radius=self.nurgaRaadius)
+        pygame.draw.rect(pind, self.kasutatavVärv, (self.asukoht, self.suurus), border_radius=self.nurgaRaadius)
     
+
     # See on funktsioon, mida ülemobjekt küsib iga kaader enne joonistamist nupualuselt ja mille põhjal ülemobjekt valib oma värvi. Funktsioon tagastab üht kolmest väärtusest. 0 - tavaline, 1 - hiir on kohal, 2 - nupp on allavajutatud.
     def VõtaOlek(self):
         return self.olek
