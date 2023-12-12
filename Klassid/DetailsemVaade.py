@@ -47,7 +47,9 @@ class DetailsemVaade:
         sündmused = self.päevaObjekt.VõtaSündmused()
         self.detailsemadSündmused = []
         for i in sündmused:
-            self.detailsemadSündmused.append(DetailsemaVaateSündmus(self.DetailsemaVaateSurface, self.olek, i))
+            sd = DetailsemaVaateSündmus(self.DetailsemaVaateSurface, self.olek, i)
+            self.detailsemadSündmused.append(sd)
+            sd.nupuAlus.MääraNihe(self.asukoht)
 
     def MääraScrollOffset(self, offset):
         self.scrollOffset = offset
@@ -247,10 +249,6 @@ class DetailsemaVaateSündmus:
 
         self.nupuAlus.MääraAsukoht((nupuAsukohtX, nupuAsukohtY))
         self.nupuAlus.MääraSuurus((nupuSuurusX, nupuSuurusY))
-
-        NiheX = self.asukoht[0]
-        NiheY = self.asukoht[1]
-        self.nupuAlus.MääraNihe((NiheX, NiheY))
         self.nupuAlus.TegeleNupuga()
         self.nupuAlus.Joonista(self.pind)
 

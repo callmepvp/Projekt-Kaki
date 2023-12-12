@@ -75,7 +75,7 @@ class NupuAlus:
         suury = self.suurus[1]
         raad = self.nurgaRaadius
         hiireAsuk = pygame.mouse.get_pos()
-        hiireAsuk = (hiireAsuk[0] + self.nihe[0], hiireAsuk[1] + self.nihe[1])
+        hiireAsuk = (hiireAsuk[0] - self.nihe[0], hiireAsuk[1] - self.nihe[1])
         if asuk == None:
             hiirx = hiireAsuk[0]
             hiiry = hiireAsuk[1]
