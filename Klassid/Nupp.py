@@ -20,8 +20,8 @@ class NupuAlus:
         if funktsioon != None: self.funktsioon = funktsioon
         else: self.funktsioon = tühiFn
             
-
         self.args = args
+        self.nihe = (0,0)
 
         self.tavalineVärv = (100, 100, 100)
         self.vajutatudVärv = (70,70,70)
@@ -42,6 +42,9 @@ class NupuAlus:
         
         self.kasVäljaLülitatud = False
         self.prioriteet = prioriteet
+
+    def MääraNihe(self, nihe):
+        self.nihe = nihe
 
     def MääraVäljaLülitatus(self, väärtus:bool):
         self.kasVäljaLülitatud = väärtus
@@ -72,6 +75,7 @@ class NupuAlus:
         suury = self.suurus[1]
         raad = self.nurgaRaadius
         hiireAsuk = pygame.mouse.get_pos()
+        hiireAsuk = (hiireAsuk[0] + self.nihe[0], hiireAsuk[1] + self.nihe[1])
         if asuk == None:
             hiirx = hiireAsuk[0]
             hiiry = hiireAsuk[1]
@@ -95,10 +99,13 @@ class NupuAlus:
             if len(self.programmiOlek.aktiivsedNupud) == 0:
                 self.programmiOlek.aktiivsedNupud.add(self)
             else:
+                LäbiKäidud = 0
                 for i in self.programmiOlek.aktiivsedNupud:
                     if self.prioriteet != i.prioriteet and self.suurus != i.suurus and self.asukoht != i.asukoht:
-                        self.programmiOlek.aktiivsedNupud.add(self)
-                        break
+                        LäbiKäidud += 1
+
+                if len(self.programmiOlek.aktiivsedNupud) == LäbiKäidud:
+                    self.programmiOlek.aktiivsedNupud.add(self)
 
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
@@ -109,9 +116,10 @@ class NupuAlus:
                         self.olek = 2
         else:
             for i in self.programmiOlek.aktiivsedNupud:
-                if i == self:
+                if self.prioriteet == i.prioriteet and self.suurus == i.suurus and self.asukoht == i.asukoht:
                     self.programmiOlek.aktiivsedNupud.remove(i)
                     break
+
             self.olek = 0
                         
         self.RakendaOlek()

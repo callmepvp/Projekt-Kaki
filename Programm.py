@@ -149,10 +149,6 @@ class Programm:
             f.MääraSuurus((ekrLai*0.4, 100))
             f.PaneValmis()
             f.Joonista()
-
-
-            nup.TegeleNupuga()
-            nup.Joonista(ekraan)
             
 
             pygame.display.flip()

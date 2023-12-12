@@ -247,6 +247,10 @@ class DetailsemaVaateSündmus:
 
         self.nupuAlus.MääraAsukoht((nupuAsukohtX, nupuAsukohtY))
         self.nupuAlus.MääraSuurus((nupuSuurusX, nupuSuurusY))
+
+        NiheX = self.asukoht[0]
+        NiheY = self.asukoht[1]
+        self.nupuAlus.MääraNihe((NiheX, NiheY))
         self.nupuAlus.TegeleNupuga()
         self.nupuAlus.Joonista(self.pind)
 
