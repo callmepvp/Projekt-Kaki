@@ -3,6 +3,7 @@ from PIL import Image, ImageFilter
 from Funktsioonid.UtilityFunktsioonid import PILpiltPinnaks, KasAsukRingiSees, MuudaHeledust
 from Klassid.Tekst import MitmeReaTekst, Tekst
 from Programmiolek import ProgrammiOlek
+from Funktsioonid.UtilityFunktsioonid import võrdleObjektiParameetreid
 
 
 # Iga nupp oleva objekti sees, näiteks päevaruudu sees, on nähtamatu nupualuse objekt, mis tegeleb hiireklõpsude tajumisega ja info andmisega selle kohta, kas ta on allavajutatud, hiir on selle kohal või tavaline. Selle põhjal ülemobjekt otsustab, mis värvi ta end joonistab.
@@ -83,12 +84,7 @@ class NupuAlus:
             KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+raad), raad) or\
             KasAsukRingiSees(hiireAsuk, (asukx+raad, asuky+suury-raad), raad) or\
             KasAsukRingiSees(hiireAsuk, (asukx+suurx-raad, asuky+suury-raad), raad)):
-            self.programmiOlek.aktiivsedNupud.add(self)
             return True
-        try: 
-            self.programmiOlek.aktiivsedNupud.remove(self)
-        except:
-            pass
         return False
         
 
@@ -96,6 +92,14 @@ class NupuAlus:
     def TegeleNupuga(self):  
         
         if self.KasHiirKohal() == True:
+            if len(self.programmiOlek.aktiivsedNupud) == 0:
+                self.programmiOlek.aktiivsedNupud.add(self)
+            else:
+                for i in self.programmiOlek.aktiivsedNupud:
+                    if self.prioriteet != i.prioriteet and self.suurus != i.suurus and self.asukoht != i.asukoht:
+                        self.programmiOlek.aktiivsedNupud.add(self)
+                        break
+
             if self.olek == 2 and pygame.mouse.get_pressed()[0] == True:
                 pass
             else:
@@ -104,6 +108,10 @@ class NupuAlus:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         self.olek = 2
         else:
+            for i in self.programmiOlek.aktiivsedNupud:
+                if i == self:
+                    self.programmiOlek.aktiivsedNupud.remove(i)
+                    break
             self.olek = 0
                         
         self.RakendaOlek()

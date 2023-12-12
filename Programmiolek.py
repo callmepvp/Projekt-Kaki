@@ -110,6 +110,7 @@ class ProgrammiOlek:
         
         # See muutuja on Päevaobjekt siis, kui on klõpsatud mingi päevaruudu peale ja seega peaks olema lahti selle päeva detailsem vaade. Muutuja on None, kui ei pea olema avatud ühegi päeva vaade.
         self.TäpsemaVaatePäev = None
+        self.eelminePäevaObjekt = None
         
         # See muutuja on True siis, kui peab olema lahti sünmduse lisamise aken. False siis, kui aken ei pea avatud olema. Suht elementaarne.
         self.SündmuseLisamine = False
@@ -127,7 +128,8 @@ class ProgrammiOlek:
             "detailsem vaade" : 3,
             "sündmuse lisamise aken" : 4,
             "tekstikast" : 5,
-            "sündmuse loomise nupp" : 6}
+            "sündmuse loomise nupp" : 6,
+            "sündmuse eemaldamise nupp" : 7}
 
         self.aktiivsedNupud = set()
         

@@ -67,6 +67,10 @@ class Programm:
         
         f = KuupäevaKüsija(self.olek, ekraan)
 
+        def fnn():
+            print("s")
+
+        nup = NupuAlus(self.olek, 100, fnn)
 
         def JoonistaAsjad():
             for i in self.olek.pygameEvents:
@@ -115,6 +119,7 @@ class Programm:
             if self.olek.TäpsemaVaatePäev != None:
                 taustaÄäreLaius = self.olek.DetailsemaVaateVälistaustaLaius
                 vaade.MääraPäev(self.olek.TäpsemaVaatePäev)
+                vaade.VärskendaSündmused()
                 ekraaniW = aknaSuur[0]
                 ekraaniH = aknaSuur[1]
                 wProtsent, hProtsent = 0.6, 0.6
@@ -144,8 +149,11 @@ class Programm:
             f.MääraSuurus((ekrLai*0.4, 100))
             f.PaneValmis()
             f.Joonista()
-            
 
+
+            nup.TegeleNupuga()
+            nup.Joonista(ekraan)
+            
 
             pygame.display.flip()
 
@@ -165,8 +173,6 @@ class Programm:
                     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                         parimNupp.KutsuFunktsioon()
                         
-
-
         # See rida teeb nii, et asjad joonistuks ka akna suuruse muutumise ajal 
         oldWndProc = win32gui.SetWindowLong(win32gui.GetForegroundWindow(), win32con.GWL_WNDPROC, lambda *args: wndProc(oldWndProc, JoonistaAsjad, *args))
 

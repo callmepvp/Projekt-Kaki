@@ -1,4 +1,4 @@
-from Klassid.Päev import Päev
+from Klassid.Päev import Päev, Kuupäev
 import pygame
 import os
 from Programmiolek import ProgrammiOlek
@@ -10,8 +10,7 @@ from Klassid.Kujundid import Ristkülik
 
 class DetailsemVaade:
     def __init__(self, pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
-        self.päevaObjekt = None
-        self.eelminePäevaObjekt = None
+        self.päevaObjekt = Päev(Kuupäev(1, 1, 1960), [])
         self.asukoht = (0, 0)
         self.suurus = (400, 200)
         self.pind = pind
@@ -37,6 +36,21 @@ class DetailsemVaade:
         self.taust = Ristkülik(self.pind)
         self.taust.MääraNurgaRaadius(20)
         self.taust.MääraVärv(self.olek.detailsemaVaateTaustaVärv)
+        
+        self.DetailsemaVaateSurface = None
+        self.detailsemadSündmused = []
+        self.VärskendaSündmused()
+        
+    def VärskendaSündmused(self):
+        self.DetailsemaVaateSurface = pygame.Surface(self.suurus, pygame.SRCALPHA, 32)
+        self.DetailsemaVaateSurface = self.DetailsemaVaateSurface.convert_alpha()
+        sündmused = self.päevaObjekt.VõtaSündmused()
+        self.detailsemadSündmused = []
+        for i in sündmused:
+            self.detailsemadSündmused.append(DetailsemaVaateSündmus(self.DetailsemaVaateSurface, self.olek, i))
+
+    def MääraScrollOffset(self, offset):
+        self.scrollOffset = offset
 
     def MääraPäev(self, päev:"Päev"):
         self.päevaObjekt = päev
@@ -58,9 +72,10 @@ class DetailsemVaade:
         self.nupp.TegeleNupuga()
         self.KäsitleSündmusi()
     
-        if not võrdleObjektiParameetreid(self.eelminePäevaObjekt, self.päevaObjekt):
+        if not võrdleObjektiParameetreid(self.olek.eelminePäevaObjekt, self.päevaObjekt):
             self.scrollOffset = 0
         
+        #taustad
         taustaÄäreLaius = self.olek.DetailsemaVaateVälistaustaLaius
         tagumiseTaustaX = self.asukoht[0] - taustaÄäreLaius
         tagumiseTaustaY = self.asukoht[1] - taustaÄäreLaius
@@ -75,15 +90,16 @@ class DetailsemVaade:
         self.taust.Joonista()
 
 
-        sündmused = self.päevaObjekt.VõtaSündmused()
+        
         järgmiseAsukoht = 0
-        for i in sündmused:
-            detailsemSündmus = DetailsemaVaateSündmus(self.pind, self.olek, i)
+
+        for i in self.detailsemadSündmused:
+            detailsemSündmus = i
 
             ülemiseSündmuseKaugusÜlaServast = 20
             SündmuseKaugusVasakServast = 20
-            uusAsukohtX = self.asukoht[0] + SündmuseKaugusVasakServast
-            uusAsukohtY = self.asukoht[1] + ülemiseSündmuseKaugusÜlaServast + järgmiseAsukoht
+            uusAsukohtX = SündmuseKaugusVasakServast
+            uusAsukohtY = ülemiseSündmuseKaugusÜlaServast + järgmiseAsukoht - self.scrollOffset
             
             detailsemSündmus.MääraAsukoht((uusAsukohtX, uusAsukohtY))
 
@@ -93,6 +109,9 @@ class DetailsemVaade:
             detailsemSündmus.Joonista()
             järgmiseAsukoht += detailsemSündmus.võtaVajalikRuum()
             järgmiseAsukoht += self.olek.kaheSündmusKastiVahe
+
+        self.olek.eelminePäevaObjekt = self.päevaObjekt
+        self.pind.blit(self.DetailsemaVaateSurface, self.asukoht)
 
         """
         startIndeks = self.scrollOffset
@@ -118,15 +137,14 @@ class DetailsemVaade:
             järgmiseAsukoht += self.olek.kaheSündmusKastiVahe
             """
 
-        self.eelminePäevaObjekt = self.päevaObjekt
-
     def SkrolliÜles(self):
-        self.scrollOffset = max(0, self.scrollOffset - 1)
+        self.scrollOffset = max(0, self.scrollOffset - 10)
 
     def SkrolliAlla(self):
-        maxOffset = max(0, len(self.päevaObjekt.VõtaSündmused()) + 1 - (int(self.suurus[1] // self.reaKõrgus)))
+        """maxOffset = max(0, len(self.päevaObjekt.VõtaSündmused()) + 1 - (int(self.suurus[1] // self.reaKõrgus)))
         if self.scrollOffset < maxOffset:
-            self.scrollOffset = min(maxOffset, self.scrollOffset + 1)
+            self.scrollOffset = min(maxOffset, self.scrollOffset + 1)"""
+        self.scrollOffset  += 10
 
     def KäsitleSündmusi(self):
         pygameEvents = self.olek.pygameEvents    
@@ -157,7 +175,13 @@ class DetailsemaVaateSündmus:
         # Pealkiri
         self.pealkiri = MitmeReaTekst(self.olek, self.pind, self.tekst, self.font)
         self.pealkiri.MääraReavahe(20)
-        
+
+        def nupuFn():
+            print(f"s {self.pealkiri.tekst}")
+
+        self.nupuAlus = NupuAlus(self.olek, self.olek.nuppudePrioriteedid['sündmuse eemaldamise nupp'], funktsioon=nupuFn)
+        self.nupuRect = Ristkülik(self.pind)
+        self.nupuRect.MääraVärv((0, 255, 0, 255))
 
         # Tekstiväljad
         self.algkuupäev = DetailsemaVaateInfoväli(self.pind, self.olek, "Algkuupäev", sündmus.alguskuupäev.VõtaTekstina())
@@ -209,6 +233,22 @@ class DetailsemaVaateSündmus:
         self.lõppkell.MääraAsukoht((asukx, asuky))
         self.lõppkell.MääraSuurus((väljadeLaius, 0))
         self.lõppkell.Joonista()
+
+        #eemaldamine
+        nupuSuurusX = 20
+        nupuSuurusY = 20
+
+        nupuAsukohtX = self.asukoht[0] + self.suurus[0] - nupuSuurusX
+        nupuAsukohtY = self.asukoht[1] - nupuSuurusY/2
+
+        self.nupuRect.MääraSuurus(nupuSuurusX, nupuSuurusY)
+        self.nupuRect.MääraAsukoht(nupuAsukohtX, nupuAsukohtY)
+        self.nupuRect.Joonista()
+
+        self.nupuAlus.MääraAsukoht((nupuAsukohtX, nupuAsukohtY))
+        self.nupuAlus.MääraSuurus((nupuSuurusX, nupuSuurusY))
+        self.nupuAlus.TegeleNupuga()
+        self.nupuAlus.Joonista(self.pind)
 
     def võtaVajalikRuum(self):
         väliPealkirjast = self.olek.DetailsemaVaateVäliPealkirjast

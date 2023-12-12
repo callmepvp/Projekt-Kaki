@@ -148,9 +148,9 @@ class PäevaRuut:
                 #self.olek.TäpsemaVaatePäev = None
             else:
                 self.olek.TäpsemaVaatePäev = päev
-            
-            self.olek.scrollOffset = 0
 
+            self.olek.eelminePäevaObjekt = None
+            
         prio = self.olek.nuppudePrioriteedid["päevaruut"]
         self.nupp = NupuAlus(olek, prio, päevaRuuduDetailsemVaade)
         
