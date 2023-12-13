@@ -150,7 +150,7 @@ class Programm:
             f.PaneValmis()
             f.Joonista()
             
-
+            print(self.olek.aktiivsedNupud)
             pygame.display.flip()
 
             

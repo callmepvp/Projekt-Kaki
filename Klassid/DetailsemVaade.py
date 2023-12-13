@@ -7,6 +7,7 @@ from Funktsioonid.UtilityFunktsioonid import võrdleObjektiParameetreid
 from Klassid.Tekst import MitmeReaTekst, TekstRidadeks
 from Klassid.Sündmus import Sündmus
 from Klassid.Kujundid import Ristkülik
+from Funktsioonid.SündNimekFunktsioonid import VõtaKindlalKuupäeval
 
 class DetailsemVaade:
     def __init__(self, pind:"pygame.Surface", olek:"ProgrammiOlek") -> None:
@@ -44,10 +45,11 @@ class DetailsemVaade:
     def VärskendaSündmused(self):
         self.DetailsemaVaateSurface = pygame.Surface(self.suurus, pygame.SRCALPHA, 32)
         self.DetailsemaVaateSurface = self.DetailsemaVaateSurface.convert_alpha()
-        sündmused = self.päevaObjekt.VõtaSündmused()
+        sündmused = VõtaKindlalKuupäeval(self.olek.sündmusteNimekiri, self.päevaObjekt.kuupäev)
         self.detailsemadSündmused = []
         for i in sündmused:
             sd = DetailsemaVaateSündmus(self.DetailsemaVaateSurface, self.olek, i)
+            sd.värskendaFunktsioon = self.VärskendaSündmused
             self.detailsemadSündmused.append(sd)
             sd.nupuAlus.MääraNihe(self.asukoht)
 
@@ -177,13 +179,31 @@ class DetailsemaVaateSündmus:
         # Pealkiri
         self.pealkiri = MitmeReaTekst(self.olek, self.pind, self.tekst, self.font)
         self.pealkiri.MääraReavahe(20)
+        
+        def tühiFn(): pass
+        self.värskendaFunktsioon = tühiFn
 
         def nupuFn():
-            print(f"s {self.pealkiri.tekst}")
+            self.olek.aktiivsedNupud.remove(self.nupuAlus)
+            self.olek.sündmusteNimekiri.remove(self.sündmus)
+            self.värskendaFunktsioon()
+
+            if len(VõtaKindlalKuupäeval(self.olek.sündmusteNimekiri, self.olek.TäpsemaVaatePäev.kuupäev)) == 0:
+                self.olek.TäpsemaVaatePäev = None
+
+                for i in self.olek.aktiivsedNupud:
+                    if i.prioriteet == self.olek.nuppudePrioriteedid['detailsem vaade']:
+                        self.olek.aktiivsedNupud.remove(i)
+                        break
 
         self.nupuAlus = NupuAlus(self.olek, self.olek.nuppudePrioriteedid['sündmuse eemaldamise nupp'], funktsioon=nupuFn)
         self.nupuRect = Ristkülik(self.pind)
-        self.nupuRect.MääraVärv((0, 255, 0, 255))
+        
+        tavaVärv = (180, 0, 0, 255)
+        hoverVärv = (255, 0, 0, 255)
+        vajutusVärv = (100, 0, 0, 255)
+        self.värvid = [tavaVärv, hoverVärv, vajutusVärv]
+        self.nupuRect.MääraVärv(tavaVärv)
 
         # Tekstiväljad
         self.algkuupäev = DetailsemaVaateInfoväli(self.pind, self.olek, "Algkuupäev", sündmus.alguskuupäev.VõtaTekstina())
@@ -243,14 +263,15 @@ class DetailsemaVaateSündmus:
         nupuAsukohtX = self.asukoht[0] + self.suurus[0] - nupuSuurusX
         nupuAsukohtY = self.asukoht[1] - nupuSuurusY/2
 
-        self.nupuRect.MääraSuurus(nupuSuurusX, nupuSuurusY)
-        self.nupuRect.MääraAsukoht(nupuAsukohtX, nupuAsukohtY)
-        self.nupuRect.Joonista()
-
         self.nupuAlus.MääraAsukoht((nupuAsukohtX, nupuAsukohtY))
         self.nupuAlus.MääraSuurus((nupuSuurusX, nupuSuurusY))
         self.nupuAlus.TegeleNupuga()
-        self.nupuAlus.Joonista(self.pind)
+
+        self.nupuRect.MääraVärv(self.värvid[self.nupuAlus.VõtaOlek()])
+        self.nupuRect.MääraSuurus(nupuSuurusX, nupuSuurusY)
+        self.nupuRect.MääraAsukoht(nupuAsukohtX, nupuAsukohtY)
+        self.nupuRect.Joonista()
+        
 
     def võtaVajalikRuum(self):
         väliPealkirjast = self.olek.DetailsemaVaateVäliPealkirjast
