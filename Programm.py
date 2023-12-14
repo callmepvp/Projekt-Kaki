@@ -97,8 +97,8 @@ class Programm:
             if self.olek.kerimisKogus < -ruudSuury:
                 self.olek.kerimisKogus = -ruudSuury
             
+            ekrLai = aknaSuur[0]
             if len(self.olek.sündmusteNimekiri) != 0:
-                ekrLai = aknaSuur[0]
                 ruudAsukx = ekrLai * 0.1
                 ruudAsuky = 30 + self.olek.kerimisKogus
                 ruudustik.MääraAsukoht((ruudAsukx, ruudAsuky))

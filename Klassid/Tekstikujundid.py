@@ -310,6 +310,13 @@ class PäevaRuudustik:
     def VärskendaRuute(self):
         for i in self.päevaRuudud:
             i.VaataSündmusedÜle()
+            
+        for i in self.päevaRuudud:
+            if len(i.sündmused) == 0:
+                self.olek.aktiivsedNupud.remove(i.nupp)
+                self.päevaRuudud.remove(i)
+                break
+            
         
         ruutudeKuupäevad = [i.kuupäev for i in self.päevaRuudud]
         sündmusteKuupäevad = [i.kuupäev for i in VõtaKõikAlgusPäevad(self.olek.sündmusteNimekiri)]
