@@ -313,7 +313,10 @@ class PäevaRuudustik:
             
         for i in self.päevaRuudud:
             if len(i.sündmused) == 0:
-                self.olek.aktiivsedNupud.remove(i.nupp)
+                try:
+                    self.olek.aktiivsedNupud.remove(i.nupp)
+                except:
+                    pass
                 self.päevaRuudud.remove(i)
                 break
             

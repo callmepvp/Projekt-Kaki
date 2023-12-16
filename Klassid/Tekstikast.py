@@ -21,10 +21,9 @@ class Tekstikast:
         # Nupp tajumaks, kas hakata kirjutama
         prio = olek.nuppudePrioriteedid["tekstikast"]
         
-        def tühiF(): pass
-        self.lõpetaKõigiKirjutamine = tühiF
+        #def tühiF(): pass
+
         def f1(): 
-            self.lõpetaKõigiKirjutamine()
             self.kasKirjutamine = True
             if self.olek.tegevuseNäitamine == True: print("Ühte tekstikasti kirjutamine algas.")
                 
@@ -40,6 +39,12 @@ class Tekstikast:
         reavahe = olek.tekstikastiReavahe
         self.tekst.MääraReavahe(reavahe)
     
+    def AlustaKirjutamist(self):
+        self.kasKirjutamine = True
+        
+    def LõpetaKirjutamine(self):
+        self.kasKirjutamine = False
+
     def MääraKeskeleJoondus(self,väärtus:"bool"):
         self.keskeleJoondus = väärtus
         if väärtus == True: self.tekst.MääraKeskeleJoondus(True)
@@ -110,7 +115,6 @@ class Tekstikast:
 
 
 
-
 class SelgitavTekstikast:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
         # Tüüpilised omadused:
@@ -119,10 +123,9 @@ class SelgitavTekstikast:
         self.suurus = (100,100)
         self.asukoht = (0,0)
         
-        self.veakontrolliFunktsioon = 0
-        
         # Eriomadused:
         self.keskeleJoondus = False
+        self.kasSelgitusKastiSees = False
         
         # Pealkirja tekst
         font = olek.sündmuseLisamiseInfoKirjaFont
@@ -131,8 +134,11 @@ class SelgitavTekstikast:
         self.tekst.MääraReavahe(reavahe)
         
         # Tekstikast
+        self.veakontrolliFunktsioon = 0
         self.kast = Tekstikast(olek, pind)
     
+    def MääraNupuF(self, funktsioon):
+        self.kast.nupp.funktsioon = funktsioon
 
     def MääraVeaKontrolliFunktsioon(self, f1):
         self.veakontrolliFunktsioon = f1
@@ -155,22 +161,47 @@ class SelgitavTekstikast:
 
     def Joonista(self):
         # Teksti asukoht
-        self.tekst.MääraLaius(self.suurus[0])
-        suurx = self.tekst.VõtaLaius()
+        # Teksti laius
+        laius = self.suurus[0]
+        if self.kasSelgitusKastiSees == True:
+            laius = self.suurus[0]*0.9
+        # Teksti y asukoht
         asuky = self.asukoht[1]
+        if self.kasSelgitusKastiSees == True:
+            asuky = self.asukoht[1] + 15
+        # Teksti x asukoht
         asukx = self.asukoht[0]
         if self.keskeleJoondus == True:
             asukx = self.asukoht[0]
+        # Objketile asukoha andmine
+        self.tekst.MääraLaius(laius)
         self.tekst.MääraAsukoht((asukx, asuky))
-        self.tekst.Joonista()
+        # Ei joonista selgitust ss kui see on tekstikasti sees ja kasutaja on midagi kirjutanud tekstikasti sisse.
+        if self.kasSelgitusKastiSees == True and self.kast.valmisTekst != "":
+            pass
+        else:
+            self.tekst.Joonista()
         
         # Kasti asukoht
+        # Kasti x asukoht
         asukx = self.asukoht[0]
+        # Kasti y asukoht
         asuky = self.asukoht[1] + self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist
+        if self.kasSelgitusKastiSees:
+            asuky = self.asukoht[1]
+        # Tekstikasti laius
         suurx = self.suurus[0]
         self.kast.MääraAsukoht((asukx, asuky))
         self.kast.MääraSuurus((suurx, 200))
         self.kast.Joonista()
+        
+    def MääraSelgitusKastiSees(self,väärtus):
+        # Teeb selgitava teksti heledamaks, kui see peab olema kasti sees. Nii on ilusam.
+        if väärtus == True:
+            self.tekst.MääraVärv((100,100,100,255))
+        else:
+            self.tekst.MääraVärv((0,0,0,255))
+        self.kasSelgitusKastiSees = väärtus
         
     def MääraAsukoht(self, asukoht):
         self.asukoht = asukoht
@@ -183,3 +214,5 @@ class SelgitavTekstikast:
         
     def VõtaTekst(self):
         return self.kast.valmisTekst
+    
+
