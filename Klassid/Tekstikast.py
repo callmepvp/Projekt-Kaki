@@ -24,7 +24,8 @@ class Tekstikast:
         #def tühiF(): pass
 
         def f1(): 
-            self.kasKirjutamine = True
+            self.LõpetaKõigiKirjutamine()
+            self.AlustaKirjutamist()
             if self.olek.tegevuseNäitamine == True: print("Ühte tekstikasti kirjutamine algas.")
                 
         self.nupp = NupuAlus(olek, prio, f1)
@@ -44,6 +45,9 @@ class Tekstikast:
         
     def LõpetaKirjutamine(self):
         self.kasKirjutamine = False
+
+    def LõpetaKõigiKirjutamine(self):
+        pass
 
     def MääraKeskeleJoondus(self,väärtus:"bool"):
         self.keskeleJoondus = väärtus
@@ -177,7 +181,7 @@ class SelgitavTekstikast:
         self.tekst.MääraLaius(laius)
         self.tekst.MääraAsukoht((asukx, asuky))
         # Ei joonista selgitust ss kui see on tekstikasti sees ja kasutaja on midagi kirjutanud tekstikasti sisse.
-        if self.kasSelgitusKastiSees == True and self.kast.valmisTekst != "":
+        if self.kasSelgitusKastiSees == True and self.kast.tekst.tekst != "":
             pass
         else:
             self.tekst.Joonista()

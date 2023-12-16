@@ -23,7 +23,7 @@ class KuupäevaKüsija:
         # Päevakast
         self.pKast = SelgitavTekstikast(olek, pind)
         def pNupuF():
-            self.LõpetaKirjutamine()
+            self.LõpetaKõigiKirjutamine()
             self.pKast.kast.AlustaKirjutamist()
         self.pKast.MääraNupuF(pNupuF)
         self.pKast.tekst.MääraRidadeArv(1)
@@ -35,7 +35,7 @@ class KuupäevaKüsija:
         # Kuukast
         self.kKast = SelgitavTekstikast(olek, pind)
         def kNupuF():
-            self.LõpetaKirjutamine()
+            self.LõpetaKõigiKirjutamine()
             self.kKast.kast.AlustaKirjutamist()
         self.kKast.MääraNupuF(kNupuF)
         self.kKast.tekst.MääraRidadeArv(1)
@@ -47,7 +47,7 @@ class KuupäevaKüsija:
         # Aastakast
         self.aKast = SelgitavTekstikast(olek, pind)
         def aNupuF():
-            self.LõpetaKirjutamine()
+            self.LõpetaKõigiKirjutamine()
             self.aKast.kast.AlustaKirjutamist()
         self.aKast.MääraNupuF(aNupuF)
         self.aKast.tekst.MääraRidadeArv(1)
@@ -56,13 +56,23 @@ class KuupäevaKüsija:
         self.aKast.MääraKeskeleJoondus(True)
         self.aKast.MääraSelgitusKastiSees(True)
         
+    # Kirjutamise lõpetamise funktsioon. See funktsioon lõpetab selle objekti asjade kirjutamise.
+    def LõpetaKirjutamine(self):
+        self.pKast.kast.LõpetaKirjutamine()
+        self.kKast.kast.LõpetaKirjutamine()
+        self.aKast.kast.LõpetaKirjutamine()
+
+    def LõpetaKõigiKirjutamine(self):
+        pass
+
+
     def PaneValmis(self):
         kastideVahe = self.suurus[0] * 0.05
         kastiLaius = (self.suurus[0] - 2*kastideVahe)/3
         asuky = self.asukoht[1]
 
         # Päevakast
-        asukx = self.asukoht[0] + kastiLaius
+        asukx = self.asukoht[0] + kastiLaius/2
         self.pKast.MääraAsukoht((asukx, asuky))
         self.pKast.MääraSuurus((kastiLaius,0))
         
@@ -75,11 +85,6 @@ class KuupäevaKüsija:
         asukx = asukx + kastiLaius + kastideVahe
         self.aKast.MääraAsukoht((asukx, asuky))
         self.aKast.MääraSuurus((kastiLaius,0))
-        
-    def LõpetaKirjutamine(self):
-        self.pKast.kast.LõpetaKirjutamine()
-        self.kKast.kast.LõpetaKirjutamine()
-        self.aKast.kast.LõpetaKirjutamine()
 
     def Joonista(self):
         self.pKast.Joonista()

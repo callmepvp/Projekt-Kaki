@@ -65,12 +65,6 @@ class Programm:
         
         vaade = DetailsemVaade(ekraan, self.olek)
         
-        f = KuupäevaKüsija(self.olek, ekraan)
-
-        def fnn():
-            print("s")
-
-        nup = NupuAlus(self.olek, 100, fnn)
 
         def JoonistaAsjad():
             for i in self.olek.pygameEvents:
@@ -144,13 +138,10 @@ class Programm:
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
-                
-            f.MääraAsukoht((20,20))
-            f.MääraSuurus((ekrLai*0.4, 100))
-            f.PaneValmis()
-            f.Joonista()
             
-            print(self.olek.aktiivsedNupud)
+            
+            nuppe = len(self.olek.aktiivsedNupud)
+            print((nuppe-1)*'––'+str(nuppe))
             pygame.display.flip()
 
             
