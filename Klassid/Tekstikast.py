@@ -203,6 +203,7 @@ class SelgitavTekstikast:
         # Teeb selgitava teksti heledamaks, kui see peab olema kasti sees. Nii on ilusam.
         if väärtus == True:
             self.tekst.MääraVärv((100,100,100,255))
+            self.tekst.MääraRidadeArv(1)
         else:
             self.tekst.MääraVärv((0,0,0,255))
         self.kasSelgitusKastiSees = väärtus

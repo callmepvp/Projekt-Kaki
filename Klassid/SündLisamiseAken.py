@@ -8,7 +8,7 @@ from Klassid.Tekstikast import SelgitavTekstikast
 from typing import List
 from Klassid.Sündmus import Sündmus
 from Funktsioonid.UtilityFunktsioonid import GenereeriID
-from Klassid.KuupäevaKüsija import KuupäevaKüsija
+from Klassid.KuupäevaKüsija import KellaajaKüsija, KuupäevaKüsija
 
 
 
@@ -36,6 +36,7 @@ class SündmuseLisamiseAken:
         # Nime kirjeldustekst
         font = olek.sündmuseLisamiseInfoKirjaFont
         self.nimeKirjeldus = MitmeReaTekst(self.olek, self.pind, "Uue sündmuse kirjeldus:", font)
+        self.nimeKirjeldus.MääraReavahe(10)
 
         # Nime küsimise tekstikast
         self.nimeKast = SelgitavTekstikast(olek, pind)
@@ -49,16 +50,13 @@ class SündmuseLisamiseAken:
 
         # Kuupäeva küsija
         self.kpKüsija = KuupäevaKüsija(self.olek, self.pind)
-
-        # Algusaja tunni kast
-        self.algTunniKast = SelgitavTekstikast(olek, pind)
-        self.algTunniKast.MääraSõnum("Tund:")
-        self.algTunniKast.MääraKeskeleJoondus(True)
         
-        # Algusaja minuti kast
-        self.algMinutiKast = SelgitavTekstikast(olek, pind)
-        self.algMinutiKast.MääraSõnum("Minut:")
-        self.algMinutiKast.MääraKeskeleJoondus(True)
+        # alguskellaja küsija kirjeldus
+        self.algKellaKirjeldus = MitmeReaTekst(self.olek, self.pind, "Sündmuse alguskellaaeg:", font)
+
+        # alguskellaaja küsija
+        self.algKellaKüsija = KellaajaKüsija(self.olek, self.pind)
+        
 
         # Tausta nupp
         def f1(): pass
@@ -69,6 +67,7 @@ class SündmuseLisamiseAken:
         self.nupp.funktsioon = self.LõpetaKirjutamine
         self.kpKüsija.LõpetaKõigiKirjutamine = self.LõpetaKirjutamine
         self.nimeKast.kast.LõpetaKõigiKirjutamine = self.LõpetaKirjutamine
+        self.algKellaKüsija.LõpetaKõigiKirjutamine = self.LõpetaKirjutamine
 
 
 
@@ -106,6 +105,7 @@ class SündmuseLisamiseAken:
     def LõpetaKirjutamine(self):
         self.kpKüsija.LõpetaKirjutamine()
         self.nimeKast.kast.LõpetaKirjutamine()
+        self.algKellaKüsija.LõpetaKirjutamine()
 
     # Juhuks, kui on plaanis lisada kusagile tekstikaste väljaspool seda objekti nii, et selles objektis kirjutamise alustamine peaks lõpetama obj välise kitjuamise. Kui midagi sellist lisandub, ss seal, kus on selle objekti asjade kirjutamise lõpetamise funktsioon, tuleb määrata LõpetaKõigiKirjutamise funktsioon alamobjketide funktsiooniks. Lihtsalt 
     def LõpetaKõigiKirjutamine(self): pass
@@ -154,28 +154,27 @@ class SündmuseLisamiseAken:
         self.algKuupKirjeldus.Joonista()
 
         # Kuupäevaküsija
-        asuky = asuky + self.nimeKirjeldus.KuiPaljuRuumiOnVaja() + 20
+        asuky = asuky + self.algKuupKirjeldus.KuiPaljuRuumiOnVaja() + 20
         self.kpKüsija.MääraAsukoht((asukx, asuky))
         self.kpKüsija.MääraSuurus((suurx, 100))
         self.kpKüsija.PaneValmis()
         self.kpKüsija.Joonista()
+        
+        # Kellaaja kirjeldus
+        asuky = asuky + self.kpKüsija.VõtaSuurus()[1] + 20
+        self.algKellaKirjeldus.MääraAsukoht((asukx, asuky))
+        self.algKellaKirjeldus.MääraLaius(suurx)
+        self.algKellaKirjeldus.Joonista()
+        
+        # Algkellaküsija
+        asuky = asuky + self.algKellaKirjeldus.KuiPaljuRuumiOnVaja() + 20
+        self.algKellaKüsija.MääraAsukoht((asukx, asuky))
+        self.algKellaKüsija.MääraSuurus((suurx, 1000))
+        self.algKellaKüsija.PaneValmis()
+        self.algKellaKüsija.Joonista()
+        
 
-        # KELLAAJA KASTIDE PAIGUTAMINE
-        # Üldised kellaaja kastide paigutamiseks vajalikud asukohad
-        asuky = 300
-        laiused = 100
-        # Tunnikast:
-        asukx = (self.asukoht[0] + self.suurus[0] / 2) + self.suurus[0]*0.11
-        self.algTunniKast.MääraAsukoht((asukx,asuky))
-        self.algTunniKast.MääraSuurus((laiused, None))
-        self.algTunniKast.Joonista()
-        
-        # Päevakast:
-        asukx = (self.asukoht[0] + self.suurus[0] / 2) - self.suurus[0]*0.11
-        self.algMinutiKast.MääraAsukoht((asukx, asuky))
-        self.algMinutiKast.MääraSuurus((laiused, None))
-        self.algMinutiKast.Joonista()
-        
+
         
 
         
