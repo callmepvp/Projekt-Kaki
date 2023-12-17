@@ -11,14 +11,6 @@ class KuupäevaKüsija:
         self.suurus = (100,100)
         self.asukoht = (0,0)
         
-        # Veakontrollifunktsioon
-        def intKontroll(a):
-            try:
-                int(a)
-                return True
-            except:
-                return False
-        
         # Alamobjektid
         # Päevakast
         self.pKast = SelgitavTekstikast(olek, pind)
@@ -27,7 +19,6 @@ class KuupäevaKüsija:
             self.pKast.kast.AlustaKirjutamist()
         self.pKast.MääraNupuF(pNupuF)
         self.pKast.tekst.MääraRidadeArv(1)
-        self.pKast.MääraVeaKontrolliFunktsioon(intKontroll)
         self.pKast.MääraSõnum("Päev:")
         self.pKast.MääraKeskeleJoondus(True)
         self.pKast.MääraSelgitusKastiSees(True)
@@ -39,7 +30,6 @@ class KuupäevaKüsija:
             self.kKast.kast.AlustaKirjutamist()
         self.kKast.MääraNupuF(kNupuF)
         self.kKast.tekst.MääraRidadeArv(1)
-        self.kKast.MääraVeaKontrolliFunktsioon(intKontroll)
         self.kKast.MääraSõnum("Kuu:")
         self.kKast.MääraKeskeleJoondus(True)
         self.kKast.MääraSelgitusKastiSees(True)
@@ -51,7 +41,6 @@ class KuupäevaKüsija:
             self.aKast.kast.AlustaKirjutamist()
         self.aKast.MääraNupuF(aNupuF)
         self.aKast.tekst.MääraRidadeArv(1)
-        self.aKast.MääraVeaKontrolliFunktsioon(intKontroll)
         self.aKast.MääraSõnum("Aasta:")
         self.aKast.MääraKeskeleJoondus(True)
         self.aKast.MääraSelgitusKastiSees(True)

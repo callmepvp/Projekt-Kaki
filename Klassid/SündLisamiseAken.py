@@ -8,6 +8,7 @@ from Klassid.Tekstikast import SelgitavTekstikast
 from typing import List
 from Klassid.Sündmus import Sündmus
 from Funktsioonid.UtilityFunktsioonid import GenereeriID
+from Klassid.KuupäevaKüsija import KuupäevaKüsija
 
 
 
@@ -42,7 +43,9 @@ class SündmuseLisamiseAken:
                 return True
             except:
                 return False
-            
+        
+        self.algKuupKüsija = KuupäevaKüsija(self.olek, self.pind)
+
 
         # Päeva küsimise tekstikast
         self.päevaKast = SelgitavTekstikast(olek, pind)
@@ -146,6 +149,13 @@ class SündmuseLisamiseAken:
         self.taust2.MääraSuurus(suur[0], suur[1])
         self.taust2.Joonista()
 
+        
+        asukx = self.asukoht[0] + self.suurus[0] * 0.1
+        asuky = self.asukoht[1] + 300
+        self.algKuupKüsija.MääraAsukoht((asukx, asuky))
+        self.algKuupKüsija.MääraSuurus((300,100))
+        self.algKuupKüsija.Joonista()
+        
         
         # Tekstikast
         servadest = self.suurus[0]*0.1
