@@ -106,7 +106,17 @@ class Programm:
                 ruudustik.VärskendaRuute()
                 ruudustik.Joonista()
             
-            
+            #live kellaaeg
+            asuky = ruudustik.asukoht[1]
+            if len(self.olek.sündmusteNimekiri) == 0:
+                asuky = (aknaSuur[1] - (aknaSuur[1] - a.asukoht[1]))/2
+
+            asukx = aknaSuur[0]/2
+            kell = datetime.datetime.now().strftime("%m.%d.%Y / %H:%M:%S")
+            ajanäit.MääraLaius(ekrLai)
+            ajanäit.MääraRead([kell])
+            ajanäit.MääraAsukoht((asukx, asuky))
+            ajanäit.Joonista()
 
             nupuAsukx = aknaSuur[0] * 0.3
             nupuAsuky = aknaSuur[1] * 0.75
@@ -149,18 +159,6 @@ class Programm:
             
 
             nuppe = len(self.olek.aktiivsedNupud)
-            
-            #live kellaaeg
-            asuky = ruudustik.asukoht[1]
-            if asuky == 0:
-                asuky = (aknaSuur[1] - (aknaSuur[1] - a.asukoht[1]))/2
-
-            asukx = aknaSuur[0]/2
-            kell = datetime.datetime.now().strftime("%m.%d.%Y / %H:%M:%S")
-            ajanäit.MääraLaius(ekrLai)
-            ajanäit.MääraRead([kell])
-            ajanäit.MääraAsukoht((asukx, asuky))
-            ajanäit.Joonista()
             #print((nuppe-1)*'––'+str(nuppe))
 
 
