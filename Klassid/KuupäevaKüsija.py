@@ -1,7 +1,7 @@
 ﻿import pygame
 from Klassid.Tekstikast import SelgitavTekstikast
 from Programmiolek import ProgrammiOlek
-from Klassid.Kuupäev import Kuupäev
+from Klassid.Kuupäev import Kellaaeg, Kuupäev
 
 class KuupäevaKüsija:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
@@ -192,3 +192,11 @@ class KellaajaKüsija:
         suurx = self.suurus[0]
         suury = max(self.tunniKast.VõtaSuurus()[1], self.minutiKast.VõtaSuurus()[1])
         return (suurx, suury)
+    
+    def VõtaKellaaeg(self):
+        tund = self.tunniKast.VõtaTekst()
+        minut = self.minutiKast.VõtaTekst()
+        kell = Kellaaeg(tund, minut)
+        if kell.KasVõimalik() == True:
+            return kell
+        return None

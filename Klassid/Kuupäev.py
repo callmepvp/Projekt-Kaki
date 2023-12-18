@@ -108,10 +108,17 @@ class Kellaaeg:
         self.tund = tund
         self.minut = minut
 
-    def KasOnKell(self):
-        if self.tund == None or self.minut == None:
+    def KasVõimalik(self):
+        try: self.tund = int(self.tund)
+        except: return False
+        try: self.minut = int(self.minut)
+        except: return False
+        if self.tund < 0 or self.tund > 23:
+            return False
+        if self.minut < 0 or self.minut > 59:
             return False
         return True
+            
 
     def VõtaStringina(self):
         minutitekst = str(self.minut)

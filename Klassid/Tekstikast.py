@@ -160,7 +160,7 @@ class SelgitavTekstikast:
 
     def VõtaSuurus(self):
         suurx = self.suurus[0]
-        suury = self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1]
+        suury = self.tekst.KuiPaljuRuumiOnVaja() + (not self.kasSelgitusKastiSees)* self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1]
         return (suurx,suury)
 
     def Joonista(self):

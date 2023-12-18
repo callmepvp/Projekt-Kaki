@@ -3,7 +3,7 @@ import win32gui
 import win32con
 from Klassid.Kujundid import Ristkülik
 from Klassid.Tekst import MitmeReaTekst
-from Klassid.Tekstikast import SelgitavTekstikast
+from Klassid.Tekstikast import SelgitavTekstikast, Tekstikast
 from Klassid.Tekstikujundid import PäevaRuudustik, SündmuseRida
 from Programmiolek import ProgrammiOlek
 from Klassid.Kuupäev import Kuupäev
@@ -61,6 +61,9 @@ class Programm:
         a = LisaSündmuseNupp(self.olek, ekraan)
         
         b = SündmuseLisamiseAken(self.olek, ekraan)
+        
+        
+        
 
         
         vaade = DetailsemVaade(ekraan, self.olek)
@@ -140,6 +143,8 @@ class Programm:
                 b.Joonista()
             
             
+            
+
             nuppe = len(self.olek.aktiivsedNupud)
             print((nuppe-1)*'––'+str(nuppe))
             pygame.display.flip()
