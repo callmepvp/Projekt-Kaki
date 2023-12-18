@@ -14,6 +14,7 @@ from Klassid.DetailsemVaade import DetailsemVaade, DetailsemaVaateInfoväli, Det
 from Klassid.SündLisamiseAken import SündmuseLisamiseAken
 import math
 from Klassid.KuupäevaKüsija import KuupäevaKüsija
+import datetime
   
 
 #See on klass, mis luuakse main functionis. Kuna sellel klassil on ainult üks funktsioon, siis tehniliselt see klass võiks ka samahästi mitte klass olla, vaid lihtsalt see funktsioon olla
@@ -67,7 +68,9 @@ class Programm:
 
         
         vaade = DetailsemVaade(ekraan, self.olek)
-        
+        kell = datetime.datetime.now().strftime("%m.%d.%Y / %H:%M:%S")
+        ajanäit = MitmeReaTekst(self.olek, ekraan, kell, self.olek.päevaruuduPealkKpPygFont)
+        ajanäit.MääraKeskeleJoondus(True)
 
         def JoonistaAsjad():
             for i in self.olek.pygameEvents:
@@ -146,7 +149,23 @@ class Programm:
             
 
             nuppe = len(self.olek.aktiivsedNupud)
-            print((nuppe-1)*'––'+str(nuppe))
+            
+            #live kellaaeg
+            asuky = ruudustik.asukoht[1]
+            if asuky == 0:
+                asuky = (aknaSuur[1] - (aknaSuur[1] - a.asukoht[1]))/2
+
+            asukx = aknaSuur[0]/2
+            kell = datetime.datetime.now().strftime("%m.%d.%Y / %H:%M:%S")
+            ajanäit.MääraLaius(ekrLai)
+            ajanäit.MääraRead([kell])
+            ajanäit.MääraAsukoht((asukx, asuky))
+            ajanäit.Joonista()
+            #print((nuppe-1)*'––'+str(nuppe))
+
+
+
+
             pygame.display.flip()
 
             

@@ -161,6 +161,24 @@ def SalvestaOlek(Olek):
             print(f"Salvestan sündmuse ID'ga {sündmus['id']}")
             failiSündmused[sündmus['id']] = sündmus
 
+    #kontrolli eemaldatud sündmusi
+    olemasolevadID = set()
+    kõikID = set()
+    for k, v in failiSündmused.items():
+        for sündmus in sündmusteSõnastikud:
+            if str(k) == str(sündmus['id']):
+                olemasolevadID.add(k)
+                break
+
+        kõikID.add(k)
+        
+    sündmusedVajaEemaldada = kõikID - olemasolevadID
+    if len(olemasolevadID) != len(failiSündmused):
+
+        #on toimunud sündmuste eemaldamine ning peab midagi failis muutma
+        for el in sündmusedVajaEemaldada:
+            del failiSündmused[el]
+
     programmiInfo['sündmused'] = failiSündmused
 
     with open(dataFileDirectory, "w", encoding="utf-8") as fail:
