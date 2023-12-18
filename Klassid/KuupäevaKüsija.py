@@ -188,4 +188,7 @@ class KellaajaKüsija:
     def MääraSuurus(self, suurus):
         self.suurus = suurus
         
-        
+    def VõtaSuurus(self):
+        suurx = self.suurus[0]
+        suury = max(self.tunniKast.VõtaSuurus()[1], self.minutiKast.VõtaSuurus()[1])
+        return (suurx, suury)

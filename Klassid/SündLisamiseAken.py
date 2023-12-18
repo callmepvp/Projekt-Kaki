@@ -57,6 +57,19 @@ class SündmuseLisamiseAken:
         # alguskellaaja küsija
         self.algKellaKüsija = KellaajaKüsija(self.olek, self.pind)
         
+        # Lõppkuuppäeva kirjeldus
+        self.lõppKuupKirjeldus = MitmeReaTekst(self.olek, self.pind, "Sündmuse lõppkuupäev:", font)
+
+        # Lõppkuupäeva küsija
+        self.lõppKpKüsija = KuupäevaKüsija(self.olek, self.pind)
+
+        # Lõppkellaaja kirjeldus
+        self.lõppKellaKirjeldus = MitmeReaTekst(self.olek, self.pind, "Sündmuse lõppkellaaeg:", font)
+
+        # alguskellaaja küsija
+        self.lõppKellaKüsija = KellaajaKüsija(self.olek, self.pind)
+        
+        # 
 
         # Tausta nupp
         def f1(): pass
@@ -160,7 +173,7 @@ class SündmuseLisamiseAken:
         self.kpKüsija.PaneValmis()
         self.kpKüsija.Joonista()
         
-        # Kellaaja kirjeldus
+        # Alguskellaaja kirjeldus
         asuky = asuky + self.kpKüsija.VõtaSuurus()[1] + 20
         self.algKellaKirjeldus.MääraAsukoht((asukx, asuky))
         self.algKellaKirjeldus.MääraLaius(suurx)
@@ -172,6 +185,32 @@ class SündmuseLisamiseAken:
         self.algKellaKüsija.MääraSuurus((suurx, 1000))
         self.algKellaKüsija.PaneValmis()
         self.algKellaKüsija.Joonista()
+        
+        # Lõppkuupäeva kirjeldus
+        asuky = asuky + self.algKellaKüsija.VõtaSuurus()[1] + 20
+        self.lõppKuupKirjeldus.MääraAsukoht((asukx, asuky))
+        self.lõppKuupKirjeldus.MääraLaius(suurx)
+        self.lõppKuupKirjeldus.Joonista()
+
+        # Lõppkuupäevaküsija
+        asuky = asuky + self.algKuupKirjeldus.KuiPaljuRuumiOnVaja() + 20
+        self.lõppKpKüsija.MääraAsukoht((asukx, asuky))
+        self.lõppKpKüsija.MääraSuurus((suurx, 100))
+        self.lõppKpKüsija.PaneValmis()
+        self.lõppKpKüsija.Joonista()
+        
+        # Lõppkellaaja kirjeldus
+        asuky = asuky + self.algKellaKüsija.VõtaSuurus()[1] + 20
+        self.lõppKellaKirjeldus.MääraAsukoht((asukx, asuky))
+        self.lõppKellaKirjeldus.MääraLaius(suurx)
+        self.lõppKellaKirjeldus.Joonista()
+        
+        # Lõppkella küsija
+        asuky = asuky + self.lõppKellaKirjeldus.KuiPaljuRuumiOnVaja() + 20
+        self.lõppKellaKüsija.MääraAsukoht((asukx, asuky))
+        self.lõppKellaKüsija.MääraSuurus((suurx, 1000))
+        self.lõppKellaKüsija.PaneValmis()
+        self.lõppKellaKüsija.Joonista()
         
 
 
