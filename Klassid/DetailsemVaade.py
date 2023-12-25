@@ -85,12 +85,12 @@ class DetailsemVaade:
         tagumiseTaustaY = self.asukoht[1] - taustaÄäreLaius
         tagumiseSuurusX = self.suurus[0] + 2*taustaÄäreLaius
         tagumiseSuurusY = self.suurus[1] + 2*taustaÄäreLaius
-        self.tagumineTaust.MääraAsukoht(tagumiseTaustaX, tagumiseTaustaY)
-        self.tagumineTaust.MääraSuurus(tagumiseSuurusX, tagumiseSuurusY)
+        self.tagumineTaust.MääraAsukoht((tagumiseTaustaX, tagumiseTaustaY))
+        self.tagumineTaust.MääraSuurus((tagumiseSuurusX, tagumiseSuurusY))
         self.tagumineTaust.Joonista()
 
-        self.taust.MääraAsukoht(self.asukoht[0], self.asukoht[1])
-        self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
+        self.taust.MääraAsukoht(self.asukoht)
+        self.taust.MääraSuurus(self.suurus)
         self.taust.Joonista()
 
 
@@ -268,8 +268,8 @@ class DetailsemaVaateSündmus:
         self.nupuAlus.TegeleNupuga()
 
         self.nupuRect.MääraVärv(self.värvid[self.nupuAlus.VõtaOlek()])
-        self.nupuRect.MääraSuurus(nupuSuurusX, nupuSuurusY)
-        self.nupuRect.MääraAsukoht(nupuAsukohtX, nupuAsukohtY)
+        self.nupuRect.MääraSuurus((nupuSuurusX, nupuSuurusY))
+        self.nupuRect.MääraAsukoht((nupuAsukohtX, nupuAsukohtY))
         self.nupuRect.Joonista()
         
 

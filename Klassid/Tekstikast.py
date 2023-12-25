@@ -98,8 +98,8 @@ class Tekstikast:
         if olek == 0: self.raam.MääraVärv(self.olek.tekstikastiTavalineVärv)
         if olek == 1: self.raam.MääraVärv(self.olek.tekstikastiHelendavVärv)
         if olek == 2: self.raam.MääraVärv(self.olek.tekstikastiVajutatudVärv)
-        self.raam.MääraAsukoht(asukx, asuky)
-        self.raam.MääraSuurus(suurx, suury)
+        self.raam.MääraAsukoht((asukx, asuky))
+        self.raam.MääraSuurus((suurx, suury))
         self.raam.Joonista()
         
         # Teksti paigutus

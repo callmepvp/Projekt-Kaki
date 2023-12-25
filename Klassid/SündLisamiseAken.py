@@ -231,18 +231,17 @@ class SündmuseLisamiseAken:
         self.looSündmusNupp.MääraSuurus((suurx, suury))
         
         # Taustade suurused
-        asuk = self.asukoht
         suurx = self.suurus[0]
         suury = asuky - self.asukoht[1] + self.lõppKellaKüsija.VõtaSuurus()[1] + 20
-        self.taust.MääraAsukoht(asuk[0], asuk[1])
-        self.taust.MääraSuurus(suurx, suury)
+        self.taust.MääraAsukoht(self.asukoht)
+        self.taust.MääraSuurus((suurx, suury))
         
         vahe = self.olek.sündmuseLisamiseHeledamaTaustaVahe
         suurx = suurx - 2*vahe
         suury = suury - 2*vahe
         asuk = (self.asukoht[0] + vahe, self.asukoht[1] + vahe)
-        self.taust2.MääraAsukoht(asuk[0], asuk[1])
-        self.taust2.MääraSuurus(suurx, suury)
+        self.taust2.MääraAsukoht(asuk)
+        self.taust2.MääraSuurus((suurx, suury))
 
 
     def MääraAsukoht(self, asukoht):

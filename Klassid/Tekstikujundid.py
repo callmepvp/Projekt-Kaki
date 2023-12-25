@@ -1,9 +1,8 @@
-﻿from ctypes.wintypes import HHOOK
-import pygame
+﻿import pygame
 from Klassid.Kujundid import Ristkülik
 from Klassid.Tekst import MitmeReaTekst, Tekst
 from Klassid.Sündmus import Sündmus
-from math import e, floor
+from math import floor
 from typing import List
 from Programmiolek import ProgrammiOlek
 from Klassid.Kuupäev import Kuupäev
@@ -201,8 +200,9 @@ class PäevaRuut:
             self.värv = MuudaHeledust(-50, origVärv)
         
         # Päevaruudu taust
-        self.taust.MääraAsukoht(self.asuk[0], self.asuk[1])
-        self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
+        print(self.asuk)
+        self.taust.MääraAsukoht(self.asuk)
+        self.taust.MääraSuurus(self.suurus)
         self.taust.MääraVärv(self.värv)
         self.taust.Joonista()
 
@@ -263,8 +263,8 @@ class FakePäevaRuut:
     def Joonista(self):
         #self.nupp.TegeleNupuga()
         
-        self.taust.MääraSuurus(self.suurus[0], self.suurus[1])
-        self.taust.MääraAsukoht(self.asukoht[0], self.asukoht[1])
+        self.taust.MääraSuurus(self.suurus)
+        self.taust.MääraAsukoht(self.asukoht)
         self.taust.Joonista()
         #self.nupp.Joonista(self.pind)
         
@@ -509,15 +509,7 @@ class PäevaRuudustik:
         # Ruudud
         for i in self.päevaRuudud:
             i.Joonista()
-        
 
-        for i in self.päevaRuudud:
-            if i.nupp.olek == 1 or i.nupp.olek == 2:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_HAND)
-                break
-            else:
-                pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
-                
         for i in fakeRuudud:
             i.Joonista()
             
