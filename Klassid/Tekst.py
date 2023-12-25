@@ -1,6 +1,7 @@
 ﻿import pygame
 import os
 
+from Klassid.ObjektiAlus import ObjektiAlus
 from Programmiolek import ProgrammiOlek
 
 
@@ -49,12 +50,12 @@ def MituRidaOnVaja(tekst, font, laius):
 
 
 
-class Tekst:
+class Tekst(ObjektiAlus):
 
-    def __init__(self, pind, tekst, pygFont:pygame.font.Font, värv=(255,0,0)):
+    def __init__(self, pind, tekst, pygFont:"pygame.font.Font", värv=(255,0,0)):
+        super().__init__()
         self.pygFont = pygFont
         self.pind = pind
-        self.asuk = (0,0)
         self.tekst = tekst
         self.värv = värv
     
@@ -64,23 +65,18 @@ class Tekst:
         
         # Oke, see on scuffed ja töötab kindlalt ainult selle fondiga. 0.22 on silma järgi valitud, aga see arv aitab teha nii, et tekst joonistuks valitud kohta täpselt nii, et väiketähe kõrguse keskkoht oleks soovitud kõrgusel. Keskkoht selle pärast, et ss on bullet pointe lihtsam joondada. Seda peaks vist täiendama, kui on vaja kirjutada mitmerealine tekst. Scuffed on veel see, et height on fontide terminoloogias väiketähe kõrgus, aga siin imo on vahemik nt j tähe langusest l tähe tõusuni, seega u 2x väiketähe kõrgus.
         poolVäiketäheKõrgus = self.pygFont.get_height()*0.22
-        
-        tekstiAsuk = (self.asuk[0], self.asuk[1]-suurtäheKõrgus + poolVäiketäheKõrgus)
-
+        tekstiAsuk = (self.asukoht[0], self.asukoht[1]-suurtäheKõrgus + poolVäiketäheKõrgus)
         img = self.pygFont.render(self.tekst, True, self.värv)
         self.pind.blit(img, tekstiAsuk)
 
-
-    def MääraAsukoht(self, asuk):
-        self.asuk = asuk
 
     def MääraTekst(self, tekst):
         self.tekst = tekst
         
     # Annab teksti laiuse
-    def VõtaLaius(self):
-        laius = self.pygFont.size(self.tekst)[0]
-        return laius
+    def VõtaSuurus(self):
+        self.suurus = (self.pygFont.size(self.tekst)[0], 0)
+        return self.suurus
 
 
 
@@ -143,7 +139,7 @@ class MitmeReaTekst:
             counter = 0
             for i in read:
                 tekst = Tekst(self.pind, i, self.font, self.värv)
-                laius = tekst.VõtaLaius()
+                laius = tekst.VõtaSuurus()[0]
                 asukx = self.asukoht[0] - laius/2
                 asuky = self.asukoht[1] + counter * self.reavahe
                 tekst.MääraAsukoht((asukx, asuky))

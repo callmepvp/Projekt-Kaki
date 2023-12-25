@@ -6,6 +6,7 @@ from Klassid.ObjektiAlus import ObjektiAlus
 # Klass, mille mõte on joonsitada ekraanile ristkülikut.
 class Ristkülik(ObjektiAlus):
     def __init__(self, pind):
+        super().__init__()
         self.pind = pind
         self.värv = (200, 200, 200, 255)
         self.raamiPaksus = 0
