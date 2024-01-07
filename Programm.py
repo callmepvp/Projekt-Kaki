@@ -3,7 +3,7 @@ import win32gui
 import win32con
 from Klassid.Kujundid import Ristkülik
 from Klassid.Tekst import MitmeReaTekst
-from Klassid.Tekstikast import SelgitavTekstikast
+from Klassid.Tekstikast import SelgitavTekstikast, Tekstikast
 from Klassid.Tekstikujundid import PäevaRuudustik, SündmuseRida
 from Programmiolek import ProgrammiOlek
 from Klassid.Kuupäev import Kuupäev
@@ -14,17 +14,18 @@ from Klassid.DetailsemVaade import DetailsemVaade, DetailsemaVaateInfoväli, Det
 from Klassid.SündLisamiseAken import SündmuseLisamiseAken
 import math
 from Klassid.KuupäevaKüsija import KuupäevaKüsija
+import datetime
   
 
 #See on klass, mis luuakse main functionis. Kuna sellel klassil on ainult üks funktsioon, siis tehniliselt see klass võiks ka samahästi mitte klass olla, vaid lihtsalt see funktsioon olla
 class Programm:
     def __init__(self, olek:ProgrammiOlek):
         self.olek = olek
+        self.aegaMöödas = 0
         #print(olek.päevaruuduVärv)
         
     # Funktsioon, mis sisaldab peamist while-loopi. Selle funktsiooni sisu on see, mis ekraanil nähakse, kui programm töötab.
     def JaaaaLäks(self):
-
 
         def wndProc(oldWndProc, draw_callback, hWnd, message, wParam, lParam):
             if message == win32con.WM_SIZE:
@@ -33,6 +34,10 @@ class Programm:
             return win32gui.CallWindowProc(oldWndProc, hWnd, message, wParam, lParam)
 
         pygame.init()
+        
+        pygKell = pygame.time.Clock()   
+
+
         ekraan = pygame.display.set_mode((640, 420), pygame.RESIZABLE)
         pygame.display.set_caption('Indie kalender')
 
@@ -40,8 +45,8 @@ class Programm:
         pygameIkoon = pygame.image.load('Pildid/iconDesign.png')
         pygame.display.set_icon(pygameIkoon)
 
-        clock = pygame.time.Clock()
         
+        self.aegaMöödas = 0
         
         ruudustik = PäevaRuudustik(self.olek, ekraan)
 
@@ -61,16 +66,16 @@ class Programm:
         a = LisaSündmuseNupp(self.olek, ekraan)
         
         b = SündmuseLisamiseAken(self.olek, ekraan)
+        
+        
+        
 
         
         vaade = DetailsemVaade(ekraan, self.olek)
+        kell = datetime.datetime.now().strftime("%m.%d.%Y / %H:%M:%S")
+        ajanäit = MitmeReaTekst(self.olek, ekraan, kell, self.olek.päevaruuduPealkKpPygFont)
+        ajanäit.MääraKeskeleJoondus(True)
         
-        f = KuupäevaKüsija(self.olek, ekraan)
-
-        def fnn():
-            print("s")
-
-        nup = NupuAlus(self.olek, 100, fnn)
 
         def JoonistaAsjad():
             for i in self.olek.pygameEvents:
@@ -79,8 +84,11 @@ class Programm:
                         pass
                     else:
                         self.olek.kerimisKogus += i.y*10
+                if i.type == pygame.MOUSEMOTION:
+                    self.aegaMöödas = 0
 
             ekraan.fill((255, 255, 255, 255))
+            
             
 
             aknaSuur = ekraan.get_size()
@@ -106,10 +114,23 @@ class Programm:
                 ruudustik.VärskendaRuute()
                 ruudustik.Joonista()
             
-            
+            #live kellaaeg
+            asuky = ruudustik.asukoht[1]
+            if len(self.olek.sündmusteNimekiri) == 0:
+                asuky = (aknaSuur[1] - (aknaSuur[1] - a.asukoht[1]))/2
+                asuky = min(aknaSuur[1]/2, asuky)
+
+            asukx = aknaSuur[0]/2
+            kell = datetime.datetime.now().strftime("%m.%d.%Y / %H:%M:%S")
+            ajanäit.MääraLaius(ekrLai)
+            ajanäit.MääraRead([kell])
+            ajanäit.MääraAsukoht((asukx, asuky))
+            ajanäit.Joonista()
 
             nupuAsukx = aknaSuur[0] * 0.3
             nupuAsuky = aknaSuur[1] * 0.75
+            if self.aegaMöödas > 5000 and len(self.olek.sündmusteNimekiri) == 0:
+                nupuAsuky += ((self.aegaMöödas - 5000)/100)**2
             nupuSuurx = aknaSuur[0] - 2*nupuAsukx
             nupuSuury = aknaSuur[1] * 0.2
             a.MääraAsukoht((nupuAsukx, nupuAsuky))
@@ -144,13 +165,16 @@ class Programm:
                 b.MääraAsukoht((asukx, asuky))
                 b.MääraSuurus((suurx, suury))
                 b.Joonista()
-                
-            f.MääraAsukoht((20,20))
-            f.MääraSuurus((ekrLai*0.4, 100))
-            f.PaneValmis()
-            f.Joonista()
             
-            print(self.olek.aktiivsedNupud)
+            
+            
+
+            nuppe = len(self.olek.aktiivsedNupud)
+            #print((nuppe-1)*'––'+str(nuppe))
+
+
+
+
             pygame.display.flip()
 
             
@@ -183,9 +207,11 @@ class Programm:
             
 
             JoonistaAsjad()
-            
+            self.aegaMöödas += pygKell.get_time()
+            print(self.aegaMöödas)            
 
-            clock.tick(60)  # limits FPS to 60
+
+            pygKell.tick(60)  # limits FPS to 60
         pygame.quit()
 
         return self.olek

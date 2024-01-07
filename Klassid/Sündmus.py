@@ -50,7 +50,7 @@ class Sündmus:
         return self.algusKuupäev.VõtaKuupäev()
 
     def MääraLõppKell(self, tund, minut):
-        self.lõppKell = Kellaaeg(tund, minut)
+        self.lõppaeg = Kellaaeg(tund, minut)
 
     def KasAlgabPäeval(self, kuupäev:"Kuupäev"):
         if self.alguskuupäev.KasOnSama(kuupäev):

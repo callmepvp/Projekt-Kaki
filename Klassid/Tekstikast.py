@@ -24,7 +24,8 @@ class Tekstikast:
         #def tühiF(): pass
 
         def f1(): 
-            self.kasKirjutamine = True
+            self.LõpetaKõigiKirjutamine()
+            self.AlustaKirjutamist()
             if self.olek.tegevuseNäitamine == True: print("Ühte tekstikasti kirjutamine algas.")
                 
         self.nupp = NupuAlus(olek, prio, f1)
@@ -44,6 +45,9 @@ class Tekstikast:
         
     def LõpetaKirjutamine(self):
         self.kasKirjutamine = False
+
+    def LõpetaKõigiKirjutamine(self):
+        pass
 
     def MääraKeskeleJoondus(self,väärtus:"bool"):
         self.keskeleJoondus = väärtus
@@ -156,7 +160,7 @@ class SelgitavTekstikast:
 
     def VõtaSuurus(self):
         suurx = self.suurus[0]
-        suury = self.tekst.KuiPaljuRuumiOnVaja() + self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1]
+        suury = self.tekst.KuiPaljuRuumiOnVaja() + (not self.kasSelgitusKastiSees)* self.olek.tekstikastiSelgitusKastist + self.kast.VõtaSuurus()[1]
         return (suurx,suury)
 
     def Joonista(self):
@@ -177,7 +181,7 @@ class SelgitavTekstikast:
         self.tekst.MääraLaius(laius)
         self.tekst.MääraAsukoht((asukx, asuky))
         # Ei joonista selgitust ss kui see on tekstikasti sees ja kasutaja on midagi kirjutanud tekstikasti sisse.
-        if self.kasSelgitusKastiSees == True and self.kast.valmisTekst != "":
+        if self.kasSelgitusKastiSees == True and self.kast.tekst.tekst != "":
             pass
         else:
             self.tekst.Joonista()
@@ -199,6 +203,7 @@ class SelgitavTekstikast:
         # Teeb selgitava teksti heledamaks, kui see peab olema kasti sees. Nii on ilusam.
         if väärtus == True:
             self.tekst.MääraVärv((100,100,100,255))
+            self.tekst.MääraRidadeArv(1)
         else:
             self.tekst.MääraVärv((0,0,0,255))
         self.kasSelgitusKastiSees = väärtus

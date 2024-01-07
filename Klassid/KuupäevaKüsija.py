@@ -1,7 +1,7 @@
 ﻿import pygame
 from Klassid.Tekstikast import SelgitavTekstikast
 from Programmiolek import ProgrammiOlek
-from Klassid.Kuupäev import Kuupäev
+from Klassid.Kuupäev import Kellaaeg, Kuupäev
 
 class KuupäevaKüsija:
     def __init__(self, olek:"ProgrammiOlek", pind:"pygame.Surface"):
@@ -15,7 +15,7 @@ class KuupäevaKüsija:
         # Päevakast
         self.pKast = SelgitavTekstikast(olek, pind)
         def pNupuF():
-            self.LõpetaKirjutamine()
+            self.LõpetaKõigiKirjutamine()
             self.pKast.kast.AlustaKirjutamist()
         self.pKast.MääraNupuF(pNupuF)
         self.pKast.tekst.MääraRidadeArv(1)
@@ -26,7 +26,7 @@ class KuupäevaKüsija:
         # Kuukast
         self.kKast = SelgitavTekstikast(olek, pind)
         def kNupuF():
-            self.LõpetaKirjutamine()
+            self.LõpetaKõigiKirjutamine()
             self.kKast.kast.AlustaKirjutamist()
         self.kKast.MääraNupuF(kNupuF)
         self.kKast.tekst.MääraRidadeArv(1)
@@ -37,7 +37,7 @@ class KuupäevaKüsija:
         # Aastakast
         self.aKast = SelgitavTekstikast(olek, pind)
         def aNupuF():
-            self.LõpetaKirjutamine()
+            self.LõpetaKõigiKirjutamine()
             self.aKast.kast.AlustaKirjutamist()
         self.aKast.MääraNupuF(aNupuF)
         self.aKast.tekst.MääraRidadeArv(1)
@@ -45,13 +45,23 @@ class KuupäevaKüsija:
         self.aKast.MääraKeskeleJoondus(True)
         self.aKast.MääraSelgitusKastiSees(True)
         
+    # Kirjutamise lõpetamise funktsioon. See funktsioon lõpetab selle objekti asjade kirjutamise.
+    def LõpetaKirjutamine(self):
+        self.pKast.kast.LõpetaKirjutamine()
+        self.kKast.kast.LõpetaKirjutamine()
+        self.aKast.kast.LõpetaKirjutamine()
+
+    def LõpetaKõigiKirjutamine(self):
+        pass
+
+
     def PaneValmis(self):
         kastideVahe = self.suurus[0] * 0.05
         kastiLaius = (self.suurus[0] - 2*kastideVahe)/3
         asuky = self.asukoht[1]
 
         # Päevakast
-        asukx = self.asukoht[0] + kastiLaius
+        asukx = self.asukoht[0] + kastiLaius/2
         self.pKast.MääraAsukoht((asukx, asuky))
         self.pKast.MääraSuurus((kastiLaius,0))
         
@@ -64,11 +74,6 @@ class KuupäevaKüsija:
         asukx = asukx + kastiLaius + kastideVahe
         self.aKast.MääraAsukoht((asukx, asuky))
         self.aKast.MääraSuurus((kastiLaius,0))
-        
-    def LõpetaKirjutamine(self):
-        self.pKast.kast.LõpetaKirjutamine()
-        self.kKast.kast.LõpetaKirjutamine()
-        self.aKast.kast.LõpetaKirjutamine()
 
     def Joonista(self):
         self.pKast.Joonista()
@@ -101,3 +106,86 @@ class KuupäevaKüsija:
         
     def MääraSuurus(self, suurus):
         self.suurus = suurus
+        
+    def VõtaSuurus(self):
+        suurx = self.suurus[0]
+        suury = max(self.pKast.VõtaSuurus()[1], self.kKast.VõtaSuurus()[1], self.aKast.VõtaSuurus()[1])
+        return (suurx, suury)
+
+
+
+class KellaajaKüsija:
+    def __init__(self, olek, pind):
+        # Tavalised omadused
+        self.olek = olek
+        self.pind = pind
+        self.asukoht = (0,0)
+        self.suurus = (300,300)
+        
+        # Alamobjektid
+        self.tunniKast = SelgitavTekstikast(olek, pind)
+        def tNupuF():
+            self.LõpetaKõigiKirjutamine()
+            self.tunniKast.kast.AlustaKirjutamist()
+        self.tunniKast.MääraNupuF(tNupuF)
+        self.tunniKast.tekst.MääraRidadeArv(1)
+        self.tunniKast.MääraSõnum("Tund:")
+        self.tunniKast.MääraKeskeleJoondus(True)
+        self.tunniKast.MääraSelgitusKastiSees(True)
+        
+        self.minutiKast = SelgitavTekstikast(olek, pind)
+        def mNupuF():
+            self.LõpetaKõigiKirjutamine()
+            self.minutiKast.kast.AlustaKirjutamist()
+        self.minutiKast.MääraNupuF(mNupuF)
+        self.minutiKast.tekst.MääraRidadeArv(1)
+        self.minutiKast.MääraSõnum("Minut:")
+        self.minutiKast.MääraKeskeleJoondus(True)
+        self.minutiKast.MääraSelgitusKastiSees(True)
+
+    # Määratakse ülemobjektis sellele klassile ja ülemobjekt kasutab sell koostamisel selle klassi LõpetaKirjutamine funktsiooni.
+    def LõpetaKõigiKirjutamine(self): pass
+    
+    def LõpetaKirjutamine(self):
+        self.tunniKast.kast.LõpetaKirjutamine()
+        self.minutiKast.kast.LõpetaKirjutamine()
+
+    def PaneValmis(self):
+        # Neid väärtusi kasutavad mõlemad kastid.
+        kastideVahe = self.suurus[0] * 0.05
+        kastiLaius = (self.suurus[0] - kastideVahe) / 2
+        
+        # Tunnikast
+        asukx = self.asukoht[0] + kastiLaius / 2
+        asuky = self.asukoht[1]
+        self.tunniKast.MääraAsukoht((asukx, asuky))
+        self.tunniKast.MääraSuurus((kastiLaius, 0))
+        
+        # Minutikast
+        asukx = self.asukoht[0] + kastideVahe + 1.5*kastiLaius
+        asuky = self.asukoht[1]
+        self.minutiKast.MääraAsukoht((asukx, asuky))
+        self.minutiKast.MääraSuurus((kastiLaius, 0))
+        
+    def Joonista(self):
+        self.tunniKast.Joonista()
+        self.minutiKast.Joonista()
+        
+    def MääraAsukoht(self, asukoht):
+        self.asukoht = asukoht
+        
+    def MääraSuurus(self, suurus):
+        self.suurus = suurus
+        
+    def VõtaSuurus(self):
+        suurx = self.suurus[0]
+        suury = max(self.tunniKast.VõtaSuurus()[1], self.minutiKast.VõtaSuurus()[1])
+        return (suurx, suury)
+    
+    def VõtaKellaaeg(self):
+        tund = self.tunniKast.VõtaTekst()
+        minut = self.minutiKast.VõtaTekst()
+        kell = Kellaaeg(tund, minut)
+        if kell.KasVõimalik() == True:
+            return kell
+        return None
